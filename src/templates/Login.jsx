@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router'; 
+import { signIn } from '../reducks/users/operations';
 
 function Copyright() {
   return (
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const [email,  setEmail] = useState(''),
-        [password, setPassword] = useState("")
+        [password, setPassword] = useState('')
 
   const inputEmail = useCallback((e) => {
     setEmail(e.target.value)
@@ -112,7 +113,8 @@ const Login = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => LinkToHome('/')}
+            onClick={() => 
+              {LinkToHome('/')}}
           >
             ログイン
           </Button>

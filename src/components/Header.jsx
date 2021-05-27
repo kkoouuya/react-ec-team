@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { useSelector } from 'react-redux';
+import { getUserName } from '../reducks/users/selector';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -80,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
+  const selector = useSelector(state => state);
+  const username = getUserName(selector);
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -173,6 +178,8 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
+          <div className={classes.glow} />
+          { username }
           <img src="./assets/img/header_logo.png" alt="" />
           <Typography className={classes.title} variant="h6" noWrap>
             ラクラクピザ
