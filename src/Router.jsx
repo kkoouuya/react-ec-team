@@ -8,11 +8,13 @@ import {
   OrderFinished,
   OrderHistory,
 } from './templates';
+import { Header } from './components/index';
 import SignUp from './templates/SignUp';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Switch>
         <Route exact path="/" component={ItemList} />
         <Route exact path="/itemdetail/:id" component={ItemDetail} />
