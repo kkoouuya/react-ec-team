@@ -16,6 +16,7 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "use-history": "^1.4.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

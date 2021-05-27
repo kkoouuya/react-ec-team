@@ -1,10 +1,10 @@
 body {
   margin: 0;
 }
-
+/* 
 #root {
   padding: 100px 50px 0 50px;
-}
+} */
 
 @media (min-width: 960px) {
   .makeStyles-inputInput-7 {
@@ -12,3 +12,31 @@ body {
     border-radius: 10px !important;
   }
 }
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.log-button {
+  text-align: right;
+  padding: 20px;
+}
+/* 
+.MuiIconButton-label {
+  display: block !important;
+} */
+/* 
+.MuiIconButton-label span {
+  display: block;
+}
+
+.icon-text {
+  font-size: 14px;
+} */
