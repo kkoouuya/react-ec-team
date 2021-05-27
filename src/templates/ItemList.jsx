@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,6 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../reducks/products/operations';
+import { getProducts } from '../reducks/products/selectors';
 
 const useStyles = makeStyles({
   root: {
@@ -15,16 +18,25 @@ const useStyles = makeStyles({
 });
 
 const ItemList = () => {
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
+  const products = getProducts(selector);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
   const classes = useStyles();
   return (
     <div>
+      {console.log(products)}
+      {console.log(Array.isArray(products))};
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
             component="img"
             alt="Contemplative Reptile"
             height="200"
-            image="https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg"
             title="Contemplative Reptile"
           />
           <CardContent>
