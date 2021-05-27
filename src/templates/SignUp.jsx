@@ -3,6 +3,7 @@ import  TextInput  from "../components/UIkit/TextInput";
 import {useDispatch} from "react-redux";
 import {signUp} from "../reducks/users/operations";
 import {push} from "connected-react-router"
+import {Button} from '@material-ui/core'
 
 const SignUp = () => {
     const dispatch = useDispatch();
@@ -43,9 +44,20 @@ const SignUp = () => {
         setUsertel(e.target.value)
     },[setUsertel]);
 
+    const clear = () => {
+        console.log('クリアボタンが発動しました')
+        setUsername('')
+        setUseraddress('')
+        setUsertel('')
+        setUserzipcode('')
+        setPassword('')
+        setConfirmPassword('')
+        setEmail('')
+    }
+
     return (
-        <div className="c-section-container">
-            <h2 className="u-text-center u-text__headline">アカウント登録</h2>
+        <div className="section">
+            <h2 className="headline">アカウント登録</h2>
             <div className="module-spacer--medium" />
             <TextInput
                 fullWidth={true} label={"ユーザー名"} multiline={false} required={true}
@@ -77,9 +89,12 @@ const SignUp = () => {
             />
             <div />
             <div >
-                <button
-                    onClick={() => dispatch(signUp(username, email, password, zipcode,address,tel,confirmPassword))}
-                >アカウントを登録する</button>
+                <Button
+                    variant="contained" color="primary"
+                    onClick={() => dispatch(signUp(username, email, zipcode,address,tel,password, confirmPassword))}
+                >アカウントを登録する</Button>
+                <span>  </span>
+                <Button variant="contained" color="primary" onClick={clear}>クリア</Button>
                 <div className="module-spacer--small" />
                 <p onClick={() => dispatch(push('/'))}>アカウントをお持ちの方はこちら</p>
             </div>
