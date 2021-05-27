@@ -1,10 +1,6 @@
 body {
   margin: 0;
 }
-/* 
-#root {
-  padding: 100px 50px 0 50px;
-} */
 
 @media (min-width: 960px) {
   .makeStyles-inputInput-7 {
@@ -28,15 +24,16 @@ button {
   text-align: right;
   padding: 20px;
 }
-/* 
-.MuiIconButton-label {
-  display: block !important;
-} */
-/* 
-.MuiIconButton-label span {
-  display: block;
-}
 
-.icon-text {
-  font-size: 14px;
-} */
+.section {
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 1rem;
+  height: auto;
+  width: calc(100% - 2rem);
+}
+.headline {
+  color: #4dd0e1;
+  font-size: 1.563rem;
+  margin: 0 auto 1rem auto;
+}
