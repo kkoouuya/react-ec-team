@@ -14,6 +14,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { useSelector } from 'react-redux';
+import { getUserName } from '../reducks/users/selector';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -82,6 +84,10 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const history = useHistory();
   const handleLink = (path) => history.push(path);
+
+  const selector = useSelector((state) => state);
+  const username = getUserName(selector);
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -221,7 +227,13 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       <div className="log-button">
-        <button>ログイン</button>
+        <button
+          onClick={() => {
+            handleLink('/login');
+          }}
+        >
+          ログイン
+        </button>
         &nbsp;&nbsp;&nbsp;
         <button>ログアウト</button>
       </div>

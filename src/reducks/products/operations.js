@@ -15,3 +15,13 @@ export const fetchProducts = () => {
     });
   };
 };
+
+
+// export const orderProducts = (productsInCart) => {
+//   return async(dispatch, getState) => {
+//     const uid = getState().users.uid;
+//     const userRef = db.collection('users').doc(uid);
+//     const timestamp = FirebaseTimeStamp.now();
+
+//   }
+// }
