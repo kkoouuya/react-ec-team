@@ -1,14 +1,11 @@
+/* eslint-disable */ //⇦ESLintの警告を非常時にする
 import { db, auth, FirebaseTimestamp } from '../../firebase/index';
-import { push } from 'connected-react-router';
 import {
   isValidEmailFormat,
   isValidRequiredInput,
-} from '../../function/common'; //⇦ESLintの警告を非常時にする
-
-/* eslint-disable */ import { signInAction } from './actions';
-import { useHistory } from 'react-router';
-// import { push } from 'connected-react-router';
-//const usersRef = db.collection('users')
+} from '../../function/common';
+import { signInAction } from './actions';
+import { createBrowserHistory } from 'history';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
@@ -21,6 +18,8 @@ export const signUp = (
   password,
   confirmPassword
 ) => {
+  const browserHistory = createBrowserHistory();
+
   return async (dispatch) => {
     // Validations
     if (
@@ -84,7 +83,8 @@ export const signUp = (
             .set(userInitialData)
             .then(async () => {
               console.log('DB保存成功');
-              dispatch(push('/'));
+              browserHistory.push('/');
+              console.log('DB');
             });
         }
       });
