@@ -178,8 +178,6 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <div className={classes.glow} />
-          { username }
           <img src="./assets/img/header_logo.png" alt="" />
           <Typography className={classes.title} variant="h6" noWrap>
             ラクラクピザ

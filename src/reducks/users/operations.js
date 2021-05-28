@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 export const signIn = () => {
 
   return async (dispatch,getState) => {
+    console.log('ログイン');
     const state = getState()
     const isSignedIn = state.users.isSignedIn
 
@@ -35,3 +36,17 @@ export const signIn = () => {
     // }
   }
 }
+
+export const signOut = () => {
+  return async (dispatch, getState) =>{
+    console.log('ログアウト');
+
+    dispatch(signInAction({
+      isSignedIn: false,
+      uid: "", 
+      username: ""
+    }))
+    dispatch.push('/');
+  }
+}
+
