@@ -7,6 +7,7 @@ import {
   OrderConfirm,
   OrderFinished,
   OrderHistory,
+  Login
 } from './templates';
 import { Header } from './components/index';
 import SignUp from './templates/SignUp';
@@ -23,6 +24,7 @@ const Router = () => {
         <Route exact path="/orderconfirm" component={OrderConfirm} />
         <Route exact path="/orderfinished" component={OrderFinished} />
         <Route exact path="/orderhistory" component={OrderHistory} />
+        <Route exact path="/login" component={Login} />
       </Switch>
     </BrowserRouter>
   );

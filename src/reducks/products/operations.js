@@ -17,6 +17,7 @@ export const fetchProducts = () => {
   };
 };
 
+
 // const uid = initialState.users.uid
 
 
@@ -39,4 +40,15 @@ export const fetchProducts = () => {
 //     };
 // };
 
+
+
+
+// export const orderProducts = (productsInCart) => {
+//   return async(dispatch, getState) => {
+//     const uid = getState().users.uid;
+//     const userRef = db.collection('users').doc(uid);
+//     const timestamp = FirebaseTimeStamp.now();
+
+//   }
+// }
 
