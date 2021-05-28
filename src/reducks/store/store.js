@@ -1,13 +1,16 @@
-import {createStore as reduxCreateStore, 
-  combineReducers, 
-  applyMiddleware } from 'redux';
+import {
+  createStore as reduxCreateStore,
+  combineReducers,
+  applyMiddleware,
+} from 'redux';
 import thunk from 'redux-thunk';
 import { ProductsReducer } from '../products/reducers';
 import { UsersReducer } from '../users/reducers';
-//import createRootReducer from '@/reducer/index';
-import { routerMiddleware,connectRouter } from 'connected-react-router';
-import { createLogger } from 'redux-logger'
+import { ToppingReducer } from '../topping/reducers';
 
+//import createRootReducer from '@/reducer/index';
+import { routerMiddleware, connectRouter } from 'connected-react-router';
+import { createLogger } from 'redux-logger';
 
 // const store = () => {
 //   return createStore(
@@ -21,28 +24,25 @@ import { createLogger } from 'redux-logger'
 
 // export default store;
 
-
 export default function createStore(history) {
-
   // Define individual settings of redux-logger
   let middleWares = [routerMiddleware(history), thunk];
   if (process.env.NODE_ENV === 'development') {
-      const logger = createLogger({
-          collapsed: true,
-          diff: true
-      });
-      middleWares.push(logger)
+    const logger = createLogger({
+      collapsed: true,
+      diff: true,
+    });
+    middleWares.push(logger);
   }
 
-  return reduxCreateStore( 
-      combineReducers({
-          products: ProductsReducer,
-          router: connectRouter(history),
-          users: UsersReducer,
-      }),
-      applyMiddleware(
-          ...middleWares
-      )
+  return reduxCreateStore(
+    combineReducers({
+      products: ProductsReducer,
+      router: connectRouter(history),
+      topping: ToppingReducer,
+      users: UsersReducer,
+    }),
+    applyMiddleware(...middleWares)
   );
 }
 //router: connectRouter(history)

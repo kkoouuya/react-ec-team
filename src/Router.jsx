@@ -18,7 +18,7 @@ const Router = () => {
       <Header />
       <Switch>
         <Route exact path="/" component={ItemList} />
-        <Route exact path="/itemdetail/:id" component={ItemDetail} />
+        <Route exact path="/itemdetail" component={ItemDetail} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/cartlist" component={CartList} />
         <Route exact path="/orderconfirm" component={OrderConfirm} />

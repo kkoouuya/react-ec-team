@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { usersReducer } from '../users/reducers';
 
 const productsSelector = (state) => state.products;
 

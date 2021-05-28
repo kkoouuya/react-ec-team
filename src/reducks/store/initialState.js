@@ -6,4 +6,5 @@ export const initialState = {
     username: ''
   },
   products: {},
+  topping: {},
 };
