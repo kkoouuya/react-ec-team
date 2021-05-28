@@ -6,38 +6,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const OrderConfirm = () => {
-//   const [name, setName] = useState('')
-//   const [nameError, setNameError] = useState('')
-
-// const handleName = (e) => {
-//   if (!e.target.value) {
-//     setNameError('名前を入力してください')
-//   } else {
-//     setNameError()
-//   }
-
-//   return (
-//     <React.Fragment>
-//     <div>
-//       <label>name</label>
-//       <input
-//         type="text"
-//         name="name"
-//         placeholder="Enter your name"
-//         value={name}
-//         onChange={(e) => {
-//           setName(e.target.value)
-//         }}
-//         onBlur={handleName}
-//       />
-//       {nameError && <p>{nameError}</p>}
-//     </div>
-//     </React.Fragment>
-//   )}
-
-// };
-
-// const OrderConfirm = () => {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -102,15 +70,6 @@ const OrderConfirm = () => {
             autoComplete="shipping postal-code"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-          />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
@@ -120,7 +79,6 @@ const OrderConfirm = () => {
             label="Use this address for payment details"
           />
         </Grid>
-      </Grid>
     </React.Fragment>
   );
 };

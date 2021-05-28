@@ -67,28 +67,6 @@ const Login = () => {
   const LinkToHome = path => history.push(path);
   const selector = useSelector(state => state)
  
-
-
-  // return async (dispatch) => {
-  //       // Validations
-  //       if(!isValidRequiredInput(email, password)) {
-  //           alert('必須項目が未入力です。');
-  //           return false
-  //       }
-
-        // if(!isValidEmailFormat(email)) {
-        //     alert('メールアドレスの形式が不正です。もう1度お試しください。')
-        //     return false
-        // }
-        // if (password !== ) {
-        //     alert('パスワードが一致しません。もう1度お試しください。')
-        //     return false
-        // }
-        // if (password.length < 6) {
-        //     alert('パスワードは6文字以上で入力してください。')
-        //     return false
-        // }
-
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />

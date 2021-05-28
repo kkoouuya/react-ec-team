@@ -2,6 +2,7 @@
 import {db, auth, FirebaseTimestamp} from '../../firebase/index';
 import {push} from 'connected-react-router'
 import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
+import { createBrowserHistory } from "history";
 /* eslint-disable */ //⇦ESLintの警告を非常時にする
 import { useHistory } from 'react-router'; 
 // import { push } from 'connected-react-router';
@@ -9,12 +10,12 @@ import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
-const dispatch = useDispatch();
 // const history = useHistory();
 // const handleLink = path => history.push(path);
 
+const browserHistory = createBrowserHistory();
 
-export const signUp = (username, email,zipcode,address,tel, password, confirmPassword) => {
+export const signUp = (username,email,zipcode,address,tel, password, confirmPassword) => {
     return async (dispatch) => {
         // Validations
         if(!isValidRequiredInput(email, password, confirmPassword,address,zipcode,tel)) {
@@ -92,7 +93,7 @@ export const signIn = (email, password) => {
                         username: data.username,
                     }));
                     console.log('ログイン済')
-                    dispatch(push('/'));
+                    browserHistory.push('/');
                     console.log('ログイン済')
                   })
               }
@@ -104,11 +105,11 @@ export const signOut = () => {
     // return async (dispatch, getState) =>{
       console.log('ログアウト');
       firebase.auth().signOut();
-      dispatch(deleteUserAction({
-        uid: null,
-        username: '',
-        isSignedIn: false,
-        }))
+    //   dispatch(deleteUserAction({
+    //     uid: null,
+    //     username: '',
+    //     isSignedIn: false,
+    //     }))
 //   }
 }
 
