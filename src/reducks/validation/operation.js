@@ -1,49 +1,20 @@
 import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
+import { useDispatch } from "react-redux";
 
-const dispatch = useDispatch();
-
-const [email, setEmail] = useState("")
-const [username, setUsername] = useState("")
-const [zipcode, setUserzipcode] = useState("")
-const [address, setUseraddress] = useState("")
-const [tel, setUsertel] = useState("")
-
-const inputEmail = useCallback((e) => {
-    setEmail(e.target.value)
-},[setEmail]);
-
-const inputUsername = useCallback((e) => {
-    setUsername(e.target.value)
-},[setUsername]);
-
-const inputZipcode = useCallback((e) => {
-    setUserzipcode(e.target.value)
-},[setUserzipcode]);
-
-const inputAddress = useCallback((e) => {
-    setUseraddress(e.target.value)
-},[setUseraddress]);
-
-const inputTel = useCallback((e) => {
-    setUsertel(e.target.value)
-},[setUsertel]);
-
-
-const clear = () => {
-    console.log('クリアボタンが発動しました')
-    setUsername('')
-    setUseraddress('')
-    setUsertel('')
-    setUserzipcode('')
-    setPassword('')
-    setConfirmPassword('')
-    setEmail('')
-}
+// const ErrorMessages = {
+//     required: '必須項目の入力がされていません',
+// }
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
-export const orderError = (userName, email,zipcode,address,tel, date) => {
+
+
+
+
+export const OrderError = (userName, email, zipcode, address, tel, date) => {
+    const dispatch = useDispatch();
     return async (dispatch) => {
+        // console.log('バリデーション');
         // Validations
         // if(!isValidRequiredInput(userName,email, 
         //     address,zipcode,tel,date)) {
@@ -51,7 +22,7 @@ export const orderError = (userName, email,zipcode,address,tel, date) => {
         //     return false
         // }
 
-        if(!userName){
+        if(userName === ""){
         // if(!isValidRequiredInput(userName)){
             alert ('名前を変更してください');
             return false
@@ -72,12 +43,22 @@ export const orderError = (userName, email,zipcode,address,tel, date) => {
             return false
         }
 
-        if(!tel){
-            alert ('電話番号')
+        if(!address){
+            alert('住所を変更してください')
+            return false
         }
-        else if(tel.match(/^[0-9]{4}-[0-9]{4}-[0-9]{4}$/)){
+
+        if(!tel){
+            alert ('電話番号を入力してください')
+        } else if(tel.match(/^[0-9]{4}-[0-9]{4}-[0-9]{4}$/)){
             alert('電話番号は XXXX-XXXX-XXXX の形式で入力してください')
             return false
         }
+
+        if(!date){
+            alert('配達日時を入力してください');
+            console.log('配達')
+            return false
+        } 
     }
 }

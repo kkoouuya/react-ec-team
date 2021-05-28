@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import  TextInput  from "../components/UIkit/TextInput";
 import {useDispatch} from "react-redux";
 import {signUp} from "../reducks/users/operations";
-import {push} from "connected-react-router"
+// import {push} from "connected-react-router"
 import {Button} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 

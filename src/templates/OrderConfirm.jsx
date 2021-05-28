@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import { orderError } from '../reducks/validation/oparation';
+import { orderError } from '../reducks/validation/operation';
 import { useDispatch } from "react-redux";
 
 const OrderConfirm = () => {
