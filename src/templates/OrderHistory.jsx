@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -56,18 +56,9 @@ const orders = [
 ];
 
 const OrderHistory = () => {
-  // const button = {
-  //   disabled: true,
-  // };
-  const button_label = () => {
-    return {
-      // disabled ?'キャンセル':'キャンセル済み'
-      button_label: "キャンセル",
-    };
-  };
-  const cancel = () => {
-    return { label: false };
-  };
+  const [double, setDouble] = useState(false);
+  const [cancel, setCancel] = useState("キャンセル");
+
   return (
     <React.Fragment>
       <Card>
@@ -132,10 +123,14 @@ const OrderHistory = () => {
                   <Button
                     variant="contained"
                     startIcon={<CancelIcon />}
-                    // disabled={orders[0].status ? "9" : "1"}
-                    onClick={cancel}
+                    disabled={double}
+                    onClick={() => {
+                      // doSomething();
+                      setDouble(true);
+                      setCancel("キャンセル済み");
+                    }}
                   >
-                    キャンセル
+                    {cancel}
                   </Button>
                 </TableCell>
               </TableRow>
