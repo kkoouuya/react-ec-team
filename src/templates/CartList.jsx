@@ -28,6 +28,10 @@ export default function CartList() {
     protein:'dhffhfh',
   }]
 
+  useEffect(() => {
+
+  },[])
+
   return (
 
     <>
