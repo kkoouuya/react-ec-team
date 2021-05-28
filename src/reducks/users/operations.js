@@ -1,6 +1,7 @@
 import {db, auth, FirebaseTimestamp} from '../../firebase/index';
 import {push} from 'connected-react-router'
 import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
+
 /* eslint-disable */ //⇦ESLintの警告を非常時にする
 
 //const usersRef = db.collection('users')
