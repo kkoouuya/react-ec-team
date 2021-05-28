@@ -83,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const history = useHistory();
-  console.log(history);
   const handleLink = (path) => history.push(path);
 
   const selector = useSelector(state => state);
@@ -172,7 +171,7 @@ const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color="warning">
+      <AppBar position="static" color="default">
         <Toolbar>
           <IconButton
             edge="start"
