@@ -9,8 +9,8 @@ import { useHistory } from 'react-router';
 //const usersRef = db.collection('users')
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
-
-
+// const history = useHistory();
+// const handleLink = path => history.push(path);
 
 
 export const signUp = (username, email,zipcode,address,tel, password, confirmPassword) => {
@@ -71,51 +71,40 @@ export const signUp = (username, email,zipcode,address,tel, password, confirmPas
     }
 }
 
-export const signIn = () => {
 
-  return async (dispatch,getState) => {
-    console.log('ログイン');
-    const state = getState()
-    const isSignedIn = state.users.isSignedIn
+export const signIn = (email, password) => {
+    return async (dispatch) => {
+     auth.signInWithEmailAndPassword(email, password)
+            .then(result => {
+                const user = result.user
 
-    if(!isSignedIn){
-      const url = "https://github.com/users/HarunaYamaguchi"
-    
-      const response = fetch(url)
-      .then(res => res.json())
-      .catch(() => null)
+                if (user) {
+                  const uid = user.uid;
 
-      const username = response.login
+                  db.collection(`users/${uid}/userinfo`).doc().get(userInitialData).then(snapshot => {
+                    console.log("データ")
+                    const data = snapshot.data()
 
-      dispatch(signInAction({
-        isSignedIn: true,
-        uid: "00001", // (仮)
-        username: username// (仮)
-      }))
-      dispatch.push('/');
-    }
-
-    // if(!isSignedIn) {
-    //   const userData = await emailSignIn(email, password)
-    //   dispatch(signInAction({
-    //     isSignedIn: true
-    //     uid: "00001", // (仮)
-    //     username: "田中太郎"// (仮)
-    //   }))
-    // }
-  }
+                    dispatch(signInAction({
+                        isSignedIn:true,
+                        role: data.role,
+                        uid: uid,
+                        username: data.username,
+                    }));
+                    dispatch(push('/'));
+                  })
+              }
+            })
+        }
 }
 
-export const signOut = () => {
-  return async (dispatch, getState) =>{
-    console.log('ログアウト');
 
-    dispatch(signInAction({
-      isSignedIn: false,
-      uid: "", 
-      username: ""
-    }))
-    dispatch.push('/');
-  }
-}
 
+  // export const signOut = () => {
+  //   return async (dispatch, getState) =>{
+  //     console.log('ログアウト');
+  //     firebase.auth().signOut()
+  // }
+// export const logoutGmail = () => {
+//       firebase.auth().signOut()
+//     }
