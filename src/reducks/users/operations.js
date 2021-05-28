@@ -3,12 +3,13 @@ import {db, auth, FirebaseTimestamp} from '../../firebase/index';
 import {push} from 'connected-react-router'
 import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
 /* eslint-disable */ //⇦ESLintの警告を非常時にする
-import {signInAction} from "./actions";
 import { useHistory } from 'react-router'; 
 // import { push } from 'connected-react-router';
 //const usersRef = db.collection('users')
+import { useDispatch } from 'react-redux';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
+const dispatch = useDispatch();
 // const history = useHistory();
 // const handleLink = path => history.push(path);
 
@@ -71,9 +72,9 @@ export const signUp = (username, email,zipcode,address,tel, password, confirmPas
     }
 }
 
-
 export const signIn = (email, password) => {
     return async (dispatch) => {
+        console.log('ログイン')
      auth.signInWithEmailAndPassword(email, password)
             .then(result => {
                 const user = result.user
@@ -82,7 +83,6 @@ export const signIn = (email, password) => {
                   const uid = user.uid;
 
                   db.collection(`users/${uid}/userinfo`).doc().get(userInitialData).then(snapshot => {
-                    console.log("データ")
                     const data = snapshot.data()
 
                     dispatch(signInAction({
@@ -91,20 +91,24 @@ export const signIn = (email, password) => {
                         uid: uid,
                         username: data.username,
                     }));
+                    console.log('ログイン済')
                     dispatch(push('/'));
+                    console.log('ログイン済')
                   })
               }
             })
         }
 }
 
+export const signOut = () => {
+    // return async (dispatch, getState) =>{
+      console.log('ログアウト');
+      firebase.auth().signOut();
+      dispatch(deleteUserAction({
+        uid: null,
+        username: '',
+        isSignedIn: false,
+        }))
+//   }
+}
 
-
-  // export const signOut = () => {
-  //   return async (dispatch, getState) =>{
-  //     console.log('ログアウト');
-  //     firebase.auth().signOut()
-  // }
-// export const logoutGmail = () => {
-//       firebase.auth().signOut()
-//     }

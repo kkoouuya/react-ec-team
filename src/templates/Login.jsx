@@ -66,7 +66,8 @@ const Login = () => {
   const history = useHistory();
   const LinkToHome = path => history.push(path);
   const selector = useSelector(state => state)
-  console.log(selector)
+ 
+
 
   // return async (dispatch) => {
   //       // Validations
@@ -136,7 +137,7 @@ const Login = () => {
               color="primary"
               className={classes.submit}
               onClick={() => 
-                {LinkToHome('/')}}
+                dispatch(signIn(email,password))}
             >
               ログイン
             </Button>
