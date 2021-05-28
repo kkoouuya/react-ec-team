@@ -85,7 +85,7 @@ const Header = () => {
   const history = useHistory();
   const handleLink = (path) => history.push(path);
 
-  const selector = useSelector(state => state);
+  const selector = useSelector((state) => state);
   const username = getUserName(selector);
 
   const classes = useStyles();
@@ -227,7 +227,13 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       <div className="log-button">
-        <button onClick={() => {handleLink('/login')}}>ログイン</button>
+        <button
+          onClick={() => {
+            handleLink('/login');
+          }}
+        >
+          ログイン
+        </button>
         &nbsp;&nbsp;&nbsp;
         <button>ログアウト</button>
       </div>

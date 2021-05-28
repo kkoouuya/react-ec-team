@@ -10,8 +10,6 @@ import { signInAction, fetchOrdersAction } from "./actions";
 import { createBrowserHistory } from "history";
 import { push } from "connected-react-router";
 
-//const usersRef = db.collection('users')
-
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
 export const signUp = (

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -74,6 +75,59 @@ const OrderHistory = () => {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+=======
+import React, { useState } from 'react';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import CancelIcon from '@material-ui/icons/Cancel';
+import HistoryIcon from '@material-ui/icons/History';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Link from '@material-ui/core/Link';
+
+const orders = [
+  {
+    id: '',
+    orderDate: '2021-5-21',
+    item_imagePath:
+      'https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg',
+    item_name: 'hawaianパラダイス',
+    topping_name: 'タコス',
+    item_num: '1',
+    status: '1',
+  },
+  {
+    id: '',
+    orderDate: '2021-6-2',
+    item_imagePath:
+      'https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg',
+    item_name: 'hawaianパラダイス',
+    topping_name: 'タコス',
+    item_num: '1',
+    status: '1',
+  },
+  {
+    id: '',
+    orderDate: '2021-8-2',
+    item_imagePath:
+      'https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg',
+    item_name: 'hawaianパラダイス',
+    topping_name: 'タコス',
+    item_num: '1',
+    status: '1',
+  },
+];
+
+const OrderHistory = () => {
+  const [double, setDouble] = useState(false);
+  const [cancel, setCancel] = useState('キャンセル');
+>>>>>>> 7c1d2338d0b298cb98e0be44b7824e0ba0416e1e
 
   return (
     <React.Fragment>
@@ -193,7 +247,7 @@ const OrderHistory = () => {
                     onClick={() => {
                       // doSomething();
                       setDouble(true);
-                      setCancel("キャンセル済み");
+                      setCancel('キャンセル済み');
                     }}
                   >
                     {cancel}
