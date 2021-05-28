@@ -8,10 +8,10 @@ export const getProducts = createSelector(
 );
 
 
-// const cartSelector = (state) => state.cart;
+// const cartSelector = (state) => state.users.cart;
 
 // export const getcart = createSelector(
 //   [cartSelector],
-//   (state) => state.list
+//   state => state.list
 // );
 

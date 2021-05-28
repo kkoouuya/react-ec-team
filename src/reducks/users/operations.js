@@ -4,7 +4,7 @@ import {
   isValidEmailFormat,
   isValidRequiredInput,
 } from '../../function/common';
-import { signInAction } from './actions';
+import { signInAction ,fetchProductsInCartAction} from './actions';
 import { createBrowserHistory } from 'history';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
@@ -141,3 +141,9 @@ export const signOut = () => {
     dispatch.push('/');
   };
 };
+
+export const fetchProductsInCart = (products) => {
+    return async (dispatch) => {
+        dispatch(fetchProductsInCartAction(products))
+    }
+}

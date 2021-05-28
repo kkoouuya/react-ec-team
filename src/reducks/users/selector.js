@@ -13,3 +13,4 @@ export const getProductsInCart = createSelector(
   [usersSelector],
   (state) => state.cart
 );
+
