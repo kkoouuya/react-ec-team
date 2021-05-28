@@ -59,7 +59,9 @@ const Search = props => {
         className={classes.iconButton}
         aria-label="directions"
         onClick={() => {
-          props.setText('');
+          // itemListのtextを''に
+          // props.setText('');
+          // searchのtextを''に
           setText('');
         }}
       >

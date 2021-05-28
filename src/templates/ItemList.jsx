@@ -24,14 +24,32 @@ const useStyles = makeStyles({
 });
 
 const ItemList = () => {
-  const [text, setText] = useState('')
+  const [filterText, setFilterText] = useState('')
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
   console.log(products);
-  // console.log(products.filter(product => {
-  //   return product.name === 'じゃがバターベーコン'
-  // }));
+  let showProducts = [];
+
+  const alertDelete = () => {
+    alert('該当する商品はありません')
+    setFilterText('')
+    // 子のstateのtextを''にしたい
+    return (
+      <Search setText= '' />
+    )
+  }
+  
+  if (products !== undefined) {
+    showProducts = products.filter(product => {
+      if (product.name.indexOf(filterText) !== -1) {
+        return product
+      }
+    })
+  };
+  
+  console.log(showProducts)
+  console.log(filterText)
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -40,53 +58,12 @@ const ItemList = () => {
   const classes = useStyles();
   return (
     <>
-      <Search setText={setText} />
+      <Search setText={setFilterText} />
       {/* {text} */}
       <div className={classes.flex}>
-        {
-          products !== undefined
-          ? products.filter(product => {
-            if (product.name.indexOf(text) !== -1) {
-              return product
-            }
-            }).map((product) => {
-              return (
-                <Card className={classes.root} key={product.id}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      alt="Contemplative Reptile"
-                      height="200"
-                      image={product.imagePath}
-                      title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {product.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        <span>L:{product.Lprice.toLocaleString()}円</span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>M:{product.Mprice.toLocaleString()}円</span>
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              );
-          })
-            :<p>商品はありませんでした</p>
-        }
-        {/* {products === undefined
+        {products === undefined
           ? ''
-          :products.filter(product => {
-            if (product.name.indexOf(text) !== -1) {
-              return product
-            }
-          }).map((product) => {
+          : showProducts.length !== 0 ? showProducts.map((product) => {
               return (
                 <Card className={classes.root} key={product.id}>
                   <CardActionArea>
@@ -115,7 +92,10 @@ const ItemList = () => {
                 </Card>
               );
           })
-        } */}
+            // :　<p>該当する商品はありませんでした</p>
+            // :setText('') && alert('該当する商品はありませんでした')
+            : alertDelete()
+        }
       </div>
     </>
   );
