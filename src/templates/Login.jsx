@@ -12,9 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router'; 
-import { signIn } from '../reducks/users/operations';
 
 function Copyright() {
   return (
@@ -62,7 +60,6 @@ const Login = () => {
   },[setPassword]);
 
   const classes = useStyles();
-  const dispatch = useDispatch();
   const history = useHistory();
   const LinkToHome = path => history.push(path);
 
