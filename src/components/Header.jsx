@@ -228,7 +228,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       <div className="log-button">
-        <button>ログイン</button>
+        <button onClick={() => {handleLink('/login')}}>ログイン</button>
         &nbsp;&nbsp;&nbsp;
         <button>ログアウト</button>
       </div>
