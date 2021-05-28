@@ -1,11 +1,11 @@
 
 import {db, auth, FirebaseTimestamp} from '../../firebase/index';
-import {push} from 'connected-react-router'
+//import {push} from 'connected-react-router'
 import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
-import { createBrowserHistory } from "history";
+import {useHistory,BrowserRouter} from 'react-router-dom'
 /* eslint-disable */ //⇦ESLintの警告を非常時にする
-import { useHistory } from 'react-router'; 
-// import { push } from 'connected-react-router';
+import {signInAction} from "./actions"; 
+import { createBrowserHistory } from 'history';
 //const usersRef = db.collection('users')
 import { useDispatch } from 'react-redux';
 
@@ -15,8 +15,11 @@ const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
 const browserHistory = createBrowserHistory();
 
-export const signUp = (username,email,zipcode,address,tel, password, confirmPassword) => {
+export const signUp = (username, email,zipcode,address,tel, password, confirmPassword) => {
+    const browserHistory = createBrowserHistory();
     return async (dispatch) => {
+        
+        
         // Validations
         if(!isValidRequiredInput(email, password, confirmPassword,address,zipcode,tel)) {
             alert('必須項目が未入力です。');
@@ -65,8 +68,12 @@ export const signUp = (username,email,zipcode,address,tel, password, confirmPass
                     };
 
                     db.collection(`users/${uid}/userinfo`).doc().set(userInitialData).then(async () => {
+
                         console.log('DB保存成功')
-                        dispatch(push('/'))
+                        browserHistory.push('/')
+                        console.log('DB')
+
+                        
                     })
                 }
             })

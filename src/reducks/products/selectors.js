@@ -8,3 +8,11 @@ export const getProducts = createSelector(
   (state) => state.list
 );
 
+
+// const cartSelector = (state) => state.cart;
+
+// export const getcart = createSelector(
+//   [cartSelector],
+//   (state) => state.list
+// );
+

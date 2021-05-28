@@ -4,7 +4,8 @@ export const initialState = {
   users: {
     isSignedIn: false,
     uid: '',
-    username: '',
+    cart:[],
+    username: ''
   },
   products: {},
 };

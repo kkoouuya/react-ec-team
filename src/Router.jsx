@@ -7,7 +7,7 @@ import {
   OrderConfirm,
   OrderFinished,
   OrderHistory,
-  Login
+  Login,
 } from './templates';
 import { Header } from './components/index';
 import SignUp from './templates/SignUp';
