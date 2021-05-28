@@ -72,36 +72,35 @@ export const signUp = (username, email,zipcode,address,tel, password, confirmPas
                         console.log('DB保存成功')
                         browserHistory.push('/')
                         console.log('DB')
-
-                        
                     })
                 }
             })
     }
 }
 
-export const signIn = (email, password) => {
+export const SignIn = (email, password) => {
     return async (dispatch) => {
         console.log('ログイン')
      auth.signInWithEmailAndPassword(email, password)
             .then(result => {
                 const user = result.user
-
+                console.log(user);
                 if (user) {
                   const uid = user.uid;
 
-                  db.collection(`users/${uid}/userinfo`).doc().get(userInitialData).then(snapshot => {
-                    const data = snapshot.data()
+                  db.collection(`users/${uid}/userinfo`).doc().get().then(snapshot => {
+                    // console.log('１２３')
+                    // const data = snapshot.data()
+                    console.log(snapshot.data())
 
                     dispatch(signInAction({
                         isSignedIn:true,
-                        role: data.role,
                         uid: uid,
-                        username: data.username,
+                        username: username,
                     }));
-                    console.log('ログイン済')
-                    browserHistory.push('/');
-                    console.log('ログイン済')
+            //         console.log('ログイン済')
+            //         history.push('/');
+            //         console.log('済')
                   })
               }
             })
@@ -112,11 +111,10 @@ export const signOut = () => {
     // return async (dispatch, getState) =>{
       console.log('ログアウト');
       firebase.auth().signOut();
-    //   dispatch(deleteUserAction({
-    //     uid: null,
-    //     username: '',
-    //     isSignedIn: false,
-    //     }))
-//   }
+      dispatch(signOutAction({
+        uid: null,
+        username: '',
+        isSignedIn: false,
+    }))
 }
 

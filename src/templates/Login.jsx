@@ -14,7 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn } from '../reducks/users/operations';
+import { SignIn, signIn } from '../reducks/users/operations';
+
 
 function Copyright() {
   return (
@@ -64,9 +65,13 @@ const Login = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const LinkToHome = path => history.push(path);
+  const handlePage = path => history.push(path);
   const selector = useSelector(state => state)
- 
+
+  // const loginClicked = (email, password) => {
+  //   console.log('クリック！');
+  // }
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -114,12 +119,16 @@ const Login = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={() => 
-                dispatch(signIn(email,password))}
+              onClick={(e) => {
+                e.preventDefault()
+                dispatch(SignIn(email, password))
+              }
+            }
             >
               ログイン
             </Button>
-          </form>
+            </form>
+            <Link to='/signup' onClick={() => {handlePage('/signup')}}>ユーザー登録がまだの方はこちら</Link>
         </div>
       </Container>
     );
