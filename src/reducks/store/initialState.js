@@ -1,9 +1,9 @@
 export const initialState = {
   users: {
     isSignedIn: false,
-    uid: '',
-    cart:[],
-    username: ''
+    uid: "",
+    orders: [],
+    username: "",
   },
   products: {},
 };
