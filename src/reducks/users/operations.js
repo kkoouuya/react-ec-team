@@ -1,6 +1,7 @@
 import {db, auth, FirebaseTimestamp} from '../../firebase/index';
 import {push} from 'connected-react-router'
 import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
+import {useHistory} from 'react-router-dom'
 /* eslint-disable */ //⇦ESLintの警告を非常時にする
 
 //const usersRef = db.collection('users')
@@ -10,7 +11,9 @@ const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
 
 
+
 export const signUp = (username, email,zipcode,address,tel, password, confirmPassword) => {
+     const history = useHistory();
     return async (dispatch) => {
         // Validations
         if(!isValidRequiredInput(email, password, confirmPassword,address,zipcode,tel)) {
@@ -60,8 +63,11 @@ export const signUp = (username, email,zipcode,address,tel, password, confirmPas
                     };
 
                     db.collection(`users/${uid}/userinfo`).doc().set(userInitialData).then(async () => {
+                        
+
                         console.log('DB保存成功')
                         dispatch(push('/'))
+                        history.push('/')
                     })
                 }
             })
