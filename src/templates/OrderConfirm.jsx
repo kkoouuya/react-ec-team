@@ -80,19 +80,19 @@ const orderClicked =(
       destinationTel,
       destinationDate))
   
-  if(destinationUserName,
-    destinationEmail,
-    destinationZipcode,
-    destinationAddress,
-    destinationTel,
-    destinationDate){
-      console.log('入力完了してます')
-      history.push('/orderfinished')
+    if(destinationUserName,
+      destinationEmail,
+      destinationZipcode,
+      destinationAddress,
+      destinationTel,
+      destinationDate){
+        console.log('入力完了してます')
+        history.push('/orderfinished')
     }
 }
 
   return (
-    
+
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         お届け先情報入力
