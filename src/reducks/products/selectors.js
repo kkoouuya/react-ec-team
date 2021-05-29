@@ -2,11 +2,10 @@ import { createSelector } from 'reselect';
 
 const productsSelector = (state) => state.products;
 
-export const getProducts = createSelector(
-  [productsSelector],
-  (state) => state.list
-);
-
+export const getProducts = createSelector([productsSelector], (state) => {
+  console.log(state);
+  return state.list;
+});
 
 // const cartSelector = (state) => state.cart;
 
@@ -14,4 +13,3 @@ export const getProducts = createSelector(
 //   [cartSelector],
 //   (state) => state.list
 // );
-
