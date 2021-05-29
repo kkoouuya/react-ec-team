@@ -4,7 +4,7 @@ import {
   isValidEmailFormat,
   isValidRequiredInput,
 } from '../../function/common';
-import { signInAction ,fetchProductsInCartAction} from './actions';
+import { signInAction ,fetchProductsInCartAction, fetchOrdersAction} from './actions';
 import { createBrowserHistory } from 'history';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
