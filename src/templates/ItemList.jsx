@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { Search } from '../components/index';
@@ -24,10 +24,28 @@ const useStyles = makeStyles({
 });
 
 const ItemList = () => {
+  const [filterText, setFilterText] = useState('')
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
   console.log(products);
+  let showProducts = [];
+
+  const alertDelete = () => {
+    alert('該当する商品はありません')
+    setFilterText('')
+  }
+  
+  if (products !== undefined) {
+    showProducts = products.filter(product => {
+      if (product.name.indexOf(filterText) !== -1) {
+        return product
+      }
+    })
+  };
+  
+  console.log(showProducts)
+  console.log(filterText)
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -37,11 +55,11 @@ const ItemList = () => {
   
   return (
     <>
-      <Search />
+      <Search setText={setFilterText} />
       <div className={classes.flex}>
         {products === undefined
           ? ''
-          : products.map((product) => {
+          : showProducts.length !== 0 ? showProducts.map((product) => {
               return (
                 <Link
                   to={{ pathname: '/itemdetail', selectedItemId: product.id }}
@@ -74,7 +92,9 @@ const ItemList = () => {
                   </Card>
                 </Link>
               );
-            })}
+          })
+            : alertDelete()
+        }
       </div>
     </>
   );
