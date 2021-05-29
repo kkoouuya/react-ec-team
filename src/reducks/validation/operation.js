@@ -53,6 +53,7 @@ export const OrderError = (userName, email, zipcode, address, tel, date)=> {
         const year = today.getFullYear();
         const month = "0" + (1 + today.getMonth())
         const day = today.getDate();
+        const hour = today.getHours(); 
 
         if(!date){
             console.log('配達')
