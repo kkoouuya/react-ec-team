@@ -8,6 +8,7 @@ import { signInAction } from './actions';
 import { createBrowserHistory } from 'history';
 //const usersRef = db.collection('users')
 import { useDispatch } from 'react-redux';
+
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 // const history = useHistory();
 // const handleLink = path => history.push(path);
