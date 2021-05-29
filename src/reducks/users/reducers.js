@@ -18,6 +18,7 @@ export const UsersReducer = (state = initialState.users, action) => {
         ...state,
         ...action.payload,
       };
+
     case Actions.SET_USER_ACTION:
       return {
         ...state,
