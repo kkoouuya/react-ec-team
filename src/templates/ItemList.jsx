@@ -13,7 +13,7 @@ import { getProducts } from '../reducks/products/selectors';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 370,
     margin: 20,
   },
   flex: {
@@ -70,7 +70,7 @@ const ItemList = () => {
                       <CardMedia
                         component="img"
                         alt="Contemplative Reptile"
-                        height="200"
+                        height="220"
                         image={product.imagePath}
                         title="Contemplative Reptile"
                       />

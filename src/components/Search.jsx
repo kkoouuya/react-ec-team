@@ -28,18 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = props => {
-  const [text, setText] = useState('')
+const Search = (props) => {
+  const [text, setText] = useState('');
   const classes = useStyles();
-  
+
   return (
-    <Paper component="form" className={classes.root}>
+    <Paper className={classes.root}>
       <InputBase
         className={classes.input}
         placeholder="商品名で検索"
         inputProps={{ 'aria-label': 'search google maps' }}
         value={text}
-        onChange={e => setText(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
       />
       <IconButton
         className={classes.iconButton}
