@@ -1,11 +1,11 @@
-import {isValidEmailFormat, isValidRequiredInput} from "../../function/common";
+
 import { useDispatch } from "react-redux";
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
 export const OrderError = (userName, email, zipcode, address, tel, date)=> {
     return async () => {
-        
+
         // console.log('バリデーション');
         // // Validations
         // if(!isValidRequiredInput(userName,email, 
