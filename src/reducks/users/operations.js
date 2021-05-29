@@ -4,7 +4,7 @@ import {
   isValidEmailFormat,
   isValidRequiredInput,
 } from '../../function/common';
-import { signInAction } from './actions';
+import { signInAction ,fetchProductsInCartAction} from './actions';
 import { createBrowserHistory } from 'history';
 //const usersRef = db.collection('users')
 import { useDispatch } from 'react-redux';
@@ -132,8 +132,28 @@ export const signOut = () => {
     console.log('ログアウト');
     firebase.auth().signOut();
     dispatch(signOutAction({
-      uid: null,
-      username: '',
-      isSignedIn: false,
-  }))
-}
+        isSignedIn: false,
+        uid: '',
+        username: '',
+      })
+    );
+    dispatch.push('/');
+};
+
+const ordersRef = db
+  .collection("users")
+  .doc("1CiNypKuOkdRJL7KKGaV5w7QSKB3")
+  .collection("orders");
+
+export const fetchOrders = () => {
+  return async (dispatch) => {
+    ordersRef.get().then((snapshots) => {
+      const orderList = [];
+      snapshots.forEach((snapshot) => {
+        const order = snapshot.data();
+        orderList.push(order);
+      });
+      dispatch(fetchOrdersAction(orderList));
+    });
+  };
+};
