@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -50,6 +51,7 @@ const OrderHistory = () => {
   const [double, setDouble] = useState(false);
   const [cancel, setCancel] = useState('キャンセル');
 
+
   return (
     <React.Fragment>
       <Card>
@@ -57,6 +59,7 @@ const OrderHistory = () => {
           <HistoryIcon style={{ fontSize: 20 }} color="primary" />
           注文履歴
         </h1>
+
         <TableContainer>
           <Table aria-label="spanning table">
             <TableHead>
@@ -76,7 +79,56 @@ const OrderHistory = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.length > 0 &&
+              {orders
+                .filter((order) => order.status !== 0)
+                .map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell>{order.orderDate}</TableCell>
+                    {order.itemInfo.map((itemInfos) => (
+                      <TableCell key={itemInfos.itemId}>
+                        {/* {itemInfos.itemNum}個 */}
+                        {products === undefined
+                          ? ""
+                          : products
+                              .filter(
+                                (product) => product.id === itemInfos.itemId
+                              )
+                              .map((product) => {
+                                return (
+                                  <div key={product.id}>{product.name}</div>
+                                );
+                              })}
+                        {/* {itemInfos.toppings.map((topping) => (
+                          <TableCell key={topping.toppingId}>
+                            {topping.filter(
+                              (toppings)=>toppings.id===topping.toppingId
+                            )}
+                          </TableCell>
+                        ))} */}
+                      </TableCell>
+                    ))}
+                    {/* {.map((itemInfos) => (
+                      <TableCell key={itemInfos.itemId}>
+                        {itemInfos.toppings.filter((topping) => topping)}
+                      </TableCell>
+                    ))} */}
+                  </TableRow>
+                ))}
+              {/* {products === undefined
+                ? ""
+                : products
+                    .filter((product) => product.id === 1)
+                    .map((product) => {
+                      return (
+                        <TableRow key={product.id}>
+                          <TableCell>{product.name}</TableCell>
+                        </TableRow>
+                      );
+                    })} */}
+              {/* <TableRow>
+                {products.filter((product) => product.id === 1)}
+              </TableRow> */}
+              {/* {orders.length > 0 &&
                 orders.map((order) => (
                   <TableRow order={order} key={order.id}>
                     <TableCell>
@@ -85,7 +137,7 @@ const OrderHistory = () => {
                         <img
                           src={order.item_imagePath}
                           alt="アイコン"
-                          height="150px"
+                          height="100px"
                           align="center"
                         />
                       </CardContent>
@@ -124,7 +176,7 @@ const OrderHistory = () => {
                     {cancel}
                   </Button>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>

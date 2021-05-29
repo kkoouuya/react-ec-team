@@ -142,8 +142,20 @@ export const signOut = () => {
   };
 };
 
-export const fetchProductsInCart = (products) => {
-    return async (dispatch) => {
-        dispatch(fetchProductsInCartAction(products))
-    }
-}
+const ordersRef = db
+  .collection("users")
+  .doc("1CiNypKuOkdRJL7KKGaV5w7QSKB3")
+  .collection("orders");
+
+export const fetchOrders = () => {
+  return async (dispatch) => {
+    ordersRef.get().then((snapshots) => {
+      const orderList = [];
+      snapshots.forEach((snapshot) => {
+        const order = snapshot.data();
+        orderList.push(order);
+      });
+      dispatch(fetchOrdersAction(orderList));
+    });
+  };
+};
