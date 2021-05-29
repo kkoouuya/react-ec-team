@@ -27,11 +27,7 @@ import {
   addOrdersInfo,
 } from '../reducks/topping/operations';
 import { getProducts } from '../reducks/products/selectors';
-import {
-  getTopping,
-  getSumPrice,
-  // getOrdersInfo,
-} from '../reducks/topping/selectors';
+import { getTopping, getSumPrice } from '../reducks/topping/selectors';
 import { Topping } from '../components/index';
 
 const useStyles = makeStyles((theme) => ({
@@ -96,40 +92,6 @@ const ItemDetail = () => {
     setLabelName(event.target.name);
   };
 
-  // const hoge = [
-  //   { id: topping[0].id, toppingSize: onion },
-  //   { id: topping[1].id, toppingSize: tsunamayo },
-  //   { id: topping[2].id, toppingSize: itarianTomato },
-  //   { id: topping[3].id, toppingSize: squid },
-  //   { id: topping[4].id, toppingSize: bulgogi },
-  //   { id: topping[5].id, toppingSize: anchovy },
-  //   { id: topping[6].id, toppingSize: shrimp },
-  //   { id: topping[7].id, toppingSize: corn },
-  //   { id: topping[8].id, toppingSize: peppers },
-  //   { id: topping[9].id, toppingSize: freshSliced },
-  //   { id: topping[10].id, toppingSize: bacon },
-  //   { id: topping[11].id, toppingSize: pepperoni },
-  //   { id: topping[12].id, toppingSize: aged },
-  //   { id: topping[13].id, toppingSize: special },
-  //   { id: topping[14].id, toppingSize: camembert },
-  //   { id: topping[15].id, toppingSize: freshMozzarella },
-  //   { id: topping[16].id, toppingSize: italianSausage },
-  //   { id: topping[17].id, toppingSize: garlic },
-  //   { id: topping[18].id, toppingSize: arabiki },
-  //   { id: topping[19].id, toppingSize: broccoli },
-  //   { id: topping[20].id, toppingSize: green },
-  //   { id: topping[21].id, toppingSize: parmesan },
-  //   { id: topping[22].id, toppingSize: pineapple },
-  //   { id: topping[23].id, toppingSize: jalapeno },
-  //   { id: topping[24].id, toppingSize: mochi },
-  //   { id: topping[25].id, toppingSize: potato },
-  //   { id: topping[26].id, toppingSize: black },
-  //   { id: topping[27].id, toppingSize: cheese },
-  // ].filter((topping) => topping.toppingSize !== '');
-
-  // [toppings, setToppings] = useState([]);
-  // useEffect(() => {
-
   // 数量
   const [num, setNum] = useState(1);
   const handleChangeNum = (event) => {
@@ -169,12 +131,6 @@ const ItemDetail = () => {
   useEffect(() => {
     dispatch(fetchTopping());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   const fuga = 0;
-  //   const sum = sumArray.forEach((sum) => (fuga += sum));
-  //   console.log(sum);
-  // });
 
   useEffect(() => {
     const sumPrice = [
@@ -313,44 +269,6 @@ const ItemDetail = () => {
     cheese,
     topping,
   ]);
-
-  // const toppings = [
-  //   { id: topping[0].id, toppingSize: onion },
-  //   { id: topping[1].id, toppingSize: tsunamayo },
-  //   { id: topping[2].id, toppingSize: itarianTomato },
-  //   { id: topping[3].id, toppingSize: squid },
-  //   { id: topping[4].id, toppingSize: bulgogi },
-  //   { id: topping[5].id, toppingSize: anchovy },
-  //   { id: topping[6].id, toppingSize: shrimp },
-  //   { id: topping[7].id, toppingSize: corn },
-  //   { id: topping[8].id, toppingSize: peppers },
-  //   { id: topping[9].id, toppingSize: freshSliced },
-  //   { id: topping[10].id, toppingSize: bacon },
-  //   { id: topping[11].id, toppingSize: pepperoni },
-  //   { id: topping[12].id, toppingSize: aged },
-  //   { id: topping[13].id, toppingSize: special },
-  //   { id: topping[14].id, toppingSize: camembert },
-  //   { id: topping[15].id, toppingSize: freshMozzarella },
-  //   { id: topping[16].id, toppingSize: italianSausage },
-  //   { id: topping[17].id, toppingSize: garlic },
-  //   { id: topping[18].id, toppingSize: arabiki },
-  //   { id: topping[19].id, toppingSize: broccoli },
-  //   { id: topping[20].id, toppingSize: green },
-  //   { id: topping[21].id, toppingSize: parmesan },
-  //   { id: topping[22].id, toppingSize: pineapple },
-  //   { id: topping[23].id, toppingSize: jalapeno },
-  //   { id: topping[24].id, toppingSize: mochi },
-  //   { id: topping[25].id, toppingSize: potato },
-  //   { id: topping[26].id, toppingSize: black },
-  //   { id: topping[27].id, toppingSize: cheese },
-  // ].filter((topping) => topping.toppingSize !== '');
-  // console.log(toppings);
-
-  // }, [sumPrice]);
-
-  // if (topping !== undefined) {
-  // }
-  // console.log(toppings);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -785,7 +703,6 @@ const ItemDetail = () => {
               onClick={() => {
                 dispatch(
                   addOrdersInfo(selectedId, sumPrice, LabelName, toppings)
-                  // console.log(selectedId, sumPrice, LabelName)
                 );
               }}
             >
