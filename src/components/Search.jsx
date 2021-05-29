@@ -34,7 +34,6 @@ const Search = props => {
   
   return (
     <Paper component="form" className={classes.root}>
-      {/* 入力欄 */}
       <InputBase
         className={classes.input}
         placeholder="商品名で検索"
@@ -42,26 +41,23 @@ const Search = props => {
         value={text}
         onChange={e => setText(e.target.value)}
       />
-      {/* 検索ボタン */}
       <IconButton
-        // type="submit"
         className={classes.iconButton}
         aria-label="search"
-        onClick={() => props.setText(text)}
+        onClick={() => {
+          props.setText(text);
+          setText('');
+        }}
       >
         <SearchIcon />
       </IconButton>
 
       <Divider className={classes.divider} orientation="vertical" />
-      {/* 削除ボタン */}
       <IconButton
         color="primary"
         className={classes.iconButton}
         aria-label="directions"
         onClick={() => {
-          // itemListのtextを''に
-          // props.setText('');
-          // searchのtextを''に
           setText('');
         }}
       >

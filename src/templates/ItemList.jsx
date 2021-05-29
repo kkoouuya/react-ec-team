@@ -34,10 +34,6 @@ const ItemList = () => {
   const alertDelete = () => {
     alert('該当する商品はありません')
     setFilterText('')
-    // 子のstateのtextを''にしたい
-    return (
-      <Search setText= '' />
-    )
   }
   
   if (products !== undefined) {
@@ -60,7 +56,6 @@ const ItemList = () => {
   return (
     <>
       <Search setText={setFilterText} />
-      {/* {text} */}
       <div className={classes.flex}>
         {products === undefined
           ? ''
@@ -98,8 +93,6 @@ const ItemList = () => {
                 </Link>
               );
           })
-            // :　<p>該当する商品はありませんでした</p>
-            // :setText('') && alert('該当する商品はありませんでした')
             : alertDelete()
         }
       </div>
