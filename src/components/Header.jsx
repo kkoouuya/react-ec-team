@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -16,7 +16,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import { useDispatch,useSelector } from 'react-redux';
 import { getUserName } from '../reducks/users/selector';
-import { LocalDiningOutlined } from '@material-ui/icons';
+// import { LocalDiningOutlined } from '@material-ui/icons';
 import { signOut } from '../reducks/users/operations'
 
 const useStyles = makeStyles((theme) => ({
@@ -176,14 +176,14 @@ const Header = () => {
     <div className={classes.grow}>
       <AppBar position="static" color="default">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Link to="/">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/react-teame.appspot.com/o/header_logo.png?alt=media&token=30bc3f87-aa85-47d9-b27f-38e2ff49b6c4"
