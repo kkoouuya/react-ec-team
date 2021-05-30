@@ -8,7 +8,16 @@ export const ToppingReducer = (state = initialState.topping, action) => {
         ...state,
         list: [...action.payload],
       };
-    
+    case Actions.FETCH_SUMPRICE:
+      return {
+        ...state,
+        sum: action.payload,
+      };
+    case Actions.ADD_ORDERSINFO:
+      return {
+        ...state,
+        ordersInfo: action.payload,
+      };
     default:
       return state;
   }
