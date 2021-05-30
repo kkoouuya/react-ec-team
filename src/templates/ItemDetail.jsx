@@ -79,7 +79,6 @@ const ItemDetail = () => {
   const topping = getTopping(selector);
   const sumPrice = getSumPrice(selector);
   const selectedId = useLocation().selectedItemId;
-  console.log(useLocation());
   const uid = getUserId(selector);
   const selectedItem =
     products === undefined
@@ -215,7 +214,10 @@ const ItemDetail = () => {
     } else {
       setToppings(
         [
-          { toppingId: topping[0].id, toppingSize: onion === 200 ? 0 : 1 },
+          {
+            toppingId: topping[0].id,
+            toppingSize: onion === 200 ? 0 : onion === 300 ? 1 : '',
+          },
           { toppingId: topping[1].id, toppingSize: tsunamayo },
           { toppingId: topping[2].id, toppingSize: itarianTomato },
           { toppingId: topping[3].id, toppingSize: squid },
@@ -711,13 +713,7 @@ const ItemDetail = () => {
               onClick={() => {
                 uid
                   ? dispatch(
-                      addOrdersInfo(
-                        selectedId,
-                        sumPrice,
-                        LabelName,
-                        toppings,
-                        uid
-                      )
+                      addOrdersInfo(selectedId, num, LabelName, toppings, uid)
                     )
                   : handleLink('/');
               }}
