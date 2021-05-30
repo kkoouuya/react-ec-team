@@ -229,10 +229,11 @@ const Header = () => {
           </div>
         </Toolbar>
       </AppBar>
+      {username}
       <div className="log-button">
         <button
           onClick={() => {
-            handleLink('/login');
+            handleLink('/');
           }}
         >
           ログイン
