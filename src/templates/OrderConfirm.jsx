@@ -4,19 +4,19 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { orderError } from '../reducks/validation/operation';
+// import { orderError } from '../reducks/validation/operation';
 import { useDispatch } from "react-redux";
 import { OrderError } from '../reducks/validation/operation';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom'
-import { getUserName } from '../reducks/users/selector';
-import { creditcard } from '../reducks/payment/PaymentForm';
+// import { getUserName } from '../reducks/users/selector';
+// import { creditcard } from '../reducks/payment/PaymentForm';
 
 const OrderConfirm = () => {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const OrderConfirm = () => {
   };
 
   // カード支払い情報
-  const [disabled, setDisabled] = useState(true);
+  // const [disabled, setDisabled] = useState(true);
 
   const inputOrderUserName = useCallback((e) => {
     setDestinationUserName(e.target.value)
@@ -102,7 +102,7 @@ const OrderConfirm = () => {
           destinationTel === '' ||
           destinationDate === ''){
             console.log('入力完了していません'); 
-        } else if((destinationEmail.indexOf('@') == -1) || 
+        } else if((destinationEmail.indexOf('@') === -1) || 
           !pattern.test(destinationZipcode) || 
           !pattern2.test(destinationTel)) {
             console.log('入力完了していません2'); 

@@ -79,6 +79,7 @@ const ItemDetail = () => {
   const topping = getTopping(selector);
   const sumPrice = getSumPrice(selector);
   const selectedId = useLocation().selectedItemId;
+  console.log(useLocation());
   const uid = getUserId(selector);
   const selectedItem =
     products === undefined
@@ -214,34 +215,34 @@ const ItemDetail = () => {
     } else {
       setToppings(
         [
-          { id: topping[0].id, toppingSize: onion },
-          { id: topping[1].id, toppingSize: tsunamayo },
-          { id: topping[2].id, toppingSize: itarianTomato },
-          { id: topping[3].id, toppingSize: squid },
-          { id: topping[4].id, toppingSize: bulgogi },
-          { id: topping[5].id, toppingSize: anchovy },
-          { id: topping[6].id, toppingSize: shrimp },
-          { id: topping[7].id, toppingSize: corn },
-          { id: topping[8].id, toppingSize: peppers },
-          { id: topping[9].id, toppingSize: freshSliced },
-          { id: topping[10].id, toppingSize: bacon },
-          { id: topping[11].id, toppingSize: pepperoni },
-          { id: topping[12].id, toppingSize: aged },
-          { id: topping[13].id, toppingSize: special },
-          { id: topping[14].id, toppingSize: camembert },
-          { id: topping[15].id, toppingSize: freshMozzarella },
-          { id: topping[16].id, toppingSize: italianSausage },
-          { id: topping[17].id, toppingSize: garlic },
-          { id: topping[18].id, toppingSize: arabiki },
-          { id: topping[19].id, toppingSize: broccoli },
-          { id: topping[20].id, toppingSize: green },
-          { id: topping[21].id, toppingSize: parmesan },
-          { id: topping[22].id, toppingSize: pineapple },
-          { id: topping[23].id, toppingSize: jalapeno },
-          { id: topping[24].id, toppingSize: mochi },
-          { id: topping[25].id, toppingSize: potato },
-          { id: topping[26].id, toppingSize: black },
-          { id: topping[27].id, toppingSize: cheese },
+          { toppingId: topping[0].id, toppingSize: onion === 200 ? 0 : 1 },
+          { toppingId: topping[1].id, toppingSize: tsunamayo },
+          { toppingId: topping[2].id, toppingSize: itarianTomato },
+          { toppingId: topping[3].id, toppingSize: squid },
+          { toppingId: topping[4].id, toppingSize: bulgogi },
+          { toppingId: topping[5].id, toppingSize: anchovy },
+          { toppingId: topping[6].id, toppingSize: shrimp },
+          { toppingId: topping[7].id, toppingSize: corn },
+          { toppingId: topping[8].id, toppingSize: peppers },
+          { toppingId: topping[9].id, toppingSize: freshSliced },
+          { toppingId: topping[10].id, toppingSize: bacon },
+          { toppingId: topping[11].id, toppingSize: pepperoni },
+          { toppingId: topping[12].id, toppingSize: aged },
+          { toppingId: topping[13].id, toppingSize: special },
+          { toppingId: topping[14].id, toppingSize: camembert },
+          { toppingId: topping[15].id, toppingSize: freshMozzarella },
+          { toppingId: topping[16].id, toppingSize: italianSausage },
+          { toppingId: topping[17].id, toppingSize: garlic },
+          { toppingId: topping[18].id, toppingSize: arabiki },
+          { toppingId: topping[19].id, toppingSize: broccoli },
+          { toppingId: topping[20].id, toppingSize: green },
+          { toppingId: topping[21].id, toppingSize: parmesan },
+          { toppingId: topping[22].id, toppingSize: pineapple },
+          { toppingId: topping[23].id, toppingSize: jalapeno },
+          { toppingId: topping[24].id, toppingSize: mochi },
+          { toppingId: topping[25].id, toppingSize: potato },
+          { toppingId: topping[26].id, toppingSize: black },
+          { toppingId: topping[27].id, toppingSize: cheese },
         ].filter((topping) => topping.toppingSize !== '')
       );
     }
