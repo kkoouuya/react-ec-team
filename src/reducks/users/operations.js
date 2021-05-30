@@ -6,12 +6,12 @@ import {
 } from "../../function/common";
 import {
   signInAction,
-  fetchProductsInCartAction,
   fetchOrdersAction,
 } from "./actions";
 import { createBrowserHistory } from "history";
 //const usersRef = db.collection('users')
 import { useDispatch } from "react-redux";
+//import { useHistory } from "react-router";
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 // const history = useHistory();
@@ -28,6 +28,7 @@ export const signUp = (
   password,
   confirmPassword
 ) => {
+    //const history = useHistory();
   const browserHistory = createBrowserHistory();
 
   return async (dispatch) => {
