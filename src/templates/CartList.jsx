@@ -51,7 +51,8 @@ const CartList = () =>{
     filterOrder.forEach(item => {
       item.itemInfo.forEach(el => {
         el.toppings.forEach(el1 => {
-  
+
+          if(topping){
           const selectTopping = topping.filter(top => top.id == el1.toppingId)
           selectTopping.forEach(el5 => {
             if(el1.toppingSize == 0){
@@ -65,7 +66,7 @@ const CartList = () =>{
             }
             // console.log(selectTopping);
           })
-          
+        }
         })
         
       })
