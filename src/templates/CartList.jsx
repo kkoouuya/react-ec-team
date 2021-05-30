@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,6 +16,8 @@ import { fetchTopping } from '../reducks/topping/operations';
 import { fetchProducts } from '../reducks/products/operations';
 import { fetchOrders } from '../reducks/users/operations';
 import {CardMedia} from '@material-ui/core'
+import {Button} from '@material-ui/core'
+import { useHistory } from 'react-router';
 
 
 const useStyles = makeStyles({
@@ -25,13 +27,110 @@ const useStyles = makeStyles({
 });
 
 
+
 //export default function CartList()
 const CartList = () =>{
+  const history = useHistory()
+  const selector = useSelector((state) => state);
+  const selecter2 = useSelector((state) => state)
+  const topping = getTopping(selecter2);
+  const orders = getOrders(selector)
+  //console.log(topping);
+
+  const [total,setTotalPrice] = useState(0)
+  const [priceTopping,setPriceTopping] = useState(0)
+
+  
+  const toppingArray = []
+
+  const createToppingPrice = () => {
+    console.log('topping金額更新！');
+    let toppingPrice = 0
+    const filterOrder = orders.filter(order => order.status == 0)
+    console.log(filterOrder);
+    filterOrder.forEach(item => {
+      item.itemInfo.forEach(el => {
+        el.toppings.forEach(el1 => {
+
+          if(topping){
+          const selectTopping = topping.filter(top => top.id == el1.toppingId)
+          selectTopping.forEach(el5 => {
+            if(el1.toppingSize == 0){
+              toppingPrice = toppingPrice + el5.Mprice
+              toppingArray.push(toppingPrice)
+              console.log(toppingPrice);
+            }else{
+              toppingPrice = toppingPrice + el5.Lprice
+              toppingArray.push(toppingPrice)
+              console.log(toppingPrice);
+            }
+            // console.log(selectTopping);
+          })
+        }
+        })
+        
+      })
+    })
+    setPriceTopping(toppingPrice)
+    
+    toppingArray.push(toppingPrice)
+    
+  }
+  
+
+  const createTotalPrice = () => {
+    console.log('total金額更新！');
+    let totalPrice = 0
+    const filterOrder = orders.filter(order => order.status === 0)
+    //console.log(filterOrder);
+    filterOrder.forEach(item => {
+      item.itemInfo.forEach(el => {
+        if(products){
+      const selectProducts = products.filter(product => product.id === el.itemId)
+      //console.log(selectProducts);
+      selectProducts.forEach(select => {
+        if(el.itemSize == 0){
+          totalPrice = totalPrice + select.Mprice * el.itemNum
+        }else{
+          totalPrice = totalPrice + select.Lprice * el.itemNum
+        }
+      }) }
+        el.toppings.forEach(el1 => {
+          if(topping){
+          const selectTopping = topping.filter(top => top.id === el1.toppingId)
+          selectTopping.forEach(el5 => {
+            if(el1.toppingSize == 0){
+              totalPrice = totalPrice + el5.Mprice * el.itemNum
+            }else{
+              totalPrice = totalPrice + el5.Lprice * el.itemNum
+            }
+            // console.log(selectTopping);
+          })
+          }
+        })
+        
+        
+        
+        
+      })
+    })
+    setTotalPrice(totalPrice)
+  }
+
+  useEffect(() => {
+    createToppingPrice()
+  })
+  console.log(priceTopping);
+
+  useEffect(() => {
+    createTotalPrice()
+  })
+  console.log(priceTopping);
 
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  
   const products = getProducts(selector);
-  console.log(products);
+  // console.log(products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -39,20 +138,19 @@ const CartList = () =>{
 
   //cart-----------------------
 
-  const orders = getOrders(selector)
+  
 
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
 
-  console.log(orders);
+  // console.log(orders);
 
-  //topping-----------------
-  const selecter2 = useSelector((state) => state)
+  
 
-  const topping = getTopping(selecter2);
+ 
 
-  console.log(topping);
+  // console.log(topping);
 
   useEffect(() => {
     dispatch(fetchTopping());
@@ -61,33 +159,12 @@ const CartList = () =>{
 
    const classes = useStyles();
 
-  // const cartItem = []
-  //  if(orders){
+    
 
-  //   const filterCart = orders.filter(el => el.status ===0)
-  //   console.log(filterCart.itemInfo);
+   
+  let toppingPrice = 0
+  console.log(toppingPrice);
 
-  // filterCart.forEach(el => {
-  //   products.forEach(el1 => {
-      
-  //     if(el.id === el1.id){
-
-  //       const newcart = {
-  //         ...el,
-  //         ...el1,
-  //       }
-  //       cartItem.push(newcart)
-  //     }
-  //   })
-  // })
-  //  }
-  // console.log(cartItem);
-
-  // const filterCart = cartItem.filter(el => el.status ===0)
-
-  // console.log(filterCart);
-
-  const shoukei = 0
   
 
   return (
@@ -96,9 +173,10 @@ const CartList = () =>{
     <h2>ショッピングカート</h2>
     <div>
       
-    {orders === undefined ? 
+    {
+    orders === undefined ? 
     <h2>カートに商品がありません</h2> :
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} >
     <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
         <TableRow>
@@ -111,12 +189,16 @@ const CartList = () =>{
       </TableHead>
       <TableBody>
 
-      {orders
+      {
+      orders
                 .filter((order) => order.status === 0)
                 .map((order) => (
                   <TableRow key={order.id}>
+                    <TableCell >
                     {order.itemInfo.map((itemInfos) => (
-                      <TableCell key={itemInfos.itemId}>
+                      <div>
+                      <TableCell>
+                      
                         {/* {itemInfos.itemNum}個 */}
                         {products === undefined
                           ? ""
@@ -138,10 +220,13 @@ const CartList = () =>{
                                   </>
                                 );
                               })}
-                      </TableCell>
-                    ))}
+                              </TableCell>
+                      </div>
+                    ))}</TableCell>
+                    <TableCell>
                     {order.itemInfo.map((itemInfos) => (
-                      <TableCell key={itemInfos.itemId}>
+                      <div>
+                        <TableCell>
                         {itemInfos.itemNum}個
                         {products === undefined
                           ? ""
@@ -151,19 +236,91 @@ const CartList = () =>{
                               )
                               .map((product) => {
                                 return (
-                                  itemInfos.itemSize==0 ? <div><div>Mサイズ</div> <div>{product.Mprice} 円</div> </div>: 
-                                  <div><div>Lサイズ</div> <div>{product.Lprice} 円</div> </div>
+                                  itemInfos.itemSize==0 ? <div><div>Mサイズ</div> <div>{(product.Mprice).toLocaleString()} 円/個</div> </div>: 
+                                  <div><div>Lサイズ</div> <div>{(product.Lprice).toLocaleString()} 円/個</div> </div>
                                 );
                               })}
                       </TableCell>
-                      
-                    ))}
+                      </div>
+                    ))}</TableCell>
+                    <TableCell>
                     {order.itemInfo.map((itemInfos) => (
-                      <TableCell key={itemInfos.itemId}>
-
+                      <div>
+                      <TableCell>
+                        
+                        <div>
+                          
                         
                         <div>
                           {
+                            
+                            itemInfos.toppings.map((top) => (
+                              
+                              <div>
+                                
+                                {
+
+                                  topping === undefined ?
+                                  "" :
+                                  topping.filter(
+                                    to => to.id == top.toppingId
+                                  ).map((to) => {
+                                    
+                                    if(top.toppingSize ==0){
+                                      toppingPrice = toppingPrice + to.Mprice
+                                    }else{
+                                      toppingPrice = toppingPrice + to.Lprice
+                                    }
+                                    return (
+                                      top.toppingSize == 0 ? <><div>{to.name}</div><div>＋１倍/{to.Mprice} 円</div></> : 
+                                      <><div>{to.name}</div><div>＋２倍/{to.Lprice}円</div></>
+                                    )
+                                  })
+                                  
+                                }
+                              </div>
+                            ))
+                            } 
+                        </div>
+                              
+                        </div>
+                    
+                      </TableCell>
+                      
+                      </div>
+                    ))}
+                    
+                    </TableCell>
+                    <TableCell >
+                    {order.itemInfo.map((itemInfos) => (
+                      < >
+                        
+                        
+                        <div>
+                          <TableCell>
+                          
+                          <p>
+                            { 
+                              products === undefined
+                                ? ""
+                                : products
+                                    .filter(
+                                      (product) => product.id == itemInfos.itemId
+                                    )
+                                    .map((product) => {
+                                      return (
+                                        itemInfos.itemSize == 0 ? 
+                                         <>
+                                         {((product.Mprice + priceTopping) * itemInfos.itemNum).toLocaleString()}円
+                                          </> : 
+                                         <>{((product.Lprice + priceTopping) * itemInfos.itemNum).toLocaleString()}円 </> 
+                                      );
+                                    })
+                            }
+                            
+                          </p>
+                          
+                          {/* {
                             itemInfos.toppings.map((top) => (
                               <div>
                                 {
@@ -173,22 +330,24 @@ const CartList = () =>{
                                     to => to.id === top.toppingId
                                   ).map((to) => {
                                     return (
-                                      top.toppingSize === 0 ? <><div>{to.name}</div><div>普通/{to.Mprice} 円</div></> : 
-                                      <><div>{to.name}</div><div>多め/{to.Lprice} 円</div></>
+                                      top.toppingSize === 0 ? <><div>{to.Mprice} 円</div></> : 
+                                      <><div>{to.Lprice} 円</div></>
                                     )
                                   })
                                 }
                               </div>
                             ))
-                          }
+                          } */}
+                          </TableCell>
                         </div>
-
                         
                         
-                      </TableCell>
+                        
+                        </>
                       
                       
                     ))}
+                    </TableCell>
                   </TableRow>
                 ))}
 
@@ -223,6 +382,9 @@ const CartList = () =>{
   </TableContainer>
   }
   </div>
+  <h2>消費税：{Math.round(total * 0.1).toLocaleString()}円</h2>
+  <h2>合計金額（税込）：{Math.round(total * 1.1).toLocaleString()}円</h2>
+  <Button onClick={() => history.push('/orderconfirm')} variant="contained" color="primary">注文確認ボタンに進む</Button>
     </>
   );
 }
