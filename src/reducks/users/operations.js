@@ -132,8 +132,7 @@ export const SignIn = (email, password) => {
               })
             );
               console.log('ログイン済')
-              dispatch.push('/');
-              console.log('済')
+              // dispatch.push('/');
           });
       }
     });
@@ -146,7 +145,7 @@ export const signOut = () => {
   auth.signOut().then(() => {
     dispatch(
       signOutAction());
-      dispatch.push("/login");
+      // dispatch.push("/login");
   })
 };
 

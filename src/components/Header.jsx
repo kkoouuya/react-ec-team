@@ -233,13 +233,18 @@ const Header = () => {
       <div className="log-button">
         <button
           onClick={() => {
-            handleLink('/');
+            handleLink('/login');
           }}
         >
           ログイン
         </button>
         &nbsp;&nbsp;&nbsp;
-        <button onClick={() => dispatch(signOut())}>ログアウト</button>
+        <button onClick={() => {
+          dispatch(signOut())
+          handleLink('/login')
+          }
+        }
+        >ログアウト</button>
       </div>
       {renderMobileMenu}
       {renderMenu}

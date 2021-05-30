@@ -122,6 +122,7 @@ const Login = () => {
                 e.preventDefault()
                 dispatch(SignIn(email, password))
                 dispatch(signInAction(uid,username))
+                handlePage('/')
               }
             }
             >
