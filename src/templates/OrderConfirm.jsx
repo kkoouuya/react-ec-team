@@ -19,94 +19,97 @@ import { getUserName } from '../reducks/users/selector';
 import { creditcard } from '../reducks/payment/PaymentForm';
 
 const OrderConfirm = () => {
-const dispatch = useDispatch();
-const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
     },
-  },
-}));
+  }));
 
-const classes = useStyles();
-const pattern = /^[0-9]{3}-[0-9]{4}$/;
-const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
+  const classes = useStyles();
+  const pattern = /^[0-9]{3}-[0-9]{4}$/;
+  const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
-const [destinationUserName, setDestinationUserName] = useState("")
+  const [destinationUserName, setDestinationUserName] = useState("")
 
-const [destinationEmail, setDestinationEmail] = useState("")
+  const [destinationEmail, setDestinationEmail] = useState("")
 
-const [destinationZipcode, setDestinationZipcode] = useState("")
+  const [destinationZipcode, setDestinationZipcode] = useState("")
 
-const [destinationAddress, setDestinationAddress] = useState("")
+  const [destinationAddress, setDestinationAddress] = useState("")
 
-const [destinationTel, setDestinationTel] = useState("")
+  const [destinationTel, setDestinationTel] = useState("")
 
-const [destinationDate, setDestinationDate] = useState("")
+  const [destinationDate, setDestinationDate] = useState("")
 
-const [value, setValue] = useState('代金引換');
-const handleChange = (event) => {
-  setValue(event.target.value);
-};
+  //支払い方法ラジオボタン
+  const [value, setValue] = useState('代金引換');
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
-const inputOrderUserName = useCallback((e) => {
-  setDestinationUserName(e.target.value)
-},[setDestinationUserName]);
+  // カード支払い情報
+  const [disabled, setDisabled] = useState(true);
 
-const inputOrderEmail = useCallback((e) => {
-  setDestinationEmail(e.target.value)
-},[setDestinationEmail]);
+  const inputOrderUserName = useCallback((e) => {
+    setDestinationUserName(e.target.value)
+  },[setDestinationUserName]);
 
-const inputOrderZipcode = useCallback((e) => {
-  setDestinationZipcode(e.target.value)
-},[setDestinationZipcode]);
+  const inputOrderEmail = useCallback((e) => {
+    setDestinationEmail(e.target.value)
+  },[setDestinationEmail]);
 
-const inputOrderAddress = useCallback((e) => {
-  setDestinationAddress(e.target.value)
-},[setDestinationAddress]);
+  const inputOrderZipcode = useCallback((e) => {
+    setDestinationZipcode(e.target.value)
+  },[setDestinationZipcode]);
 
-const inputOrderTel = useCallback((e) => {
-  setDestinationTel(e.target.value)
-},[setDestinationTel]);
+  const inputOrderAddress = useCallback((e) => {
+    setDestinationAddress(e.target.value)
+  },[setDestinationAddress]);
 
-const inputOrderDate = useCallback((e) => {
-  setDestinationDate(e.target.value)
-},[setDestinationDate]);
+  const inputOrderTel = useCallback((e) => {
+    setDestinationTel(e.target.value)
+  },[setDestinationTel]);
 
+  const inputOrderDate = useCallback((e) => {
+    setDestinationDate(e.target.value)
+  },[setDestinationDate]);
 
-const orderClicked =(
-  destinationUserName,
-  destinationEmail,
-  destinationZipcode,
-  destinationAddress,
-  destinationTel,
-  destinationDate
-  ) => {
-    dispatch(OrderError(
-      destinationUserName,
-      destinationEmail,
-      destinationZipcode,
-      destinationAddress,
-      destinationTel,
-      destinationDate))
+  const orderClicked =(
+    destinationUserName,
+    destinationEmail,
+    destinationZipcode,
+    destinationAddress,
+    destinationTel,
+    destinationDate
+    ) => {
+      dispatch(OrderError(
+        destinationUserName,
+        destinationEmail,
+        destinationZipcode,
+        destinationAddress,
+        destinationTel,
+        destinationDate))
 
-      if(destinationUserName === '' ||
-        destinationEmail === '' ||
-        destinationZipcode === '' ||
-        destinationAddress === '' ||
-        destinationTel === '' ||
-        destinationDate === ''){
-          console.log('入力完了していません'); 
-      } else if((destinationEmail.indexOf('@') == -1) || 
-        !pattern.test(destinationZipcode) || 
-        !pattern2.test(destinationTel)) {
-          console.log('入力完了していません2'); 
-      } else {
-        history.push('/orderfinished');
-      }
-}
+        if(destinationUserName === '' ||
+          destinationEmail === '' ||
+          destinationZipcode === '' ||
+          destinationAddress === '' ||
+          destinationTel === '' ||
+          destinationDate === ''){
+            console.log('入力完了していません'); 
+        } else if((destinationEmail.indexOf('@') == -1) || 
+          !pattern.test(destinationZipcode) || 
+          !pattern2.test(destinationTel)) {
+            console.log('入力完了していません2'); 
+        } else {
+          history.push('/orderfinished');
+        }
+  }
 
   return (
     <React.Fragment>
@@ -198,7 +201,8 @@ const orderClicked =(
           <FormLabel component="legend">Delivery Time
             <RadioGroup row aria-label="position" name="position" defaultValue="top">
               <FormControlLabel value="10時" labelPlacement="end"
-                control={<Radio color="primary" />} label="10時" />
+                control={<Radio color="primary" />} 
+                label="10時" />
               <FormControlLabel value="11時" 
                 control={<Radio color="primary" />} label="11時" />
               <FormControlLabel value="12時" 
@@ -229,7 +233,7 @@ const orderClicked =(
                 label="代金引換" />
               <FormControlLabel value="クレジットカード" 
                 name="card" id="1" control={<Radio />} 
-                label="クレジットカード" />
+                label="クレジットカード" onClick={() => {}}/>
             </RadioGroup>
           </FormControl>
         </div>

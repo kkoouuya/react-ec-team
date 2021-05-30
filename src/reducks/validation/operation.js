@@ -55,9 +55,11 @@ export const OrderError = (userName, email, zipcode, address, tel, date)=> {
         const day = today.getDate();
         const hour = today.getHours();
 
-        if(!date){
+        if(date === ''){
             console.log('配達')
             alert('配達日時を入力してください');
+        // } else if () {
+
         }
     }
 }
