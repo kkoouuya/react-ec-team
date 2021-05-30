@@ -24,12 +24,6 @@ export const fetchSumPrice = (sumPrice) => {
   };
 };
 
-// コレクションの取得
-const ordersRef = db
-  .collection('users')
-  .doc('51Kio0Dzrkbf2J1txbDTdFL7XCh1')
-  .collection('orders');
-
 let localCart = [
   {
     itemInfo: [],
@@ -37,7 +31,17 @@ let localCart = [
   },
 ];
 
-export const addOrdersInfo = (selectedId, sumPrice, LabelName, toppings) => {
+export const addOrdersInfo = (
+  selectedId,
+  sumPrice,
+  LabelName,
+  toppings,
+  uid
+) => {
+  console.log(uid);
+  // コレクションの取得
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
+
   // クリックしたらローカルのカートに情報を保存
   localCart[0].itemInfo.push({
     id: 'ffwafewawefew',
