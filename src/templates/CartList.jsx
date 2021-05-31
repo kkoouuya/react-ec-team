@@ -315,7 +315,7 @@ const CartList = () => {
                                                 </p>
                                               ) : (
                                                 <p>
-                             {(product.Lprice +
+                                                  {(product.Lprice +
                                                     toppingPrice) *
                                                     itemInfos.itemNum}
                                                   円
