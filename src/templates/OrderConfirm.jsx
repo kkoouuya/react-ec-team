@@ -57,7 +57,7 @@ const OrderConfirm = () => {
   const numOrderTime = Number(destinationHour);
 
   //firebaseへ格納用
-  const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
+  // const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
  
 
   //支払い方法ラジオボタン
@@ -183,9 +183,6 @@ const DeliveriesTimes = [
   { value: '16', label:'16'},
   { value: '17', label:'17'},
   { value: '18', label:'18'},
-  { value: '19', label:'19'},
-  { value: '20', label:'20'},
-  { value: '21', label:'21'},
 ]
 
 //データ・画面遷移
