@@ -359,6 +359,7 @@ const CartList = () => {
                         
                       </TableCell>
                       <TableCell>
+<<<<<<< HEAD
                                   {itemInfos.toppings.length === 0 ? <p>なし</p> :
                                   <div>
                                     
@@ -371,6 +372,17 @@ const CartList = () => {
                                         
                                         <div  key={order.id}>
                                           
+=======
+                        {order.itemInfo.map((itemInfos) => (
+                          <div key={order.id}>
+                            <TableCell>
+                              <div>
+                                <div>
+                                  {itemInfos === undefined
+                                    ? ''
+                                    : itemInfos.toppings.map((top) => (
+                                        <div key={order.id}>
+>>>>>>> f3982b033dc2c78ac6ace9511079aed3276cd2b4
                                           {topping === undefined
                                             ? ''
                                             : topping

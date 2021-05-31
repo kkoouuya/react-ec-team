@@ -148,7 +148,7 @@ export const signOut = () => {
 
 const ordersRef = db
   .collection('users')
-  .doc('1CiNypKuOkdRJL7KKGaV5w7QSKB3')
+  .doc('51Kio0Dzrkbf2J1txbDTdFL7XCh1')
   .collection('orders');
 
 export const fetchOrders = () => {
@@ -165,6 +165,12 @@ export const fetchOrders = () => {
 };
 
 export const setCancel = (orderId) => {
-  
-  return console.log(orderId);
+  const updateOrdersRef = ordersRef.doc(orderId);
+  return updateOrdersRef
+    .update({
+      status: 9,
+    })
+    .then(() => {
+      console.log('Document successfully updated!');
+    });
 };
