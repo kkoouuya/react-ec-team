@@ -104,9 +104,9 @@ export const signUp = (
 export const SignIn = (email, password) => {
   return async (dispatch) => {
     // console.log("ログイン");
-    
-    if (email === '' || password === '') {
-      alert('必須項目が未入力です。');
+
+    if (email === "" || password === "") {
+      alert("必須項目が未入力です。");
       return false;
     }
 
