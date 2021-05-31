@@ -1,8 +1,12 @@
 export const SIGN_IN = "SIGN_IN";
-export const signInAction = (user) => {
+export const signInAction = (userState) => {
   return {
     type: "SIGN_IN",
-    payload: user
+    payload: {
+      isSignedIn: true,
+      uid: userState.uid,
+      username: userState.username,
+    },
   };
 };
 
@@ -28,7 +32,6 @@ export const setUserAction = (user) => {
 
 export const DELETE_USER_ACTION = "DELETE_USER_ACTION";
 export const deleteUserAction = (user) => {
-
   return {
     type: DELETE_USER_ACTION,
     payload: user,
@@ -42,4 +45,3 @@ export const fetchOrdersAction = (orders) => {
     payload: orders,
   };
 };
-
