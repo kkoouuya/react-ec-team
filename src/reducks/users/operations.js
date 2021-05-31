@@ -166,11 +166,7 @@ export const fetchOrders = () => {
 
 export const setCancel = (a) => {
   console.log(a);
-  const updateOrdersRef = db
-    .collection('users')
-    .doc('51Kio0Dzrkbf2J1txbDTdFL7XCh1')
-    .collection('orders')
-    .doc(a);
+  const updateOrdersRef = ordersRef.doc(a);
   return updateOrdersRef
     .update({
       status: 9,
