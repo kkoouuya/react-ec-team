@@ -4,7 +4,7 @@ import {
   isValidEmailFormat,
   isValidRequiredInput,
 } from "../../function/common";
-import { signInAction, fetchOrdersAction } from "./actions";
+import { signInAction, fetchOrdersAction, signUpAction } from "./actions";
 import { createBrowserHistory } from "history";
 //const usersRef = db.collection('users')
 import { useDispatch } from "react-redux";
@@ -90,11 +90,13 @@ export const signUp = (
             .doc()
             .set(userInitialData)
             .then(async () => {
+              console.log(username);
               console.log("DB保存成功");
               browserHistory.push("/");
               console.log("DB");
             });
         }
+        dispatch(signUpAction(username, email, zipcode, address, tel));
       });
   };
 };

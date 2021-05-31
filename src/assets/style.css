@@ -63,3 +63,6 @@ a {
 .cartlist {
   padding: 0 50px 0 50px;
 }
+.center {
+  text-align: center;
+}
