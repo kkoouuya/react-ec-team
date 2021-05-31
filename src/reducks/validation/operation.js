@@ -1,11 +1,9 @@
 import React from 'react';
-import { isValidRequiredInput } from "../../function/common";
-import { useDispatch } from "react-redux";
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
-export const OrderError = (userName, email, zipcode, address, tel, date)=> {
+export const OrderError = (userName, email, zipcode, address, tel, orderYear,orderMonth,orderDay,orderTime)=> {
     return async () => {
 
         // // Validations
@@ -51,15 +49,37 @@ export const OrderError = (userName, email, zipcode, address, tel, date)=> {
         const today = new Date();
         console.log(today);
         const year = today.getFullYear();
-        const month = "0" + (1 + today.getMonth())
+        // console.log(year);
+        const month = (1 + today.getMonth());
+        // console.log(month)
         const day = today.getDate();
         const hour = today.getHours();
+        // console.log(day)
+        // console.log(hour)
 
-        if(date === ''){
+        const numOrderYear = Number(orderYear);
+        console.log(numOrderYear);
+
+        const numOrderMonth = Number(orderMonth)
+        console.log(numOrderMonth);
+
+        const numOrderDay = Number(orderDay);
+        console.log(numOrderDay);
+
+        const numOrderTime = Number(orderTime);
+        console.log(numOrderTime);
+
+        const numHour = Number(hour);
+
+        if(orderYear === '' || 
+            orderMonth === '' || 
+            orderDay  === '' || orderTime === ''){
             console.log('配達')
             alert('配達日時を入力してください');
-        // } else if () {
-
+        } else if((numOrderTime - hour <= 3) || 
+            (numOrderTime - hour == 0)){
+            alert('今から３時間以内の日時をご入力ください');
         }
+
     }
 }
