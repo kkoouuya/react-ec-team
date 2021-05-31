@@ -177,12 +177,12 @@ export const setCancel = (orderId) => {
   // });
 };
 
-export const resetCancel = (orderId) => {
-  const updateOrdersRef = ordersRef.doc(orderId);
-  return updateOrdersRef.update({
-    status: 1,
-  });
-  // .then(() => {
-  //   console.log("Document successfully updated!");
-  // });
-};
+// export const resetCancel = (orderId) => {
+//   const updateOrdersRef = ordersRef.doc(orderId);
+//   return updateOrdersRef.update({
+//     status: 1,
+//   });
+//   // .then(() => {
+//   //   console.log("Document successfully updated!");
+//   // });
+// };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { makeStyles } from '@material-ui/core/styles';
 import Table from "@material-ui/core/Table";
@@ -24,7 +24,7 @@ import { getProducts } from "../reducks/products/selectors";
 import { fetchTopping } from "../reducks/topping/operations";
 import { getTopping } from "../reducks/topping/selectors";
 import { Link } from "react-router-dom";
-import { setCancel, resetCancel } from "../reducks/users/operations";
+import { setCancel } from "../reducks/users/operations";
 import Grid from "@material-ui/core/Grid";
 // import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
@@ -35,7 +35,9 @@ import Grid from "@material-ui/core/Grid";
 // });
 
 const OrderHistory = () => {
-  // const [double, setDouble] = useState(false);
+  const [double, setDouble] = useState(false);
+  const [show, setShow] = useState(false);
+  const [shows, setShows] = useState(true);
   // const [cancel, setCancel] = useState('キャンセル');
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
@@ -212,21 +214,25 @@ const OrderHistory = () => {
                                     </TableCell>
                                     <TableCell align="center">
                                       {order.status !== 9 ? (
-                                        <Button
-                                          variant="contained"
-                                          startIcon={<CancelIcon />}
-                                          disabled={order.status === 9}
-                                          onClick={() => {
-                                            // doSomething();
-                                            // setDouble(true);
-                                            disabled = true;
-                                            setCancel(order.orderId);
-                                          }}
-                                        >
-                                          {order.status === 9
-                                            ? "キャンセル済み"
-                                            : "キャンセル"}
-                                        </Button>
+                                        <div>
+                                          <Button
+                                            variant="contained"
+                                            startIcon={<CancelIcon />}
+                                            disabled={
+                                              order.status === 9 || double
+                                            }
+                                            onClick={() => {
+                                              // doSomething();
+                                              setDouble(true);
+                                              setShow(true);
+                                              setCancel(order.orderId);
+                                            }}
+                                          >
+                                            {order.status === 9 || double
+                                              ? "キャンセル済み"
+                                              : "キャンセル"}
+                                          </Button>
+                                        </div>
                                       ) : (
                                         <div>
                                           <Button
@@ -236,7 +242,6 @@ const OrderHistory = () => {
                                             onClick={() => {
                                               // doSomething();
                                               // setDouble(true);
-                                              disabled = true;
                                               setCancel(order.orderId);
                                             }}
                                           >
@@ -244,17 +249,18 @@ const OrderHistory = () => {
                                               ? "キャンセル済み"
                                               : "キャンセル"}
                                           </Button>
-                                          &emsp; &emsp; &emsp; &emsp; &emsp;
+                                          {/* &emsp; &emsp; &emsp; &emsp; &emsp;
                                           &emsp; &emsp;
                                           <Button
-                                            showresults={order.status ? 9 : !9}
+                                            showresults={shows}
                                             onClick={() => {
-                                              showresult = false;
                                               resetCancel(order.orderId);
+                                              setDouble(false);
+                                              setShows(false);
                                             }}
                                           >
                                             キャンセルを取り消し
-                                          </Button>
+                                          </Button> */}
                                         </div>
                                       )}
                                     </TableCell>
