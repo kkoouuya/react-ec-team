@@ -57,12 +57,14 @@ const OrderConfirm = () => {
   const numOrderTime = Number(destinationHour);
 
   //firebaseへ格納用
-  // const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
+  const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
  
 
   //支払い方法ラジオボタン
   const [paymentMethods, setPaymentMethods] = useState('');
   
+// console.log(paymentMethods);
+
   //支払い方法
   const [cash , setCash] = useState('')
   const [creditCardNo, setCreditCardNo] = useState('')
@@ -140,13 +142,13 @@ const DeliveriesMonths = [
 const DeliveriesDays = [
   { value: '01', label: '1'},
   { value: '02', label: '2'},
-  { value: '3', label: '3'},
-  { value: '4', label: '4'},
-  { value: '5', label: '5'},
-  { value: '6', label: '6'},
-  { value: '7', label: '7'},
-  { value: '8', label: '8'},
-  { value: '9', label: '9'},
+  { value: '03', label: '3'},
+  { value: '04', label: '4'},
+  { value: '05', label: '5'},
+  { value: '06', label: '6'},
+  { value: '07', label: '7'},
+  { value: '08', label: '8'},
+  { value: '09', label: '9'},
   { value: '10', label:'10'},
   { value: '11', label:'11'},
   { value: '12', label:'12'},
@@ -232,7 +234,8 @@ const DeliveriesTimes = [
           !pattern2.test(destinationTel) ||
           (destinationDay === numOrderDay && 
               (numOrderTime - hour <= 3) || 
-              (numOrderTime - hour === 0))) {
+              (numOrderTime - hour === 0)) ||
+              !pattern3.test(creditCard)) {
             console.log('入力完了していません2'); 
         } else {
           history.push('/orderfinished');
@@ -366,14 +369,14 @@ const DeliveriesTimes = [
             <FormLabel component="legend">Payment</FormLabel>
             <RadioGroup aria-label="payment" name="payment" 
               value={paymentMethods} onChange={inputOrderPay}>
-              <FormControlLabel value='1' 
+              <FormControlLabel value='1'
                 name="pay" id="0" control={<Radio />} 
                 label="代金引換" />
-              <FormControlLabel value="2" 
+              <FormControlLabel value='2'
                 name="pay" id="1" control={<Radio />} 
                 label="クレジットカード" />
             </RadioGroup>
-            {paymentMethods === '2' ? 
+            {paymentMethods === "2" ? 
             <TextField 
               id="standard-basic" 
               label="Credit-card Number" 
@@ -391,7 +394,7 @@ const DeliveriesTimes = [
             color="primary"
             name="button"
             onClick={() => 
-              orderClicked(destinationUserName,destinationEmail,destinationZipcode,destinationAddress,destinationTel,destinationYear,destinationMonth,destinationDay,destinationHour,paymentMethods,cash,creditCardNo)}
+              orderClicked(destinationUserName,destinationEmail,destinationZipcode,destinationAddress,destinationTel,destinationYear,destinationMonth,destinationDay,destinationHour,paymentMethods,creditCardNo)}
           >
             この内容で注文する
           </Button>
