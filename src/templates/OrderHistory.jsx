@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,18 +10,20 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import CancelIcon from "@material-ui/icons/Cancel";
 import HistoryIcon from "@material-ui/icons/History";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 import { fetchOrders } from "../reducks/users/operations";
 import { getOrders } from "../reducks/users/selector";
 import { fetchProducts } from "../reducks/products/operations";
 import { getProducts } from "../reducks/products/selectors";
 import { fetchTopping } from "../reducks/topping/operations";
 import { getTopping } from "../reducks/topping/selectors";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
@@ -30,41 +31,8 @@ const useStyles = makeStyles({
   },
 });
 
-// const orders = [
-//   {
-//     id: "",
-//     orderDate: "2021-5-21",
-//     item_imagePath:
-//       "https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg",
-//     item_name: "hawaianパラダイス",
-//     topping_name: "タコス",
-//     item_num: "1",
-//     status: "1",
-//   },
-//   {
-//     id: "",
-//     orderDate: "2021-6-2",
-//     item_imagePath:
-//       "https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg",
-//     item_name: "hawaianパラダイス",
-//     topping_name: "タコス",
-//     item_num: "1",
-//     status: "1",
-//   },
-//   {
-//     id: "",
-//     orderDate: "2021-8-2",
-//     item_imagePath:
-//       "https://static.pizzahut.jp/jp/menu/single/desktop_thumbnail_63e36f58-0e6a-43cf-bf5d-721f0cc6bb98.jpg",
-//     item_name: "hawaianパラダイス",
-//     topping_name: "タコス",
-//     item_num: "1",
-//     status: "1",
-//   },
-// ];
-
 const OrderHistory = () => {
-  const [double, setDouble] = useState(false);
+  // const [double, setDouble] = useState(false);
   const [cancel, setCancel] = useState("キャンセル");
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
@@ -82,169 +50,218 @@ const OrderHistory = () => {
     dispatch(fetchTopping());
   }, [dispatch]);
 
-
   return (
     <React.Fragment>
-      <Card>
-        <h1 align="center">
-          <HistoryIcon style={{ fontSize: 20 }} color="primary" />
-          注文履歴
-        </h1>
-
-        <TableContainer>
-          <Table aria-label="spanning table">
-            <TableHead>
-              {/* <TableRow>
-                <TableCell colSpan="4">
-                  <h1 align="center">
-                    <HistoryIcon style={{ fontSize: 20 }} color="primary" />
-                    注文履歴
-                  </h1>
-                </TableCell>
-              </TableRow> */}
-              <TableRow>
-                <TableCell align="center">配達日</TableCell>
-                <TableCell align="center">商品名</TableCell>
-                <TableCell align="center">トッピング</TableCell>
-                <TableCell align="center">数量</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders === undefined ? (
-                <h2 align="center">注文履歴がありません</h2>
-              ) : (
-                orders
-                  .filter((order) => order.status !== 0)
-                  .map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell align="center">
-                        {order.orderDate}
-                        {order.itemInfo.map((itemInfos) => (
-                          <div key={itemInfos.itemId}>
-                            {products === undefined
-                              ? ""
-                              : products
-                                  .filter(
-                                    (product) => product.id === itemInfos.itemId
-                                  )
-                                  .map((product) => {
-                                    return (
-                                      <div key={product.id}>
-                                        <img
-                                          src={product.imagePath}
-                                          alt="アイコン"
-                                          height="100px"
-                                          align="center"
-                                        />
-                                      </div>
-                                    );
-                                  })}
-                          </div>
-                        ))}
-                      </TableCell>
-                      {order.itemInfo.map((itemInfos) => (
-                        <TableCell align="center" key={itemInfos.itemId}>
-                          {/* {itemInfos.itemNum}個 */}
-                          {products === undefined
-                            ? ""
-                            : products
-                                .filter(
-                                  (product) => product.id === itemInfos.itemId
-                                )
-                                .map((product) => {
-                                  return (
-                                    <div key={product.id}>{product.name}</div>
-                                  );
+      {orders === undefined ? (
+        <div align="center">
+          <h2>注文履歴がありません</h2>
+          <Link to={{ pathname: "/" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<ShoppingCartIcon />}
+            >
+              メニューに戻る
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <div align="center">
+          {orders.some((order) => order.status !== 0) ? (
+            <Card>
+              <h1 align="center">
+                <HistoryIcon style={{ fontSize: 20 }} color="primary" />
+                注文履歴
+              </h1>
+              <TableContainer>
+                <Card>
+                  <Table aria-label="spanning table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center">商品名</TableCell>
+                        <TableCell align="center">トッピング</TableCell>
+                        <TableCell align="center">数量</TableCell>
+                        {/* <TableCell align="center">合計金額</TableCell>
+                                  <TableCell align="center">お届け先</TableCell> */}
+                      </TableRow>
+                    </TableHead>
+                    {orders === undefined
+                      ? ""
+                      : orders
+                          .filter((order) => order.status !== 0)
+                          .map((order) => {
+                            return (
+                              <TableBody key={order.orderId}>
+                                <TableRow>
+                                  <TableCell align="center">
+                                    <h3>{order.orderDate}に配達</h3>
+                                  </TableCell>
+                                  {/* <TableCell align="center">
+                                    <h4>{}円</h4>
+                                  </TableCell>
+                                  <TableCell></TableCell> */}
+                                  <TableCell colSpan="4"></TableCell>
+                                </TableRow>
+                                {order.itemInfo.map((itemInfos) => {
+                                  return products === undefined
+                                    ? ""
+                                    : products
+                                        .filter(
+                                          (product) =>
+                                            product.id === itemInfos.itemId
+                                        )
+                                        .map((product) => {
+                                          return (
+                                            <TableRow key={product.id}>
+                                              <TableCell align="center">
+                                                <img
+                                                  src={product.imagePath}
+                                                  alt="アイコン"
+                                                  height="100px"
+                                                  align="center"
+                                                />
+                                              </TableCell>
+                                              <TableCell align="center">
+                                                <Link
+                                                  to={{
+                                                    pathname: "/itemdetail",
+                                                    selectedItemId: product.id,
+                                                  }}
+                                                  key={product.id}
+                                                >
+                                                  {product.name}
+                                                </Link>
+                                              </TableCell>
+                                              <TableCell align="center">
+                                                {itemInfos.toppings.map(
+                                                  (topp) => {
+                                                    return topping === undefined
+                                                      ? ""
+                                                      : topping
+                                                          .filter(
+                                                            (toppings) =>
+                                                              toppings.id ===
+                                                              topp.toppingId
+                                                          )
+                                                          .map((toppings) => {
+                                                            return (
+                                                              <p
+                                                                key={
+                                                                  toppings.id
+                                                                }
+                                                              >
+                                                                {toppings.name}
+                                                              </p>
+                                                            );
+                                                          });
+                                                  }
+                                                )}
+                                              </TableCell>
+                                              <TableCell
+                                                key={itemInfos.itemId}
+                                                align="center"
+                                              >
+                                                {itemInfos.itemNum}個
+                                              </TableCell>
+                                              <TableCell align="center">
+                                                <Link
+                                                  to={{
+                                                    pathname: "/itemdetail",
+                                                    selectedItemId: product.id,
+                                                  }}
+                                                  key={product.id}
+                                                >
+                                                  <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    startIcon={
+                                                      <AddShoppingCartIcon />
+                                                    }
+                                                  >
+                                                    もう一度注文する
+                                                  </Button>
+                                                </Link>
+                                              </TableCell>
+                                            </TableRow>
+                                          );
+                                        });
                                 })}
-                        </TableCell>
-                      ))}
-                      {order.itemInfo.map((itemInfos) => (
-                        <TableCell align="center" key={itemInfos.itemId}>
-                          {/* {itemInfos.itemNum}個 */}
-                          {itemInfos.toppings.map((topp) => (
-                            <div key={topp.toppingId}>
-                              {topping === undefined
-                                ? ""
-                                : topping
-                                    .filter(
-                                      (toppings) =>
-                                        toppings.id === topp.toppingId
-                                    )
-                                    .map((toppings) => {
-                                      return (
-                                        <div key={toppings.id}>
-                                          {toppings.name}
-                                        </div>
-                                      );
-                                    })}
-                            </div>
-                          ))}
-                        </TableCell>
-                      ))}
-                      {order.itemInfo.map((itemInfos) => (
-                        <TableCell key={itemInfos.itemId}>
-                          {itemInfos.itemNum}個
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-              )}
-              {/* {orders.length > 0 &&
-                orders.map((order) => (
-                  <TableRow order={order} key={order.id}>
-                    <TableCell>
-                      <CardContent align="center">
-                        <h3> {order.orderDate}に配達</h3>
-                        <img
-                          src={order.item_imagePath}
-                          alt="アイコン"
-                          height="100px"
-                          align="center"
-                        />
-                      </CardContent>
-                    </TableCell>
-                    <TableCell>
-                      <Link>{order.item_name}</Link>
-                    </TableCell>
-                    <TableCell>{order.topping_name}</TableCell>
-                    <TableCell>{order.item_num}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<AddShoppingCartIcon />}
-                      >
-                        もう一度注文する
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              <TableRow>
-                <TableCell colSpan={4} align="right">
-                  合計金額：{}円
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    startIcon={<CancelIcon />}
-                    disabled={double}
-                    onClick={() => {
-                      // doSomething();
-                      setDouble(true);
-                      setCancel('キャンセル済み');
-                    }}
-                  >
-                    {cancel}
-                  </Button>
-                </TableCell>
-              </TableRow> */}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {/* <Button variant="contained" align="center" style={{color:"white"}}>
+                                <TableRow>
+                                  <TableCell colSpan={4} align="right">
+                                    <h3>合計金額：{}円</h3>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {order.status !== 9 ? (
+                                      <Button
+                                        variant="contained"
+                                        startIcon={<CancelIcon />}
+                                        disabled={order.status === 9}
+                                        onClick={() => {
+                                          // doSomething();
+                                          // setDouble(true);
+                                          order.status = 9;
+                                          setCancel("キャンセル済み");
+                                        }}
+                                      >
+                                        {cancel}
+                                      </Button>
+                                    ) : (
+                                      <div>
+                                        <Button
+                                          variant="contained"
+                                          startIcon={<CancelIcon />}
+                                          disabled={order.status === 9}
+                                          onClick={() => {
+                                            // doSomething();
+                                            // setDouble(true);
+                                            order.status = 9;
+                                            setCancel("キャンセル済み");
+                                          }}
+                                        >
+                                          {cancel}
+                                        </Button>
+                                        &emsp; &emsp; &emsp; &emsp; &emsp;
+                                        &emsp; &emsp;
+                                        <Button
+                                          showresults={order.status === "9"}
+                                          onClick={() => {
+                                            order.status = 1;
+                                            setCancel("キャンセル");
+                                          }}
+                                        >
+                                          キャンセルを取り消し
+                                        </Button>
+                                      </div>
+                                    )}
+                                  </TableCell>
+                                </TableRow>
+                              </TableBody>
+                            );
+                          })}
+                  </Table>
+                </Card>
+              </TableContainer>
+            </Card>
+          ) : (
+            <div align="center">
+              <h2>注文履歴がありません</h2>
+              <Link to={{ pathname: "/" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<ShoppingCartIcon />}
+                >
+                  メニューに戻る
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+      {/* <Button variant="contained" align="center" style={{color:"white"}}>
       メニューに戻る
       </Button> */}
-      </Card>
     </React.Fragment>
   );
 };
