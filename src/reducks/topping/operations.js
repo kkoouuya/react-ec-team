@@ -109,11 +109,6 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
 };
 
 export const deleteOrdersInfo = (uid, itemInfos, orderId) => {
-  console.log(uid);
-  console.log(itemInfos.id);
-  console.log(itemInfos);
-  console.log(orderId);
-
   const itemInfosId = itemInfos.id;
   // コレクションの取得
   const ordersRef = db.collection('users').doc(uid).collection('orders');
@@ -134,8 +129,6 @@ export const deleteOrdersInfo = (uid, itemInfos, orderId) => {
               status: 0,
             },
           ];
-          console.log(localCart);
-          console.log(orderId);
           ordersRef.doc(orderId).set(localCart[0]);
         });
       });
