@@ -58,10 +58,10 @@ export const OrderError = (userName, email, zipCode, address, tel, orderYear, or
         console.log(hour)
 
 
-        const numOrderYear = Number(orderYear);
+        // const numOrderYear = Number(orderYear);
         // console.log(numOrderYear);
 
-        const numOrderMonth = Number(orderMonth)
+        // const numOrderMonth = Number(orderMonth)
         // console.log(numOrderMonth);
 
         const numOrderDay = Number(orderDay);
