@@ -24,8 +24,9 @@ import { getProducts } from "../reducks/products/selectors";
 import { fetchTopping } from "../reducks/topping/operations";
 import { getTopping } from "../reducks/topping/selectors";
 import { Link } from "react-router-dom";
-import { setCancel } from "../reducks/users/operations";
+import { setCancel, resetCancel } from "../reducks/users/operations";
 import Grid from "@material-ui/core/Grid";
+import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
 // const useStyles = makeStyles({
 //   table: {
@@ -73,15 +74,20 @@ const OrderHistory = () => {
             <Grid container alignItems="center" justify="center">
               <Grid item xs={8}>
                 <Card>
-                  <h1 align="center">
-                    <HistoryIcon style={{ fontSize: 20 }} color="primary" />
-                    注文履歴
+                  <h1 align="left">
+                    &emsp;
+                    <HistoryIcon style={{ fontSize: 30 }} color="primary" />
+                    &nbsp; 注文履歴&nbsp;
+                    {/* <ImportContactsIcon
+                      style={{ fontSize: 30 }}
+                      color="primary"
+                    /> */}
                   </h1>
                   <TableContainer>
                     <Table aria-label="spanning table">
                       <TableHead>
                         <TableRow>
-                          <TableCell align="center"></TableCell>
+                          <TableCell align="center">配達日</TableCell>
                           <TableCell align="center">商品名</TableCell>
                           <TableCell align="center">トッピング</TableCell>
                           <TableCell align="center">数量</TableCell>
@@ -212,7 +218,9 @@ const OrderHistory = () => {
                                             setCancel(order.orderId);
                                           }}
                                         >
-                                          {/* {cancel} */}
+                                          {order.status === 9
+                                            ? "キャンセル済み"
+                                            : "キャンセル"}
                                         </Button>
                                       ) : (
                                         <div>
@@ -227,7 +235,9 @@ const OrderHistory = () => {
                                               setCancel(order.orderId);
                                             }}
                                           >
-                                            {/* {cancel} */}
+                                            {order.status === 9
+                                              ? "キャンセル済み"
+                                              : "キャンセル"}
                                           </Button>
                                           &emsp; &emsp; &emsp; &emsp; &emsp;
                                           &emsp; &emsp;
@@ -235,8 +245,7 @@ const OrderHistory = () => {
                                             showresults={order.status === "9"}
                                             onClick={(index) => {
                                               order.status = 1;
-                                              const a = orders[index];
-                                              setCancel(a);
+                                              resetCancel(order.orderId);
                                             }}
                                           >
                                             キャンセルを取り消し
