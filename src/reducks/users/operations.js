@@ -164,9 +164,8 @@ export const fetchOrders = () => {
   };
 };
 
-export const setCancel = (a) => {
-  console.log(a);
-  const updateOrdersRef = ordersRef.doc(a);
+export const setCancel = (orderId) => {
+  const updateOrdersRef = ordersRef.doc(orderId);
   return updateOrdersRef
     .update({
       status: 9,
