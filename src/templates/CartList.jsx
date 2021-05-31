@@ -122,8 +122,8 @@ const CartList = () => {
   //cart-----------------------
 
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+    dispatch(fetchOrders(uid));
+  }, [dispatch, orders, uid]);
 
   useEffect(() => {
     dispatch(fetchTopping());

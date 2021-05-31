@@ -1,9 +1,4 @@
-// import { useEffect, useState } from 'react';
-// import { useEffect } from 'react';
-// import { useEffect } from 'react';
 import { db } from '../../firebase/index';
-// import { push } from 'connected-react-router';
-// import firebase from 'firebase/app';
 import { fetchToppingAction, fetchSumPriceAction } from './actions';
 
 let localCart = [

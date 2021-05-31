@@ -148,12 +148,11 @@ export const signOut = () => {
   });
 };
 
-const ordersRef = db
-  .collection('users')
-  .doc('51Kio0Dzrkbf2J1txbDTdFL7XCh1')
-  .collection('orders');
+export const fetchOrders = (uid) => {
+  // const uid = getUserId(selector);
 
-export const fetchOrders = () => {
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
+
   return async (dispatch) => {
     ordersRef.get().then((snapshots) => {
       const orderList = [];
