@@ -7,10 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import { useDispatch,useSelector } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserName } from '../reducks/users/selector';
-// import { LocalDiningOutlined } from '@material-ui/icons';
-import { signOut } from '../reducks/users/operations'
+import { signOut } from '../reducks/users/operations';
+// import { getUserId } from '../reducks/users/selector';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -20,10 +21,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    flexGrow: 1,
+    fontSize: 16,
+    textAlign: 'right',
+    marginRight: 20,
+  },
+  span: {
+    fontSize: 14,
   },
   search: {
     position: 'relative',
@@ -54,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -62,121 +65,28 @@ const useStyles = makeStyles((theme) => ({
       width: '20ch',
     },
   },
-  // sectionDesktop: {
-  //   display: 'none',
-  //   [theme.breakpoints.up('md')]: {
-  //     display: 'flex',
-  //   },
-  // },
-  // sectionMobile: {
-  //   display: 'flex',
-  //   [theme.breakpoints.up('md')]: {
-  //     display: 'none',
-  //   },
-  // },
 }));
 
 const Header = () => {
   const history = useHistory();
   const handleLink = (path) => history.push(path);
-
   const selector = useSelector((state) => state);
   const username = getUserName(selector);
+  // const uid = getUserId(selector);
+
   const dispatch = useDispatch();
+  // console.log(username);
+
+  // useEffect(() => {
+  //   getUserName(selector);
+  // }, [uid]);
 
   const classes = useStyles();
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  // const isMenuOpen = Boolean(anchorEl);
-  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  // const handleProfileMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleMobileMenuClose = () => {
-  //   setMobileMoreAnchorEl(null);
-  // };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
-
-  // const handleMobileMenuOpen = (event) => {
-  //   setMobileMoreAnchorEl(event.currentTarget);
-  // };
-
-  // const menuId = 'primary-search-account-menu';
-  // const renderMenu = (
-  //   <Menu
-  //     anchorEl={anchorEl}
-  //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     id={menuId}
-  //     keepMounted
-  //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     open={isMenuOpen}
-  //     onClose={handleMenuClose}
-  //   >
-  //     <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-  //     <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-  //   </Menu>
-  // );
-
-  // const mobileMenuId = 'primary-search-account-menu-mobile';
-  // const renderMobileMenu = (
-  //   <Menu
-  //     anchorEl={mobileMoreAnchorEl}
-  //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     id={mobileMenuId}
-  //     keepMounted
-  //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     open={isMobileMenuOpen}
-  //     onClose={handleMobileMenuClose}
-  //   >
-  //     <MenuItem>
-  //       <IconButton aria-label="show 4 new mails" color="inherit">
-  //         <Badge badgeContent={4} color="secondary">
-  //           <MailIcon />
-  //         </Badge>
-  //       </IconButton>
-  //       <p>Messages</p>
-  //     </MenuItem>
-  //     <MenuItem>
-  //       <IconButton aria-label="show 11 new notifications" color="inherit">
-  //         <Badge badgeContent={11} color="secondary">
-  //           <NotificationsIcon />
-  //         </Badge>
-  //       </IconButton>
-  //       <p>Notifications</p>
-  //     </MenuItem>
-  //     <MenuItem onClick={handleProfileMenuOpen}>
-  //       <IconButton
-  //         aria-label="account of current user"
-  //         aria-controls="primary-search-account-menu"
-  //         aria-haspopup="true"
-  //         color="inherit"
-  //       >
-  //         <AccountCircle />
-  //       </IconButton>
-  //       <p>Profile</p>
-  //     </MenuItem>
-  //   </Menu>
-  // );
 
   return (
     <div className={classes.grow}>
       <AppBar position="static" color="default">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Link to="/">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/react-teame.appspot.com/o/header_logo.png?alt=media&token=30bc3f87-aa85-47d9-b27f-38e2ff49b6c4"
@@ -185,6 +95,10 @@ const Header = () => {
             />
           </Link>
           <div className={classes.grow} />
+          <Typography variant="h3" className={classes.title}>
+            {username}
+            <span className={classes.span}>さん</span>
+          </Typography>
           <div className={classes.sectionDesktop}>
             <IconButton
               aria-label="show 17 new notifications"
@@ -231,7 +145,14 @@ const Header = () => {
           ログイン
         </button>
         &nbsp;&nbsp;&nbsp;
-        <button onClick={() => dispatch(signOut())}>ログアウト</button>
+        <button
+          onClick={() => {
+            dispatch(signOut());
+            handleLink('/login');
+          }}
+        >
+          ログアウト
+        </button>
       </div>
       {/* {renderMobileMenu}
       {renderMenu} */}
