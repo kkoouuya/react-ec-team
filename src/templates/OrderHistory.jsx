@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { makeStyles } from '@material-ui/core/styles';
 import Table from "@material-ui/core/Table";
@@ -25,6 +25,8 @@ import { fetchTopping } from "../reducks/topping/operations";
 import { getTopping } from "../reducks/topping/selectors";
 import { Link } from "react-router-dom";
 import { setCancel } from "../reducks/users/operations";
+import Grid from "@material-ui/core/Grid";
+// import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
 // const useStyles = makeStyles({
 //   table: {
@@ -33,7 +35,9 @@ import { setCancel } from "../reducks/users/operations";
 // });
 
 const OrderHistory = () => {
-  // const [double, setDouble] = useState(false);
+  const [double, setDouble] = useState(false);
+  // const [show, setShow] = useState(false);
+  // const [shows, setShows] = useState(true);
   // const [cancel, setCancel] = useState('キャンセル');
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
@@ -50,6 +54,11 @@ const OrderHistory = () => {
   useEffect(() => {
     dispatch(fetchTopping());
   }, [dispatch]);
+  // useEffect(()=>{
+  //   const unsubscribe =db.collection("users").doc("1CiNypKuOkdRJL7KKGaV5w7QSKB3").collection("orders").onSnapshot(snapshots =>{
+
+  //   })
+  // })
 
   return (
     <React.Fragment>
@@ -69,182 +78,201 @@ const OrderHistory = () => {
       ) : (
         <div align="center">
           {orders.some((order) => order.status !== 0) ? (
-            <Card>
-              <h1 align="center">
-                <HistoryIcon style={{ fontSize: 20 }} color="primary" />
-                注文履歴
-              </h1>
-              <TableContainer>
+            <Grid container alignItems="center" justify="center">
+              <Grid item xs={8}>
                 <Card>
-                  <Table aria-label="spanning table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center"></TableCell>
-                        <TableCell align="center">商品名</TableCell>
-                        <TableCell align="center">トッピング</TableCell>
-                        <TableCell align="center">数量</TableCell>
-                        {/* <TableCell align="center">合計金額</TableCell>
+                  <h1 align="left">
+                    &emsp;
+                    <HistoryIcon style={{ fontSize: 30 }} color="primary" />
+                    &nbsp; 注文履歴&nbsp;
+                    {/* <ImportContactsIcon
+                      style={{ fontSize: 30 }}
+                      color="primary"
+                    /> */}
+                  </h1>
+                  <TableContainer>
+                    <Table aria-label="spanning table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">配達日</TableCell>
+                          <TableCell align="center">商品名</TableCell>
+                          <TableCell align="center">トッピング</TableCell>
+                          <TableCell align="center">数量</TableCell>
+                          {/* <TableCell align="center">合計金額</TableCell>
                                   <TableCell align="center">お届け先</TableCell> */}
-                      </TableRow>
-                    </TableHead>
-                    {orders === undefined
-                      ? ""
-                      : orders
-                          .filter((order) => order.status !== 0)
-                          .map((order) => {
-                            return (
-                              <TableBody key={order.orderId}>
-                                <TableRow>
-                                  <TableCell align="center">
-                                    <h3>{order.orderDate}に配達</h3>
-                                  </TableCell>
-                                  {/* <TableCell align="center">
+                        </TableRow>
+                      </TableHead>
+                      {orders === undefined
+                        ? ""
+                        : orders
+                            .filter((order) => order.status !== 0)
+                            .map((order) => {
+                              return (
+                                <TableBody key={order.orderId}>
+                                  <TableRow>
+                                    <TableCell align="center">
+                                      <h3>{order.orderDate}に配達</h3>
+                                    </TableCell>
+                                    {/* <TableCell align="center">
                                     <h4>{}円</h4>
                                   </TableCell>
                                   <TableCell></TableCell> */}
-                                  <TableCell colSpan="4"></TableCell>
-                                </TableRow>
-                                {order.itemInfo.map((itemInfos) => {
-                                  return products === undefined
-                                    ? ""
-                                    : products
-                                        .filter(
-                                          (product) =>
-                                            product.id === itemInfos.itemId
-                                        )
-                                        .map((product) => {
-                                          return (
-                                            <TableRow key={product.id}>
-                                              <TableCell align="center">
-                                                <img
-                                                  src={product.imagePath}
-                                                  alt="アイコン"
-                                                  height="100px"
-                                                  align="center"
-                                                />
-                                              </TableCell>
-                                              <TableCell align="center">
-                                                <Link
-                                                  to={{
-                                                    pathname: "/itemdetail",
-                                                    selectedItemId: product.id,
-                                                  }}
-                                                  key={product.id}
-                                                >
-                                                  {product.name}
-                                                </Link>
-                                              </TableCell>
-                                              <TableCell align="center">
-                                                {itemInfos.toppings.map(
-                                                  (topp) => {
-                                                    return topping === undefined
-                                                      ? ""
-                                                      : topping
-                                                          .filter(
-                                                            (toppings) =>
-                                                              toppings.id ===
-                                                              topp.toppingId
-                                                          )
-                                                          .map((toppings) => {
-                                                            return (
-                                                              <p
-                                                                key={
-                                                                  toppings.id
-                                                                }
-                                                              >
-                                                                {toppings.name}
-                                                              </p>
-                                                            );
-                                                          });
-                                                  }
-                                                )}
-                                              </TableCell>
-                                              <TableCell
-                                                key={itemInfos.itemId}
-                                                align="center"
-                                              >
-                                                {itemInfos.itemNum}個
-                                              </TableCell>
-                                              <TableCell align="center">
-                                                <Link
-                                                  to={{
-                                                    pathname: "/itemdetail",
-                                                    selectedItemId: product.id,
-                                                  }}
-                                                  key={product.id}
-                                                >
-                                                  <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    startIcon={
-                                                      <AddShoppingCartIcon />
-                                                    }
+                                    <TableCell colSpan="4"></TableCell>
+                                  </TableRow>
+                                  {order.itemInfo.map((itemInfos) => {
+                                    return products === undefined
+                                      ? ""
+                                      : products
+                                          .filter(
+                                            (product) =>
+                                              product.id === itemInfos.itemId
+                                          )
+                                          .map((product) => {
+                                            return (
+                                              <TableRow key={product.id}>
+                                                <TableCell align="center">
+                                                  <img
+                                                    src={product.imagePath}
+                                                    alt="アイコン"
+                                                    height="100px"
+                                                    align="center"
+                                                  />
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                  <Link
+                                                    to={{
+                                                      pathname: "/itemdetail",
+                                                      selectedItemId:
+                                                        product.id,
+                                                    }}
+                                                    key={product.id}
                                                   >
-                                                    もう一度注文する
-                                                  </Button>
-                                                </Link>
-                                              </TableCell>
-                                            </TableRow>
-                                          );
-                                        });
-                                })}
-                                <TableRow>
-                                  <TableCell colSpan={4} align="right">
-                                    <h3>合計金額：{}円</h3>
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {order.status !== 9 ? (
-                                      <Button
-                                        variant="contained"
-                                        startIcon={<CancelIcon />}
-                                        disabled={order.status === 9}
-                                        onClick={() => {
-                                          // doSomething();
-                                          // setDouble(true);
-                                          order.status = 9;
-                                          setCancel(order.orderId);
-                                        }}
-                                      >
-                                        {/* {cancel} */}
-                                      </Button>
-                                    ) : (
-                                      <div>
-                                        <Button
-                                          variant="contained"
-                                          startIcon={<CancelIcon />}
-                                          disabled={order.status === 9}
-                                          onClick={() => {
-                                            // doSomething();
-                                            // setDouble(true);
-                                            order.status = 9;
-                                            setCancel(order.orderId);
-                                          }}
-                                        >
-                                          {/* {cancel} */}
-                                        </Button>
-                                        &emsp; &emsp; &emsp; &emsp; &emsp;
-                                        &emsp; &emsp;
-                                        <Button
-                                          showresults={order.status === "9"}
-                                          onClick={(index) => {
-                                            order.status = 1;
-                                            const a = orders[index];
-                                            setCancel(a);
-                                          }}
-                                        >
-                                          キャンセルを取り消し
-                                        </Button>
-                                      </div>
-                                    )}
-                                  </TableCell>
-                                </TableRow>
-                              </TableBody>
-                            );
-                          })}
-                  </Table>
+                                                    {product.name}
+                                                  </Link>
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                  {itemInfos.toppings.map(
+                                                    (topp) => {
+                                                      return topping ===
+                                                        undefined
+                                                        ? ""
+                                                        : topping
+                                                            .filter(
+                                                              (toppings) =>
+                                                                toppings.id ===
+                                                                topp.toppingId
+                                                            )
+                                                            .map((toppings) => {
+                                                              return (
+                                                                <p
+                                                                  key={
+                                                                    toppings.id
+                                                                  }
+                                                                >
+                                                                  {
+                                                                    toppings.name
+                                                                  }
+                                                                </p>
+                                                              );
+                                                            });
+                                                    }
+                                                  )}
+                                                </TableCell>
+                                                <TableCell
+                                                  key={itemInfos.itemId}
+                                                  align="center"
+                                                >
+                                                  {itemInfos.itemNum}個
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                  <Link
+                                                    to={{
+                                                      pathname: "/itemdetail",
+                                                      selectedItemId:
+                                                        product.id,
+                                                    }}
+                                                    key={product.id}
+                                                  >
+                                                    <Button
+                                                      variant="contained"
+                                                      color="primary"
+                                                      startIcon={
+                                                        <AddShoppingCartIcon />
+                                                      }
+                                                    >
+                                                      もう一度注文する
+                                                    </Button>
+                                                  </Link>
+                                                </TableCell>
+                                              </TableRow>
+                                            );
+                                          });
+                                  })}
+                                  <TableRow>
+                                    <TableCell colSpan={4} align="right">
+                                      <h3>合計金額：{}円</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      {order.status !== 9 ? (
+                                        <div>
+                                          <Button
+                                            variant="contained"
+                                            startIcon={<CancelIcon />}
+                                            disabled={
+                                              order.status === 9 || double
+                                            }
+                                            onClick={() => {
+                                              // doSomething();
+                                              setDouble(true);
+                                              // setShow(true);
+                                              setCancel(order.orderId);
+                                            }}
+                                          >
+                                            {order.status === 9 || double
+                                              ? "キャンセル済み"
+                                              : "キャンセル"}
+                                          </Button>
+                                        </div>
+                                      ) : (
+                                        <div>
+                                          <Button
+                                            variant="contained"
+                                            startIcon={<CancelIcon />}
+                                            disabled={order.status === 9}
+                                            onClick={() => {
+                                              // doSomething();
+                                              // setDouble(true);
+                                              setCancel(order.orderId);
+                                            }}
+                                          >
+                                            {order.status === 9
+                                              ? "キャンセル済み"
+                                              : "キャンセル"}
+                                          </Button>
+                                          {/* &emsp; &emsp; &emsp; &emsp; &emsp;
+                                          &emsp; &emsp;
+                                          <Button
+                                            showresults={shows}
+                                            onClick={() => {
+                                              resetCancel(order.orderId);
+                                              setDouble(false);
+                                              setShows(false);
+                                            }}
+                                          >
+                                            キャンセルを取り消し
+                                          </Button> */}
+                                        </div>
+                                      )}
+                                    </TableCell>
+                                  </TableRow>
+                                </TableBody>
+                              );
+                            })}
+                    </Table>
+                  </TableContainer>
                 </Card>
-              </TableContainer>
-            </Card>
+              </Grid>
+            </Grid>
           ) : (
             <div align="center">
               <h2>注文履歴がありません</h2>
@@ -261,9 +289,6 @@ const OrderHistory = () => {
           )}
         </div>
       )}
-      {/* <Button variant="contained" align="center" style={{color:"white"}}>
-      メニューに戻る
-      </Button> */}
     </React.Fragment>
   );
 };
