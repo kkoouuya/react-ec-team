@@ -75,7 +75,7 @@ const Header = () => {
   // const uid = getUserId(selector);
 
   const dispatch = useDispatch();
-  console.log(username);
+  // console.log(username);
 
   // useEffect(() => {
   //   getUserName(selector);

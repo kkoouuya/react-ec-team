@@ -19,7 +19,6 @@ import { useHistory } from 'react-router';
 import { DeleteOrdersInfo } from '../reducks/topping/operations';
 import { getUserId } from '../reducks/users/selector';
 
-
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -36,7 +35,7 @@ const CartList = () => {
   const uid = getUserId(selector);
 
   const [total, setTotalPrice] = useState(0);
-  const [priceTopping, setPriceTopping] = useState(0);
+  // const [priceTopping, setPriceTopping] = useState(0);
 
   const toppingArray = [];
 
@@ -63,7 +62,7 @@ const CartList = () => {
         });
       });
     });
-    setPriceTopping(toppingPrice);
+    // setPriceTopping(toppingPrice);
 
     toppingArray.push(toppingPrice);
   };
@@ -106,7 +105,7 @@ const CartList = () => {
 
   useEffect(() => {
     createToppingPrice();
-  },[]);
+  }, []);
 
   useEffect(() => {
     createTotalPrice();
@@ -134,14 +133,14 @@ const CartList = () => {
   const classes = useStyles();
 
   let toppingPrice = 0;
-  const topPriceArray = []
+  // const topPriceArray = []
 
   return (
     <div className="cartlist">
       <h2>ショッピングカート</h2>
       <div>
         {orders === undefined ? (
-          ""
+          ''
         ) : (
           <TableContainer component={Paper} key={orders.id}>
             <Table
@@ -159,133 +158,172 @@ const CartList = () => {
                 </TableRow>
               </TableHead>
               {orders === undefined
-                      ? ''
-                      : orders
-                          .filter((order) => order.status === 0)
-                          .map((order) => {
-                            
-                            return (
-                              <TableBody key={order.orderId}>
-                                
-                                {order.itemInfo.map((itemInfos) => {
-                                  return products === undefined
-                                    ? ''
-                                    : products
-                                        .filter(
-                                          (product) =>
-                                            product.id === itemInfos.itemId
-                                        )
-                                        .map((product) => {
-                                          return (
-                                            <TableRow key={product.id}>
-                                              <TableCell align="center">
-                                                <img
-                                                  src={product.imagePath}
-                                                  alt="アイコン"
-                                                  height="100px"
-                                                  align="center"
-                                                />
-                                                <p>{product.name}</p>
-                                              </TableCell>
-                                              <TableCell align="center">
-                                                <p>{itemInfos.itemNum}個</p>
-                                                <p>{itemInfos.itemSize === 0 ? 
-                                                <div>Mサイズ</div> : <div>Lサイズ</div>}</p>
-                                                <p>{itemInfos.itemSize === 0 ? 
-                                                <div>{product.Mprice}円/個</div> : <div>{product.Lprice}円/個</div>}</p>
-                                              </TableCell>
-                                              <TableCell align="center">
-                                              
-                                                {itemInfos.toppings.length === 0 ? <p>なし</p> :
-                                               <div>
-                                                 
-                                                 {itemInfos.toppings.map(
-                                                  (topp) => {
-                                                    return topping === undefined
-                                                      ? ''
-                                                      : topping
-                                                          .filter(
-                                                            (toppings) =>
-                                                              toppings.id ===
-                                                              topp.toppingId
-                                                          )
-                                                          .map((toppings) => {
-                                                            if (topp.toppingSize === 0) {
-                                                   
-                                                              toppingPrice =
-                                                                toppingPrice + toppings.Mprice;
-                                                            } else {
-                                                              
-                                                              toppingPrice =
-                                                                toppingPrice + toppings.Lprice;
-                                                                console.log(toppingPrice);
-                                                            }
-                                                            return (
-                                                              <>
+                ? ''
+                : orders
+                    .filter((order) => order.status === 0)
+                    .map((order) => {
+                      return (
+                        <TableBody key={order.orderId}>
+                          {order.itemInfo.map((itemInfos) => {
+                            return products === undefined
+                              ? ''
+                              : products
+                                  .filter(
+                                    (product) => product.id === itemInfos.itemId
+                                  )
+                                  .map((product) => {
+                                    return (
+                                      <TableRow key={product.id}>
+                                        <TableCell align="center">
+                                          <img
+                                            src={product.imagePath}
+                                            alt="アイコン"
+                                            height="100px"
+                                            align="center"
+                                          />
+                                          <p>{product.name}</p>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                          <p>{itemInfos.itemNum}個</p>
+                                          <p>
+                                            {itemInfos.itemSize === 0 ? (
+                                              <div>Mサイズ</div>
+                                            ) : (
+                                              <div>Lサイズ</div>
+                                            )}
+                                          </p>
+                                          <p>
+                                            {itemInfos.itemSize === 0 ? (
+                                              <div>{product.Mprice}円/個</div>
+                                            ) : (
+                                              <div>{product.Lprice}円/個</div>
+                                            )}
+                                          </p>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                          {itemInfos.toppings.length === 0 ? (
+                                            <p>なし</p>
+                                          ) : (
+                                            <div>
+                                              {itemInfos.toppings.map(
+                                                (topp) => {
+                                                  return topping === undefined
+                                                    ? ''
+                                                    : topping
+                                                        .filter(
+                                                          (toppings) =>
+                                                            toppings.id ===
+                                                            topp.toppingId
+                                                        )
+                                                        .map((toppings) => {
+                                                          if (
+                                                            topp.toppingSize ===
+                                                            0
+                                                          ) {
+                                                            toppingPrice =
+                                                              toppingPrice +
+                                                              toppings.Mprice;
+                                                          } else {
+                                                            toppingPrice =
+                                                              toppingPrice +
+                                                              toppings.Lprice;
+                                                            // console.log(
+                                                            //   toppingPrice
+                                                            // );
+                                                          }
+                                                          return (
+                                                            <>
                                                               <p
                                                                 key={
                                                                   toppings.id
                                                                 }
-                                                              >
-                                                              </p>
+                                                              ></p>
                                                               <div>
-                                                                {topp.toppingSize === 0 ?
-                                                                <><p>{toppings.name}/+1倍/+{toppings.Mprice}円</p></>:<><p>{toppings.name}/+2倍/+{toppings.Lprice}円</p></>
-                                                              }
+                                                                {topp.toppingSize ===
+                                                                0 ? (
+                                                                  <>
+                                                                    <p>
+                                                                      {
+                                                                        toppings.name
+                                                                      }
+                                                                      /+1倍/+
+                                                                      {
+                                                                        toppings.Mprice
+                                                                      }
+                                                                      円
+                                                                    </p>
+                                                                  </>
+                                                                ) : (
+                                                                  <>
+                                                                    <p>
+                                                                      {
+                                                                        toppings.name
+                                                                      }
+                                                                      /+2倍/+
+                                                                      {
+                                                                        toppings.Lprice
+                                                                      }
+                                                                      円
+                                                                    </p>
+                                                                  </>
+                                                                )}
                                                               </div>
-                                                              </>
-                                                            );
-                                                          });
-                                                  }
-                                                )}
-                                                 </div>}
-                                                
-                                              </TableCell>
-                                              <TableCell
-                                                key={itemInfos.itemId}
-                                                align="center"
-                                              >
-                                                {itemInfos.itemSize === 0 ? 
-                                                <p>{(product.Mprice +
-                                                    toppingPrice) *
-                                                    itemInfos.itemNum}円</p> :
-                                                     <p>{(product.Lprice +
-                                                      toppingPrice) *
-                                                      itemInfos.itemNum}円
-                                                       </p>}
-                                                       {itemInfos.toppings.map(el => {
-                                                    toppingPrice = 0
-                                                  })}
-                                                
-                                              </TableCell>
-                                              <TableCell align="center">
-                                              <div>
-                                              <Button
-                                               key={order.id}
-                                                variant="contained"
-                                                 color="primary"
+                                                            </>
+                                                          );
+                                                        });
+                                                }
+                                              )}
+                                            </div>
+                                          )}
+                                        </TableCell>
+                                        <TableCell
+                                          key={itemInfos.itemId}
+                                          align="center"
+                                        >
+                                          {itemInfos.itemSize === 0 ? (
+                                            <p>
+                                              {(product.Mprice + toppingPrice) *
+                                                itemInfos.itemNum}
+                                              円
+                                            </p>
+                                          ) : (
+                                            <p>
+                                              {(product.Lprice + toppingPrice) *
+                                                itemInfos.itemNum}
+                                              円
+                                            </p>
+                                          )}
+                                          {itemInfos.toppings.map(
+                                            (el) => (toppingPrice = 0)
+                                          )}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                          <div>
+                                            <Button
+                                              key={order.id}
+                                              variant="contained"
+                                              color="primary"
                                               onClick={() => {
-                                              dispatch(
-                                                DeleteOrdersInfo(
+                                                dispatch(
+                                                  DeleteOrdersInfo(
                                                     uid,
-                                                   itemInfos,
-                                                 order.orderId
-                                                     )
-                                                   );
-                                                 }}
-                                               >
-                                                削除
-                                               </Button>
-                                               </div>
-                                              </TableCell>
-                                            </TableRow>
-                                          );
-                                        });
-                                })}
-                                
-                              </TableBody>
-                            );
+                                                    itemInfos,
+                                                    order.orderId
+                                                  )
+                                                );
+                                              }}
+                                            >
+                                              削除
+                                            </Button>
+                                          </div>
+                                        </TableCell>
+                                      </TableRow>
+                                    );
+                                  });
                           })}
+                        </TableBody>
+                      );
+                    })}
               {/* <TableBody>
                 {orders
                   .filter((order) => order.status === 0)
