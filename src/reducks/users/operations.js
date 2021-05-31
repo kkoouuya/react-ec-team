@@ -170,17 +170,12 @@ export const setCancel = (a) => {
     .collection('users')
     .doc('51Kio0Dzrkbf2J1txbDTdFL7XCh1')
     .collection('orders')
-    .doc(a).id;
-  console.log(updateOrdersRef);
-  const Ref = db
-    .collection('users')
-    .doc('51Kio0Dzrkbf2J1txbDTdFL7XCh1')
-    .collection('orders')
-    .doc(`Odr6NAqJsomNhklGPVfx`);
-  console.log(Ref);
-  return Ref.update({
-    status: 9,
-  }).then(() => {
-    console.log('Document successfully updated!');
-  });
+    .doc(a);
+  return updateOrdersRef
+    .update({
+      status: 9,
+    })
+    .then(() => {
+      console.log('Document successfully updated!');
+    });
 };
