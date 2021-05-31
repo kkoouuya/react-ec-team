@@ -12,10 +12,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { SignIn } from '../reducks/users/operations';
+//import { SignIn } from '../reducks/users/operations';
 import { Link } from 'react-router-dom';
-import { signInAction } from '../reducks/users/actions';
 import { getUserId, getUserName } from '../reducks/users/selector';
+import signIn from '../reducks/users/operations';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -59,9 +59,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const handlePage = (path) => history.push(path);
-  const selector = useSelector((state) => state);
-  const username = getUserName(selector);
-  const uid = getUserId(selector);
+  //const selector = useSelector((state) => state);
+  // const username = getUserName(selector);
+  // const uid = getUserId(selector);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -110,10 +110,9 @@ const Login = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(SignIn(email, password));
-              dispatch(signInAction(uid, username));
+            onClick={() => {
+              //e.preventDefault();
+              dispatch(signIn(email, password));
               handlePage('/');
             }}
           >
