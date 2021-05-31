@@ -221,27 +221,32 @@ const DeliveriesTimes = [
         ))
 
         if(destinationUserName === '' ||
-        destinationEmail === '' ||
-        destinationZipcode  === '' ||
-        destinationAddress === '' ||
-        destinationTel === '' || 
-        destinationYear === '' || 
-        destinationMonth === '' || 
-        destinationDay  === '' || 
-        destinationTime === '' ||
-        paymentMethods === '' ||
-        creditCardNo === ''){
+          destinationEmail === '' ||
+          destinationZipcode  === '' ||
+          destinationAddress === '' ||
+          destinationTel === '' || 
+          destinationYear === '' || 
+          destinationMonth === '' || 
+          destinationDay  === '' || 
+          destinationTime === '' ||
+          paymentMethods === '' ||
+          creditCardNo === '') 
+        {
           console.log('入力完了していません'); 
-      } else if((destinationEmail.indexOf('@') === -1) || 
-        !pattern.test(destinationZipcode) || 
-        !pattern2.test(destinationTel) ||
-        (destinationDay === numOrderDay && 
-            (numOrderTime - hour <= 3) || 
-            (numOrderTime - hour === 0))) {
-          console.log('入力完了していません2'); 
-      } else {
-        history.push('/orderfinished');
-      }
+          
+
+
+
+        } else if((destinationEmail.indexOf('@') === -1) || 
+          !pattern.test(destinationZipcode) || 
+          !pattern2.test(destinationTel) ||
+          (destinationDay === numOrderDay && 
+              (numOrderTime - hour <= 3) || 
+              (numOrderTime - hour === 0))) {
+            console.log('入力完了していません2'); 
+        } else {
+          history.push('/orderfinished');
+        }
   }
 
   return (

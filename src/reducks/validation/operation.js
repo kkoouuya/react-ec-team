@@ -90,6 +90,7 @@ export const OrderError = (userName, email, zipCode, address, tel, orderYear, or
             alert('クレジットカード情報を入力してください');
         } else if(!pattern3.test(creditCard)) {
             alert('クレジットカード情報は XXXX-XXXX-XXXX-XXXX の形で入力してください');
+            return false
         };
     }
 }

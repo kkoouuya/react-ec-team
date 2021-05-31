@@ -14,8 +14,7 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignIn, signIn } from '../reducks/users/operations';
 import {Link} from 'react-router-dom'
-import { signInAction } from '../reducks/users/actions';
-import { getUserId, getUserName } from '../reducks/users/selector';
+
 
 // function Copyright() {
 //   return (
@@ -67,9 +66,10 @@ const Login = () => {
   const history = useHistory();
   const handlePage = path => history.push(path);
   const selector = useSelector(state => state)
-  const username = getUserName(selector);
-  const uid = getUserId(selector);
- 
+
+  // const loginClicked = (email, password) => {
+  //   console.log('クリック！');
+  // }
 
     return (
       <Container component="main" maxWidth="xs">
@@ -121,18 +121,13 @@ const Login = () => {
               onClick={(e) => {
                 e.preventDefault()
                 dispatch(SignIn(email, password))
-                dispatch(signInAction(uid,username))
-                handlePage('/')
               }
             }
             >
               ログイン
             </Button>
             </form>
-            <Link to='/signup' 
-              onClick={() => {handlePage('/signup')}}>
-              ユーザー登録がまだの方はこちら
-              </Link>
+            <Link to='/signup' onClick={() => {handlePage('/signup')}}>ユーザー登録がまだの方はこちら</Link>
         </div>
       </Container>
     );
