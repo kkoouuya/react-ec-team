@@ -49,23 +49,24 @@ const OrderConfirm = () => {
   const [destinationYear, setDestinationYear] = useState('');
   const [destinationMonth, setDestinationMonth] = useState('');
   const [destinationDay, setDestinationDay] = useState('');
-  const [destinationTime, setDestinationTime] = useState('');
+  const [destinationHour, setDestinationHour] = useState('');
 
   const today = new Date();
   const hour = today.getHours();
   const numOrderDay = Number(destinationDay);
-  const numOrderTime = Number(destinationTime);
+  const numOrderTime = Number(destinationHour);
+
+  //firebaseへ格納用
+  const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
+ 
 
   //支払い方法ラジオボタン
   const [paymentMethods, setPaymentMethods] = useState('');
-
-  //カード支払い
-  const [creditCardNo, setCreditCardNo] = useState("")
-
-  // const handleChange = (event) => {
-  //   setPaymentMethods(event.target.value);
-  // };
   
+  //支払い方法
+  const [cash , setCash] = useState('')
+  const [creditCardNo, setCreditCardNo] = useState('')
+
   //入力値
   const inputOrderUserName = useCallback((e) => {
     setDestinationUserName(e.target.value)
@@ -99,25 +100,21 @@ const OrderConfirm = () => {
     setDestinationDay(e.target.value)
   },[setDestinationDay]);
 
-  const inputOrderTime = useCallback((e) => {
-    setDestinationTime(e.target.value)
-  },[setDestinationTime]);
+  const inputOrderHour = useCallback((e) => {
+    setDestinationHour(e.target.value)
+  },[setDestinationHour]);
 
   const inputOrderPay = useCallback((e) => {
     setPaymentMethods(e.target.value)
   },[setPaymentMethods]);
 
+  // const inputCash = useCallback((e) => {
+  //   setCash(e.target.value)
+  // },[setCash])
+
   const inputCreditCardNo = useCallback((e) => {
     setCreditCardNo(e.target.value)
   },[setCreditCardNo]);
-
-  // console.log(paymentMethods);
-
-// const payClicked = (e) => {
-//   if(e.target.value == '2') {
-//     // console.log('クレジットです');
-//   }
-// }
 
 //配達関連
 const DeliveriesYears = [
@@ -201,7 +198,7 @@ const DeliveriesTimes = [
     destinationYear,
     destinationMonth,
     destinationDay,
-    destinationTime,
+    destinationHour,
     paymentMethods,
     creditCardNo
     ) => {
@@ -214,7 +211,7 @@ const DeliveriesTimes = [
         destinationYear,
         destinationMonth,
         destinationDay,
-        destinationTime,
+        destinationHour,
         paymentMethods,
         creditCardNo
         ))
@@ -227,7 +224,7 @@ const DeliveriesTimes = [
           destinationYear === '' || 
           destinationMonth === '' || 
           destinationDay  === '' || 
-          destinationTime === '' ||
+          destinationHour === '' ||
           paymentMethods === '' ||
           creditCardNo === '') 
         {
@@ -311,7 +308,7 @@ const DeliveriesTimes = [
         <form className={classes.root} noValidate>
           <div>
             <TextField
-                id="standard-select-currency"
+                id="destinationYear"
                 select
                 label="Delivery Year"
                 value={destinationYear}
@@ -325,7 +322,7 @@ const DeliveriesTimes = [
             </TextField>
 
             <TextField
-                id="standard-select-currency"
+                id="destinationMonth"
                 select
                 label="Delivery Month"
                 value={destinationMonth}
@@ -338,7 +335,7 @@ const DeliveriesTimes = [
                 ))}
             </TextField>      
             <TextField
-                id="standard-select-currency"
+                id="destinationDay"
                 select
                 label="Delivery Day"
                 value={destinationDay}
@@ -351,11 +348,11 @@ const DeliveriesTimes = [
                 ))}
             </TextField>
             <TextField
-                id="standard-select-currency"
+                id="destinationHour"
                 select
                 label="Delivery Time"
-                value={destinationTime}
-                onChange={inputOrderTime}
+                value={destinationHour}
+                onChange={inputOrderHour}
               >
                 {DeliveriesTimes.map((time) => (
                   <MenuItem key={time.value} value={time.value}>
@@ -388,12 +385,6 @@ const DeliveriesTimes = [
               onChange={inputCreditCardNo}
               /> 
             : ''}
-            {/* {paymentMethods === '2' ? 
-            <TextField id="standard-basic" label="Credit-card Number" /> : ''}
-            {paymentMethods === '2' ? 
-            <TextField id="standard-basic" label="Credit-card Number" /> : ''}
-            {paymentMethods === '2' ? 
-            <TextField id="standard-basic" label="Credit-card Number" /> : ''} */}
           </FormControl>
         </div>
         <div className={classes.root}>
@@ -403,7 +394,7 @@ const DeliveriesTimes = [
             color="primary"
             name="button"
             onClick={() => 
-              orderClicked(destinationUserName,destinationEmail,destinationZipcode,destinationAddress,destinationTel,destinationYear,destinationMonth,destinationDay,destinationTime,paymentMethods,creditCardNo)}
+              orderClicked(destinationUserName,destinationEmail,destinationZipcode,destinationAddress,destinationTel,destinationYear,destinationMonth,destinationDay,destinationHour,paymentMethods,cash,creditCardNo)}
           >
             この内容で注文する
           </Button>

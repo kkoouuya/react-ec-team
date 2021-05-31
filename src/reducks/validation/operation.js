@@ -2,7 +2,7 @@ const pattern = /^[0-9]{3}-[0-9]{4}$/;
 const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 const pattern3 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
-export const OrderError = (userName, email, zipCode, address, tel, orderYear, orderMonth, orderDay, orderTime, pay, creditCard)=> {
+export const OrderError = (userName, email, zipCode, address, tel, orderYear, orderMonth, orderDay, orderTime, pay, cash,creditCard)=> {
     return async () => {
         
         // // Validations
@@ -49,13 +49,14 @@ export const OrderError = (userName, email, zipCode, address, tel, orderYear, or
         console.log(today);
 
         const year = today.getFullYear();
-        // console.log(year);
-        const month = (1 + today.getMonth());
-        // console.log(month)
+        console.log(year);
+        const month = "0" + (1 + today.getMonth());
+        console.log(month)
         const day = today.getDate();
         const hour = today.getHours();
-        // console.log(day)
-        // console.log(hour)
+        console.log(day)
+        console.log(hour)
+
 
         const numOrderYear = Number(orderYear);
         // console.log(numOrderYear);
@@ -82,15 +83,15 @@ export const OrderError = (userName, email, zipCode, address, tel, orderYear, or
                 }
         };
 
-         if(pay === '') {
-            alert('支払い情報の選択がされていません。');
-        };
+        //  if(cash === '' || creditCard === "") {
+        //     alert('支払い情報の選択がされていません。');
+        // } else if(cash || creditCard === "" ){
+        //     alert('クレジットカード情報を入力してください');
+        // } else if(!pattern3.test(creditCard)) {
+        //     alert('クレジットカード情報は XXXX-XXXX-XXXX-XXXX の形で入力してください');
+        //     return false
+        // };
 
-        if(creditCard === ""){
-            alert('クレジットカード情報を入力してください');
-        } else if(!pattern3.test(creditCard)) {
-            alert('クレジットカード情報は XXXX-XXXX-XXXX-XXXX の形で入力してください');
-            return false
-        };
+        console.log(orderYear + orderMonth + orderDay * orderTime);
     }
 }
