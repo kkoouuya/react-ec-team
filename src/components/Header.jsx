@@ -16,7 +16,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import { useDispatch,useSelector } from 'react-redux';
 import { getUserName } from '../reducks/users/selector';
-import { LocalDiningOutlined } from '@material-ui/icons';
 import { signOut } from '../reducks/users/operations'
 
 const useStyles = makeStyles((theme) => ({

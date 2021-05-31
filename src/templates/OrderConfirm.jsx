@@ -3,23 +3,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup'
-// import FormLabel from '@material-ui/core/FormLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 // import InputLabel from '@material-ui/core/InputLabel';
 // // import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+// import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { orderError } from '../reducks/validation/operation';
 import { useDispatch } from "react-redux";
 import { OrderError } from '../reducks/validation/operation';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom'
-import { getUserName } from '../reducks/users/selector';
-import { creditcard } from '../reducks/payment/PaymentForm';
+
 
 const OrderConfirm = () => {
   const dispatch = useDispatch();
@@ -43,46 +41,33 @@ const OrderConfirm = () => {
 
   //初期値
   const [destinationUserName, setDestinationUserName] = useState("")
-
   const [destinationEmail, setDestinationEmail] = useState("")
-
   const [destinationZipcode, setDestinationZipcode] = useState("")
-
   const [destinationAddress, setDestinationAddress] = useState("")
-
   const [destinationTel, setDestinationTel] = useState("")
 
   //配達日時
-  const today = new Date();
-  // console.log(today);
-  const year = today.getFullYear();
-  const month = "0" + (1 + today.getMonth())
-  const day = today.getDate();
-  const hour = today.getHours();
-  // console.log(hour);
-
   const [destinationYear, setDestinationYear] = useState('');
-
   const [destinationMonth, setDestinationMonth] = useState('');
   const [destinationDay, setDestinationDay] = useState('');
-
   const [destinationTime, setDestinationTime] = useState('');
 
-  // deliveryYear: '',
-  // deliveryMonth: '',
-  // deliveryDay: '',
-  // deliveryTime: '',
+  const today = new Date();
+  const hour = today.getHours();
+  const numOrderDay = Number(destinationDay);
+  const numOrderTime = Number(destinationTime);
 
   //支払い方法ラジオボタン
-  const [paymentMethods, setPaymentMethods] = useState('代金引換');
+  const [paymentMethods, setPaymentMethods] = useState('');
+
+  //カード支払い
+  const [creditCardNo, setCreditCardNo] = useState("")
+
   // const handleChange = (event) => {
   //   setPaymentMethods(event.target.value);
   // };
-
-  // カード支払い情報
-  const [disabled, setDisabled] = useState();
-
   
+  //入力値
   const inputOrderUserName = useCallback((e) => {
     setDestinationUserName(e.target.value)
   },[setDestinationUserName]);
@@ -118,6 +103,22 @@ const OrderConfirm = () => {
   const inputOrderTime = useCallback((e) => {
     setDestinationTime(e.target.value)
   },[setDestinationTime]);
+
+  const inputOrderPay = useCallback((e) => {
+    setPaymentMethods(e.target.value)
+  },[setPaymentMethods]);
+
+  const inputCreditCardNo = useCallback((e) => {
+    setCreditCardNo(e.target.value)
+  },[setCreditCardNo]);
+
+  // console.log(paymentMethods);
+
+// const payClicked = (e) => {
+//   if(e.target.value == '2') {
+//     // console.log('クレジットです');
+//   }
+// }
 
 //配達関連
 const DeliveriesYears = [
@@ -201,7 +202,9 @@ const DeliveriesTimes = [
     destinationYear,
     destinationMonth,
     destinationDay,
-    destinationTime
+    destinationTime,
+    paymentMethods,
+    creditCardNo
     ) => {
       dispatch(OrderError(
         destinationUserName,
@@ -212,22 +215,33 @@ const DeliveriesTimes = [
         destinationYear,
         destinationMonth,
         destinationDay,
-        destinationTime
+        destinationTime,
+        paymentMethods,
+        creditCardNo
         ))
 
         if(destinationUserName === '' ||
-          destinationEmail === '' ||
-          destinationZipcode === '' ||
-          destinationAddress === '' ||
-          destinationTel === '' || destinationYear === '' || destinationMonth === '' || destinationDay === '' ||destinationTime === ''){
-            console.log('入力完了していません'); 
-        } else if((destinationEmail.indexOf('@') == -1) || 
-          !pattern.test(destinationZipcode) || 
-          !pattern2.test(destinationTel)) {
-            console.log('入力完了していません2'); 
-        } else {
-          history.push('/orderfinished');
-        }
+        destinationEmail === '' ||
+        destinationZipcode  === '' ||
+        destinationAddress === '' ||
+        destinationTel === '' || 
+        destinationYear === '' || 
+        destinationMonth === '' || 
+        destinationDay  === '' || 
+        destinationTime === '' ||
+        paymentMethods === '' ||
+        creditCardNo === ''){
+          console.log('入力完了していません'); 
+      } else if((destinationEmail.indexOf('@') === -1) || 
+        !pattern.test(destinationZipcode) || 
+        !pattern2.test(destinationTel) ||
+        (destinationDay === numOrderDay && 
+            (numOrderTime - hour <= 3) || 
+            (numOrderTime - hour === 0))) {
+          console.log('入力完了していません2'); 
+      } else {
+        history.push('/orderfinished');
+      }
   }
 
   return (
@@ -262,8 +276,8 @@ const DeliveriesTimes = [
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="zipcode"
-            name="zipcode"
+            id="zipCode"
+            name="zipCode"
             label="Zipcode"
             fullWidth
             autoComplete="shipping postal-code"
@@ -352,26 +366,35 @@ const DeliveriesTimes = [
         </form>
         </Grid>
 
-        {/* <div className={classes.root}>
+        <div className={classes.root}>
           <FormControl component="fieldset">
             <FormLabel component="legend">Payment</FormLabel>
             <RadioGroup aria-label="payment" name="payment" 
-              value={paymentMethods} onChange={handleChange}>
-              <FormControlLabel value="代金引換" 
-                name="cash" id="0" control={<Radio />} 
+              value={paymentMethods} onChange={inputOrderPay}>
+              <FormControlLabel value='1' 
+                name="pay" id="0" control={<Radio />} 
                 label="代金引換" />
-              <FormControlLabel value="クレジットカード" 
-                name="card" id="1" control={<Radio />} 
-                label="クレジットカード" onClick={() => {}}/>
+              <FormControlLabel value="2" 
+                name="pay" id="1" control={<Radio />} 
+                label="クレジットカード" />
             </RadioGroup>
+            {paymentMethods === '2' ? 
+            <TextField 
+              id="standard-basic" 
+              label="Credit-card Number" 
+              name="cardNumber"
+              value={creditCardNo}
+              onChange={inputCreditCardNo}
+              /> 
+            : ''}
+            {/* {paymentMethods === '2' ? 
+            <TextField id="standard-basic" label="Credit-card Number" /> : ''}
+            {paymentMethods === '2' ? 
+            <TextField id="standard-basic" label="Credit-card Number" /> : ''}
+            {paymentMethods === '2' ? 
+            <TextField id="standard-basic" label="Credit-card Number" /> : ''} */}
           </FormControl>
-        </div> */}
-
-        <Link to="/paymentform">
-          <Button color="secondary">
-            クレジットカードの場合
-          </Button>
-        </Link>
+        </div>
         <div className={classes.root}>
           <Button
             type="button"
@@ -379,7 +402,7 @@ const DeliveriesTimes = [
             color="primary"
             name="button"
             onClick={() => 
-              orderClicked(destinationUserName,destinationEmail,destinationZipcode,destinationAddress,destinationTel,destinationYear,destinationMonth,destinationDay,destinationTime)}
+              orderClicked(destinationUserName,destinationEmail,destinationZipcode,destinationAddress,destinationTel,destinationYear,destinationMonth,destinationDay,destinationTime,paymentMethods,creditCardNo)}
           >
             この内容で注文する
           </Button>

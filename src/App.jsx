@@ -18,6 +18,7 @@ const App = () => {
       if(user){
         uid = user.uid;
         console.log(user.uid)
+        
         console.log(uid);
         console.log('ログインしました！')
       }else{
