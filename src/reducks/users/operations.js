@@ -148,7 +148,7 @@ export const signOut = () => {
 
 const ordersRef = db
   .collection("users")
-  .doc("51Kio0Dzrkbf2J1txbDTdFL7XCh1")
+  .doc("1CiNypKuOkdRJL7KKGaV5w7QSKB3")
   .collection("orders");
 
 export const fetchOrders = () => {
@@ -164,34 +164,23 @@ export const fetchOrders = () => {
   };
 };
 
-export const setCancel = (a) => {
-  console.log(a);
-  const updateOrdersRef = db
-    .collection("users")
-    .doc("51Kio0Dzrkbf2J1txbDTdFL7XCh1")
-    .collection("orders")
-    .doc(a);
-  return updateOrdersRef
-    .update({
-      status: 9,
-    })
-    .then(() => {
-      console.log("Document successfully updated!");
-    });
+export const setCancel = (orderId) => {
+  const updateOrdersRef = ordersRef.doc(orderId);
+  // console.log(updateOrdersRef);
+  return updateOrdersRef.update({
+    status: 9,
+  });
+  // .then(() => {
+  //   console.log("Document successfully updated!");
+  // });
 };
 
-export const resetCancel = (a) => {
-  console.log(a);
-  const updateOrdersRef = db
-    .collection("users")
-    .doc("51Kio0Dzrkbf2J1txbDTdFL7XCh1")
-    .collection("orders")
-    .doc(a);
-  return updateOrdersRef
-    .update({
-      status: 9,
-    })
-    .then(() => {
-      console.log("Document successfully updated!");
-    });
+export const resetCancel = (orderId) => {
+  const updateOrdersRef = ordersRef.doc(orderId);
+  return updateOrdersRef.update({
+    status: 1,
+  });
+  // .then(() => {
+  //   console.log("Document successfully updated!");
+  // });
 };

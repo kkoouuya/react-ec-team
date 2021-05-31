@@ -26,7 +26,7 @@ import { getTopping } from "../reducks/topping/selectors";
 import { Link } from "react-router-dom";
 import { setCancel, resetCancel } from "../reducks/users/operations";
 import Grid from "@material-ui/core/Grid";
-import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+// import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
 // const useStyles = makeStyles({
 //   table: {
@@ -52,6 +52,11 @@ const OrderHistory = () => {
   useEffect(() => {
     dispatch(fetchTopping());
   }, [dispatch]);
+  // useEffect(()=>{
+  //   const unsubscribe =db.collection("users").doc("1CiNypKuOkdRJL7KKGaV5w7QSKB3").collection("orders").onSnapshot(snapshots =>{
+
+  //   })
+  // })
 
   return (
     <React.Fragment>
@@ -214,7 +219,7 @@ const OrderHistory = () => {
                                           onClick={() => {
                                             // doSomething();
                                             // setDouble(true);
-                                            order.status = 9;
+                                            disabled = true;
                                             setCancel(order.orderId);
                                           }}
                                         >
@@ -231,7 +236,7 @@ const OrderHistory = () => {
                                             onClick={() => {
                                               // doSomething();
                                               // setDouble(true);
-                                              order.status = 9;
+                                              disabled = true;
                                               setCancel(order.orderId);
                                             }}
                                           >
@@ -242,9 +247,9 @@ const OrderHistory = () => {
                                           &emsp; &emsp; &emsp; &emsp; &emsp;
                                           &emsp; &emsp;
                                           <Button
-                                            showresults={order.status === "9"}
-                                            onClick={(index) => {
-                                              order.status = 1;
+                                            showresults={order.status ? 9 : !9}
+                                            onClick={() => {
+                                              showresult = false;
                                               resetCancel(order.orderId);
                                             }}
                                           >
@@ -278,9 +283,6 @@ const OrderHistory = () => {
           )}
         </div>
       )}
-      {/* <Button variant="contained" align="center" style={{color:"white"}}>
-      メニューに戻る
-      </Button> */}
     </React.Fragment>
   );
 };
