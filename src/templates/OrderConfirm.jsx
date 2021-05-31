@@ -62,7 +62,7 @@ const OrderConfirm = () => {
  
 
   //支払い方法ラジオボタン
-  const [paymentMethods, setPaymentMethods] = useState('');
+  const [paymentMethods, setPaymentMethods] = useState('1');
   
 // console.log(paymentMethods);
 
