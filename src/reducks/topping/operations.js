@@ -13,29 +13,6 @@ let localCart = [
   },
 ];
 
-// export const useCart = () => {
-//   let cartItemNum = '';
-//   db.collection('users')
-//     .doc('1CiNypKuOkdRJL7KKGaV5w7QSKB3')
-//     .collection('orders')
-//     .get()
-//     .then((querySnapshot) => {
-//       querySnapshot.forEach((doc) => {
-//         if (doc.data().status === 0) {
-//           cartItemNum = doc.data().itemInfo[0].length;
-//           console.log('hoge')
-//         }
-//       });
-//     });
-
-//   const [cartItem, setcartItemNum] = useState('');
-//   useEffect(() => {
-//     setcartItemNum(cartItemNum);
-//   }, [cartItemNum]);
-
-//   console.log(cartItem);
-// };
-
 const toppingsRef = db.collection('topping').orderBy('id', 'asc');
 
 export const fetchTopping = () => {
@@ -63,7 +40,6 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
 
   // クリックしたらローカルのカートに情報を保存
   const ref = ordersRef.doc();
-  console.log(ref)
   const id = ref.id;
   localCart[0].itemInfo.push({
     id: id,

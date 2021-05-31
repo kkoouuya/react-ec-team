@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../reducks/products/selectors';
-//import { FetchCart } from '../reducks/products/operations';
 import { getOrders } from '../reducks/users/selector';
 import { getTopping } from '../reducks/topping/selectors';
 import { fetchTopping } from '../reducks/topping/operations';
