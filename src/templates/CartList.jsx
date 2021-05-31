@@ -233,14 +233,14 @@ const CartList = () => {
                       </TableCell>
                       <TableCell>
                         {order.itemInfo.map((itemInfos) => (
-                          <div  key={order.id}>
+                          <div key={order.id}>
                             <TableCell>
                               <div>
                                 <div>
                                   {itemInfos === undefined
                                     ? ''
                                     : itemInfos.toppings.map((top) => (
-                                        <div  key={order.id}>
+                                        <div key={order.id}>
                                           {topping === undefined
                                             ? ''
                                             : topping
