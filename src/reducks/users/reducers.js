@@ -1,5 +1,5 @@
-import * as Actions from "./actions";
-import { initialState } from "../store/initialState";
+import * as Actions from './actions';
+import { initialState } from '../store/initialState';
 
 export const UsersReducer = (state = initialState.users, action) => {
   switch (action.type) {
@@ -8,6 +8,12 @@ export const UsersReducer = (state = initialState.users, action) => {
         ...state,
         orders: [...action.payload],
       };
+    case Actions.SIGN_UP:
+      console.log(action.payload);
+      return {
+        ...state,
+        usersInfo: action.payload,
+      };
     case Actions.SIGN_IN:
       return {
         ...state,
@@ -15,7 +21,7 @@ export const UsersReducer = (state = initialState.users, action) => {
       };
     case Actions.SIGN_OUT:
       return {
-        ...initialState.users
+        ...initialState.users,
       };
     case Actions.SET_USER_ACTION:
       return {
