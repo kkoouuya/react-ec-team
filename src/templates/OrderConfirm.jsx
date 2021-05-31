@@ -37,6 +37,7 @@ const OrderConfirm = () => {
   const classes = useStyles();
   const pattern = /^[0-9]{3}-[0-9]{4}$/;
   const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
+  const pattern3 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
   //初期値
   const [destinationUserName, setDestinationUserName] = useState("")
@@ -235,7 +236,7 @@ const DeliveriesTimes = [
           (destinationDay === numOrderDay && 
               (numOrderTime - hour <= 3) || 
               (numOrderTime - hour === 0)) ||
-              !pattern3.test(creditCard)) {
+              !pattern3.test(creditCardNo)) {
             console.log('入力完了していません2'); 
         } else {
           history.push('/orderfinished');

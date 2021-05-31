@@ -96,6 +96,7 @@ export const OrderError = (userName, email, zipCode, address, tel, orderYear, or
             return false
         };
 
-        console.log(orderYear + orderMonth + orderDay + orderTime);
+        // console.log(orderYear + orderMonth + orderDay + orderTime);
+    } 
     }
 }
