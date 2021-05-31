@@ -15,15 +15,11 @@ import { getTopping } from '../reducks/topping/selectors';
 import { fetchTopping } from '../reducks/topping/operations';
 import { fetchProducts } from '../reducks/products/operations';
 import { fetchOrders } from '../reducks/users/operations';
-import { CardMedia } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { DeleteOrdersInfo } from '../reducks/topping/operations';
 import { getUserId } from '../reducks/users/selector';
-import {Link} from '@material-ui/core'
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import CancelIcon from '@material-ui/icons/Cancel';
-import { setCancel } from '../reducks/users/operations';
+
 
 const useStyles = makeStyles({
   table: {
@@ -359,7 +355,6 @@ const CartList = () => {
                         
                       </TableCell>
                       <TableCell>
-<<<<<<< HEAD
                                   {itemInfos.toppings.length === 0 ? <p>なし</p> :
                                   <div>
                                     
@@ -372,17 +367,6 @@ const CartList = () => {
                                         
                                         <div  key={order.id}>
                                           
-=======
-                        {order.itemInfo.map((itemInfos) => (
-                          <div key={order.id}>
-                            <TableCell>
-                              <div>
-                                <div>
-                                  {itemInfos === undefined
-                                    ? ''
-                                    : itemInfos.toppings.map((top) => (
-                                        <div key={order.id}>
->>>>>>> f3982b033dc2c78ac6ace9511079aed3276cd2b4
                                           {topping === undefined
                                             ? ''
                                             : topping
