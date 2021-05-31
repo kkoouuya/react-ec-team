@@ -1,6 +1,6 @@
-import React from 'react';
-import { isValidRequiredInput } from "../../function/common";
-import { useDispatch } from "react-redux";
+// import React from 'react';
+// import { isValidRequiredInput } from "../../function/common";
+// import { useDispatch } from "react-redux";
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
@@ -22,7 +22,7 @@ export const OrderError = (userName, email, zipcode, address, tel, date)=> {
         if(email === '') {
             console.log('ok');
             alert('メールアドレスを入力してください。');
-        } else if(email.indexOf('@') == -1) {
+        } else if(email.indexOf('@') === -1) {
             console.log('NG');
             alert('メールアドレスの形式が不正です。もう1度お試しください。');
         }
@@ -50,10 +50,10 @@ export const OrderError = (userName, email, zipcode, address, tel, date)=> {
 
         const today = new Date();
         console.log(today);
-        const year = today.getFullYear();
-        const month = "0" + (1 + today.getMonth())
-        const day = today.getDate();
-        const hour = today.getHours();
+        // const year = today.getFullYear();
+        // const month = "0" + (1 + today.getMonth())
+        // const day = today.getDate();
+        // const hour = today.getHours();
 
         if(date === ''){
             console.log('配達')
