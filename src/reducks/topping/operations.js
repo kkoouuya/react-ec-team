@@ -63,6 +63,7 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
 
   // クリックしたらローカルのカートに情報を保存
   const ref = ordersRef.doc();
+  console.log(ref)
   const id = ref.id;
   localCart[0].itemInfo.push({
     id: id,
