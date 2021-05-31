@@ -18,7 +18,7 @@ import { fetchOrders } from '../reducks/users/operations';
 import { CardMedia } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
-import { deleteOrdersInfo } from '../reducks/topping/operations';
+import { DeleteOrdersInfo } from '../reducks/topping/operations';
 import { getUserId } from '../reducks/users/selector';
 
 const useStyles = makeStyles({
@@ -35,7 +35,6 @@ const CartList = () => {
   const topping = getTopping(selecter2);
   const orders = getOrders(selector);
   const uid = getUserId(selector);
-
 
   const [total, setTotalPrice] = useState(0);
   const [priceTopping, setPriceTopping] = useState(0);
@@ -126,7 +125,7 @@ const CartList = () => {
 
   useEffect(() => {
     dispatch(fetchOrders());
-  }, [dispatch]);
+  }, [dispatch, orders]);
 
   useEffect(() => {
     dispatch(fetchTopping());
@@ -167,7 +166,7 @@ const CartList = () => {
                     <TableRow key={order.id}>
                       <TableCell>
                         {order.itemInfo.map((itemInfos) => (
-                          <div>
+                          <div key={order.id}>
                             <TableCell>
                               {/* {itemInfos.itemNum}個 */}
                               {products === undefined
@@ -181,6 +180,7 @@ const CartList = () => {
                                       return (
                                         <>
                                           <CardMedia
+                                            key={order.id}
                                             component="img"
                                             alt="Contemplative Reptile"
                                             height="200"
@@ -199,7 +199,7 @@ const CartList = () => {
                       </TableCell>
                       <TableCell>
                         {order.itemInfo.map((itemInfos) => (
-                          <div>
+                          <div key={order.id}>
                             <TableCell>
                               {itemInfos.itemNum}個
                               {products === undefined
@@ -211,7 +211,7 @@ const CartList = () => {
                                     )
                                     .map((product) => {
                                       return itemInfos.itemSize === 0 ? (
-                                        <div>
+                                        <div key={order.id}>
                                           <div>Mサイズ</div>{' '}
                                           <div>
                                             {product.Mprice.toLocaleString()}{' '}
@@ -234,7 +234,7 @@ const CartList = () => {
                       </TableCell>
                       <TableCell>
                         {order.itemInfo.map((itemInfos) => (
-                          <div>
+                          <div  key={order.id}>
                             <TableCell>
                               <div>
                                 <div>
@@ -243,7 +243,7 @@ const CartList = () => {
                                     {itemInfos === undefined
                                     ? ''
                                     : itemInfos.toppings.map((top) => (
-                                        <div>
+                                        <div  key={order.id}>
                                           {topping === undefined
                                             ? ''
                                             : topping
@@ -349,10 +349,17 @@ const CartList = () => {
                         {order.itemInfo.map((itemInfos) => (
                           <div>
                             <Button
+                              key={order.id}
                               variant="contained"
                               color="primary"
                               onClick={() => {
-                                dispatch(deleteOrdersInfo(uid, itemInfos,order.orderId));
+                                dispatch(
+                                  DeleteOrdersInfo(
+                                    uid,
+                                    itemInfos,
+                                    order.orderId
+                                  )
+                                );
                               }}
                             >
                               削除

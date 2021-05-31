@@ -1,4 +1,6 @@
 // import { useEffect, useState } from 'react';
+// import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { db } from '../../firebase/index';
 // import { push } from 'connected-react-router';
 // import firebase from 'firebase/app';
@@ -108,7 +110,7 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
   };
 };
 
-export const deleteOrdersInfo = (uid, itemInfos, orderId) => {
+export const DeleteOrdersInfo = (uid, itemInfos, orderId) => {
   const itemInfosId = itemInfos.id;
   // コレクションの取得
   const ordersRef = db.collection('users').doc(uid).collection('orders');
@@ -134,4 +136,5 @@ export const deleteOrdersInfo = (uid, itemInfos, orderId) => {
         });
       });
   };
+  // }, [,itemInfos.id, orderId, uid]);
 };
