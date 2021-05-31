@@ -60,8 +60,10 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
   const ordersRef = db.collection('users').doc(uid).collection('orders');
 
   // クリックしたらローカルのカートに情報を保存
+  const ref = ordersRef.doc();
+  const id = ref.id;
   localCart[0].itemInfo.push({
-    // id: 'ffwafewawefew',
+    id: id,
     itemId: selectedId,
     itemNum: Number(num),
     itemSize: Number(LabelName),
@@ -94,6 +96,7 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
           },
         ];
         localCart[0].itemInfo.push({
+          id: id,
           itemId: selectedId,
           itemNum: Number(num),
           itemSize: Number(LabelName),
@@ -102,5 +105,39 @@ export const addOrdersInfo = (selectedId, num, LabelName, toppings, uid) => {
         ordersRef.doc(id).set(localCart[0]);
       }
     });
+  };
+};
+
+export const deleteOrdersInfo = (uid, itemInfos, orderId) => {
+  console.log(uid);
+  console.log(itemInfos.id);
+  console.log(itemInfos);
+  console.log(orderId);
+
+  const itemInfosId = itemInfos.id;
+  // コレクションの取得
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
+
+  return async (dispatch) => {
+    ordersRef
+      .where('status', '==', 0)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let deleteItem = doc
+            .data()
+            .itemInfo.filter((item) => item.id !== itemInfosId);
+          localCart = [
+            {
+              orderId: orderId,
+              itemInfo: deleteItem,
+              status: 0,
+            },
+          ];
+          console.log(localCart);
+          console.log(orderId);
+          ordersRef.doc(orderId).set(localCart[0]);
+        });
+      });
   };
 };

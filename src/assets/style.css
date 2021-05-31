@@ -59,3 +59,7 @@ a {
 .item-title {
   font-size: 1.4rem !important;
 }
+
+.cartlist {
+  padding: 0 50px 0 50px;
+}

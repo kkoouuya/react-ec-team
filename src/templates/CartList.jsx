@@ -18,6 +18,8 @@ import { fetchOrders } from '../reducks/users/operations';
 import { CardMedia } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
+import { deleteOrdersInfo } from '../reducks/topping/operations';
+import { getUserId } from '../reducks/users/selector';
 
 const useStyles = makeStyles({
   table: {
@@ -32,7 +34,8 @@ const CartList = () => {
   const selecter2 = useSelector((state) => state);
   const topping = getTopping(selecter2);
   const orders = getOrders(selector);
-  //console.log(topping);
+  const uid = getUserId(selector);
+
 
   const [total, setTotalPrice] = useState(0);
   const [priceTopping, setPriceTopping] = useState(0);
@@ -40,10 +43,8 @@ const CartList = () => {
   const toppingArray = [];
 
   const createToppingPrice = () => {
-    console.log('topping金額更新！');
     let toppingPrice = 0;
     const filterOrder = orders.filter((order) => order.status === 0);
-    console.log(filterOrder);
     filterOrder.forEach((item) => {
       item.itemInfo.forEach((el) => {
         el.toppings.forEach((el1) => {
@@ -55,13 +56,10 @@ const CartList = () => {
               if (el1.toppingSize === 0) {
                 toppingPrice = toppingPrice + el5.Mprice;
                 toppingArray.push(toppingPrice);
-                console.log(toppingPrice);
               } else {
                 toppingPrice = toppingPrice + el5.Lprice;
                 toppingArray.push(toppingPrice);
-                console.log(toppingPrice);
               }
-              // console.log(selectTopping);
             });
           }
         });
@@ -73,17 +71,14 @@ const CartList = () => {
   };
 
   const createTotalPrice = () => {
-    console.log('total金額更新！');
     let totalPrice = 0;
     const filterOrder = orders.filter((order) => order.status === 0);
-    //console.log(filterOrder);
     filterOrder.forEach((item) => {
       item.itemInfo.forEach((el) => {
         if (products) {
           const selectProducts = products.filter(
             (product) => product.id === el.itemId
           );
-          //console.log(selectProducts);
           selectProducts.forEach((select) => {
             if (el.itemSize === 0) {
               totalPrice = totalPrice + select.Mprice * el.itemNum;
@@ -103,7 +98,6 @@ const CartList = () => {
               } else {
                 totalPrice = totalPrice + el5.Lprice * el.itemNum;
               }
-              // console.log(selectTopping);
             });
           }
         });
@@ -115,17 +109,14 @@ const CartList = () => {
   useEffect(() => {
     createToppingPrice();
   });
-  console.log(priceTopping);
 
   useEffect(() => {
     createTotalPrice();
   });
-  console.log(priceTopping);
 
   const dispatch = useDispatch();
 
   const products = getProducts(selector);
-  // console.log(products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -137,10 +128,6 @@ const CartList = () => {
     dispatch(fetchOrders());
   }, [dispatch]);
 
-  // console.log(orders);
-
-  // console.log(topping);
-
   useEffect(() => {
     dispatch(fetchTopping());
   }, [dispatch]);
@@ -149,16 +136,15 @@ const CartList = () => {
   const classes = useStyles();
 
   let toppingPrice = 0;
-  console.log(toppingPrice);
 
   return (
-    <>
+    <div className="cartlist">
       <h2>ショッピングカート</h2>
       <div>
         {orders === undefined ? (
           <h2>カートに商品がありません</h2>
         ) : (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} key={orders.id}>
             <Table
               className={classes.table}
               size="small"
@@ -251,40 +237,44 @@ const CartList = () => {
                             <TableCell>
                               <div>
                                 <div>
-                                  {itemInfos.toppings.map((top) => (
-                                    <div>
-                                      {topping === undefined
-                                        ? ''
-                                        : topping
-                                            .filter(
-                                              (to) => to.id === top.toppingId
-                                            )
-                                            .map((to) => {
-                                              if (top.toppingSize === 0) {
-                                                toppingPrice =
-                                                  toppingPrice + to.Mprice;
-                                              } else {
-                                                toppingPrice =
-                                                  toppingPrice + to.Lprice;
-                                              }
-                                              return top.toppingSize === 0 ? (
-                                                <>
-                                                  <div>{to.name}</div>
-                                                  <div>
-                                                    ＋１倍/{to.Mprice} 円
-                                                  </div>
-                                                </>
-                                              ) : (
-                                                <>
-                                                  <div>{to.name}</div>
-                                                  <div>
-                                                    ＋２倍/{to.Lprice}円
-                                                  </div>
-                                                </>
-                                              );
-                                            })}
-                                    </div>
-                                  ))}
+                                  {itemInfos === undefined
+                                    ? ''
+                                    : itemInfos.toppings.map((top) => (
+                                        <div>
+                                          {topping === undefined
+                                            ? ''
+                                            : topping
+                                                .filter(
+                                                  (to) =>
+                                                    to.id === top.toppingId
+                                                )
+                                                .map((to) => {
+                                                  if (top.toppingSize === 0) {
+                                                    toppingPrice =
+                                                      toppingPrice + to.Mprice;
+                                                  } else {
+                                                    toppingPrice =
+                                                      toppingPrice + to.Lprice;
+                                                  }
+                                                  return top.toppingSize ===
+                                                    0 ? (
+                                                    <>
+                                                      <div>{to.name}</div>
+                                                      <div>
+                                                        ＋１倍/{to.Mprice} 円
+                                                      </div>
+                                                    </>
+                                                  ) : (
+                                                    <>
+                                                      <div>{to.name}</div>
+                                                      <div>
+                                                        ＋２倍/{to.Lprice}円
+                                                      </div>
+                                                    </>
+                                                  );
+                                                })}
+                                        </div>
+                                      ))}
                                 </div>
                               </div>
                             </TableCell>
@@ -350,6 +340,21 @@ const CartList = () => {
                           </>
                         ))}
                       </TableCell>
+                      <TableCell>
+                        {order.itemInfo.map((itemInfos) => (
+                          <div>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => {
+                                dispatch(deleteOrdersInfo(uid, itemInfos,order.orderId));
+                              }}
+                            >
+                              削除
+                            </Button>
+                          </div>
+                        ))}
+                      </TableCell>
                     </TableRow>
                   ))}
 
@@ -392,7 +397,7 @@ const CartList = () => {
       >
         注文確認ボタンに進む
       </Button>
-    </>
+    </div>
   );
 };
 export default CartList;
