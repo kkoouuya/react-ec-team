@@ -163,6 +163,7 @@ const CartList = () => {
                 {orders
                   .filter((order) => order.status === 0)
                   .map((order) => (
+
                     <TableRow key={order.id}>
                       <TableCell>
                         {order.itemInfo.map((itemInfos) => (
@@ -237,7 +238,9 @@ const CartList = () => {
                             <TableCell>
                               <div>
                                 <div>
-                                  {itemInfos === undefined
+                                  {itemInfos.toppings.length === 0 ? <p>なし</p> :
+                                  <div>
+                                    {itemInfos === undefined
                                     ? ''
                                     : itemInfos.toppings.map((top) => (
                                         <div>
@@ -275,6 +278,8 @@ const CartList = () => {
                                                 })}
                                         </div>
                                       ))}
+                                    </div>}
+                                  
                                 </div>
                               </div>
                             </TableCell>

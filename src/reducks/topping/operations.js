@@ -129,6 +129,7 @@ export const deleteOrdersInfo = (uid, itemInfos, orderId) => {
               status: 0,
             },
           ];
+          console.log(localCart[0]);
           ordersRef.doc(orderId).set(localCart[0]);
         });
       });
