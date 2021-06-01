@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -21,7 +20,6 @@ const OrderConfirm = () => {
   const dispatch = useDispatch();
   const sumPrice = useLocation().state.sumPrice;
   const uid = getUserId(selector);
-  const history = useHistory();
 
   const [destinationUserName, setDestinationUserName] = useState('');
   const [destinationZipcode, setDestinationZipcode] = useState('');
@@ -440,7 +438,6 @@ const OrderConfirm = () => {
           color="primary"
           name="button"
           onClick={() => {
-            history.push('/orderfinished');
             dispatch(
               addPaymentInfo(
                 uid,

@@ -61,7 +61,6 @@ export const signUp = (
       return false;
     }
     if (!pattern.test(zipcode)) {
-      console.log(zipcode);
       alert('郵便番号は XXX-XXXX の形式で入力してください');
       return false;
     }
@@ -279,12 +278,50 @@ export const addPaymentInfo = (
   sumPrice,
   paymentValue
 ) => {
-  const ordersRef = db.collection('users').doc(uid).collection('orders');
-  console.log(FirebaseTimestamp.now().toDate());
-  const timestamp = FirebaseTimestamp.now().toDate();
+  const browserHistory = createBrowserHistory();
 
   return async (dispatch) => {
-    ordersRef
+    // Validations
+    if (
+      !isValidRequiredInput(
+        destinationUserName,
+        destinationZipcode,
+        destinationAddress,
+        destinationTel,
+        destinationDate,
+        creditCardNo,
+        paymentValue
+      )
+    ) {
+      alert('必須項目が未入力です。');
+      return false;
+    }
+
+    // if (!isValidEmailFormat(email)) {
+    //   alert('メールアドレスの形式が不正です。もう1度お試しください。');
+    //   return false;
+    // }
+    // if (password !== confirmPassword) {
+    //   alert('パスワードが一致しません。もう1度お試しください。');
+    //   return false;
+    // }
+    // if (password.length < 6) {
+    //   alert('パスワードは6文字以上で入力してください。');
+    //   return false;
+    // }
+    if (!pattern.test(destinationZipcode)) {
+      alert('郵便番号は XXX-XXXX の形式で入力してください');
+      return false;
+    }
+    if (destinationTel.match(/^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/)) {
+      alert('電話番号は XXXX-XXXX-XXXX の形式で入力してください');
+      return false;
+    }
+
+    const ordersRef = db.collection('users').doc(uid).collection('orders');
+    const timestamp = FirebaseTimestamp.now().toDate();
+
+    return ordersRef
       .where('status', '==', 0)
       .get()
       .then((querySnapshot) => {
@@ -305,65 +342,64 @@ export const addPaymentInfo = (
             totalPrice: sumPrice,
           });
         });
+        browserHistory.push('/orderfinished');
       });
-      
   };
 };
 
 export const listenAuthState = () => {
   const browserHistory = createBrowserHistory();
   return async (dispatch) => {
-      return auth.onAuthStateChanged(user => {
-          if (user) {
-            
-            usersRef
-        .doc(user.uid)
-        .collection('userinfo')
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
+    return auth.onAuthStateChanged((user) => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .collection('userinfo')
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const data = doc.data();
 
-            if (!data) {
-              throw new Error('ユーザーデータが存在しません');
-            }
+              if (!data) {
+                throw new Error('ユーザーデータが存在しません');
+              }
 
-            dispatch(
-              signInAction({
-                email: data.email,
-                isSignedIn: true,
-                uid: user.uid,
-                username: data.username,
-                address: data.address,
-                tel: data.tel,
-                zipcode: data.zipcode,
-              })
-            );
-            browserHistory.push('/');
+              dispatch(
+                signInAction({
+                  email: data.email,
+                  isSignedIn: true,
+                  uid: user.uid,
+                  username: data.username,
+                  address: data.address,
+                  tel: data.tel,
+                  zipcode: data.zipcode,
+                })
+              );
+              browserHistory.push('/');
+            });
           });
-        });
-              // usersRef.doc(user.uid).collection('userinfo').get()
-              //     .then(snapshot => {
-              //         const data = snapshot.data()
-              //         if (!data) {
-              //             throw new Error('ユーザーデータが存在しません。')
-              //         }
-              //         console.log('userdata');
+        // usersRef.doc(user.uid).collection('userinfo').get()
+        //     .then(snapshot => {
+        //         const data = snapshot.data()
+        //         if (!data) {
+        //             throw new Error('ユーザーデータが存在しません。')
+        //         }
+        //         console.log('userdata');
 
-              //         // Update logged in user state
-              //         dispatch(signInAction({
-              //           email: data.email,
-              //           isSignedIn: true,
-              //           uid: userId,
-              //           username: data.username,
-              //           address: data.address,
-              //           tel: data.tel,
-              //           zipcode: data.zipcode,
-              //         }))
-              //     })
-          } else {
-              browserHistory.push('/')
-          }
-      })
-  }
+        //         // Update logged in user state
+        //         dispatch(signInAction({
+        //           email: data.email,
+        //           isSignedIn: true,
+        //           uid: userId,
+        //           username: data.username,
+        //           address: data.address,
+        //           tel: data.tel,
+        //           zipcode: data.zipcode,
+        //         }))
+        //     })
+      } else {
+        browserHistory.push('/');
+      }
+    });
+  };
 };
