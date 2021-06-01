@@ -212,7 +212,7 @@ export const signOut = () => {
       .signOut()
       .then(() => {
         dispatch(signOutAction());
-        browserHistory.push('/login');
+        browserHistory.push('/itemlist');
       })
       .catch(() => {
         throw new Error('ログアウトに失敗しました。');
@@ -362,7 +362,7 @@ export const listenAuthState = () => {
               //         }))
               //     })
           } else {
-              browserHistory.push('/signin')
+              browserHistory.push('/')
           }
       })
   }
