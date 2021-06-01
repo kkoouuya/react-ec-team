@@ -14,6 +14,10 @@ export const signInAction = (userState) => {
       isSignedIn: true,
       uid: userState.uid,
       username: userState.username,
+      zipcode: userState.zipcode,
+      tel:userState.tel,
+      address: userState.address,
+      email:userState.email
     },
   };
 };
@@ -22,11 +26,7 @@ export const SIGN_OUT = 'SIGN_OUT';
 export const signOutAction = () => {
   return {
     type: 'SIGN_OUT',
-    payload: {
-      isSignedIn: false,
-      uid: '',
-      username: '',
-    },
+    payload: null
   };
 };
 

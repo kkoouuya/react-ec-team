@@ -10,19 +10,19 @@ const App = () => {
   const selector = useSelector((state) => state);
   let uid = getUserId(selector);
 
-  useRef(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        uid = user.uid;
-        // console.log(user.uid);
-        console.log(uid);
-        // console.log('ログインしました！');
-      } else {
-        uid = null;
-        // console.log('ログアウトしました！');
-      }
-    });
-  }, [uid]);
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       uid = user.uid;
+  //       // console.log(user.uid);
+  //       console.log(uid);
+  //       // console.log('ログインしました！');
+  //     } else {
+  //       uid = null;
+  //       // console.log('ログアウトしました！');
+  //     }
+  //   });
+  // }, [uid]);
 
   return (
     <div>

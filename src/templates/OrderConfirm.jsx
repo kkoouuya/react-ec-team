@@ -389,6 +389,64 @@ const OrderConfirm = () => {
             />
           </form>
         </Grid>
+        <Grid item xs={12} sm={8}>
+          <FormLabel component="legend">
+            Delivery Time
+            <RadioGroup
+              row
+              aria-label="position"
+              name="position"
+              defaultValue="top"
+            >
+              <FormControlLabel
+                value="10時"
+                labelPlacement="end"
+                control={<Radio color="primary" />}
+                label="10時"
+              />
+              <FormControlLabel
+                value="11時"
+                control={<Radio color="primary" />}
+                label="11時"
+              />
+              <FormControlLabel
+                value="12時"
+                control={<Radio color="primary" />}
+                label="12時"
+              />
+              <FormControlLabel
+                value="13時"
+                control={<Radio color="primary" />}
+                label="13時"
+              />
+              <FormControlLabel
+                value="14時"
+                control={<Radio color="primary" />}
+                label="14時"
+              />
+              <FormControlLabel
+                value="15時"
+                control={<Radio color="primary" />}
+                label="15時"
+              />
+              <FormControlLabel
+                value="16時"
+                control={<Radio color="primary" />}
+                label="16時"
+              />
+              <FormControlLabel
+                value="17時"
+                control={<Radio color="primary" />}
+                label="17時"
+              />
+              <FormControlLabel
+                value="18時"
+                control={<Radio color="primary" />}
+                label="18時"
+              />
+            </RadioGroup>
+          </FormLabel>
+        </Grid>
         {/* <form className={classes.root} noValidate>
           <div>
             <TextField
@@ -495,23 +553,21 @@ const OrderConfirm = () => {
           variant="contained"
           color="primary"
           name="button"
-          onClick={
-            () => {
-              dispatch(
-                addPaymentInfo(
-                  uid,
-                  destinationUserName,
-                  destinationZipcode,
-                  destinationAddress,
-                  destinationTel,
-                  destinationDate,
-                  creditCardNo,
-                  sumPrice,
-                  Number(paymentValue)
-                )
-              );
-            }
-          }
+          onClick={() => {
+            dispatch(
+              addPaymentInfo(
+                uid,
+                destinationUserName,
+                destinationZipcode,
+                destinationAddress,
+                destinationTel,
+                destinationDate,
+                creditCardNo,
+                sumPrice,
+                Number(paymentValue)
+              )
+            );
+          }}
         >
           この内容で注文する
         </Button>
