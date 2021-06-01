@@ -11,10 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //import { SignIn } from '../reducks/users/operations';
 import { Link } from 'react-router-dom';
-import { getUserId, getUserName } from '../reducks/users/selector';
+// import { getUserId, getUserName } from '../reducks/users/selector';
 import signIn from '../reducks/users/operations';
 
 const useStyles = makeStyles((theme) => ({
