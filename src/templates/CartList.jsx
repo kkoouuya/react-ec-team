@@ -134,6 +134,8 @@ const CartList = () => {
   //------------------------------
 
   const classes = useStyles();
+  const Array = []
+  //console.log(orders);
 
   let toppingPrice = 0;
   // const topPriceArray = []
@@ -141,9 +143,9 @@ const CartList = () => {
   return (
     <div className="cartlist">
       {orders === undefined ? (
-        ''
+      ''
       ) :
-        !orders.filter((el) => el.status === 0)
+      !orders.filter(el => el.status === 0)
       
        ? (
         <div align="center">
