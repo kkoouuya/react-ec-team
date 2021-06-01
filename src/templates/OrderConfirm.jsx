@@ -21,37 +21,25 @@ const OrderConfirm = () => {
   const dispatch = useDispatch();
   const sumPrice = useLocation().state.sumPrice;
   const uid = getUserId(selector);
+  const history = useHistory();
 
-  // const pattern = /^[0-9]{3}-[0-9]{4}$/;
-  // const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
-
-  //初期値
   const [destinationUserName, setDestinationUserName] = useState('');
-  // const [destinationEmail, setDestinationEmail] = useState('');
   const [destinationZipcode, setDestinationZipcode] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [destinationTel, setDestinationTel] = useState('');
-
-  //配達日時
   const [destinationDate, setDestinationDate] = useState('');
-
-  //支払い方法ラジオボタン
-  const [paymentMethods, setPaymentMethods] = useState('');
-
-  //支払い方法
-  // const [cash, setCash] = useState('');
   const [creditCardNo, setCreditCardNo] = useState('');
+  const [paymentValue, setPaymentValue] = useState('');
 
-  //入力値
+  //名前
   const inputOrderUserName = useCallback(
     (e) => {
-      if (e.target.value === '') {
-      }
       setDestinationUserName(e.target.value);
     },
     [setDestinationUserName]
   );
 
+  //郵便番号
   const inputOrderZipcode = useCallback(
     (e) => {
       setDestinationZipcode(e.target.value);
@@ -59,6 +47,7 @@ const OrderConfirm = () => {
     [setDestinationZipcode]
   );
 
+  //メールアドレス
   const inputOrderAddress = useCallback(
     (e) => {
       setDestinationAddress(e.target.value);
@@ -66,6 +55,7 @@ const OrderConfirm = () => {
     [setDestinationAddress]
   );
 
+  //電話番号
   const inputOrderTel = useCallback(
     (e) => {
       setDestinationTel(e.target.value);
@@ -73,6 +63,7 @@ const OrderConfirm = () => {
     [setDestinationTel]
   );
 
+  //配達日
   const inputOrderDate = useCallback(
     (e) => {
       setDestinationDate(e.target.value);
@@ -80,39 +71,85 @@ const OrderConfirm = () => {
     [setDestinationDate]
   );
 
-  const inputOrderPay = useCallback(
+  //支払い方法
+  const changePaymentValue = useCallback(
     (e) => {
-      setPaymentMethods(e.target.value);
+      setPaymentValue(e.target.value);
     },
-    [setPaymentMethods]
+    [setPaymentValue]
   );
 
+  //カード番号
   const inputCreditCardNo = useCallback(
     (e) => {
       setCreditCardNo(e.target.value);
     },
     [setCreditCardNo]
   );
+  // メール
+  // const destinationEmailChange = useCallback(
+  //   (e) => {
+  //     setDestinationEmail(e.target.value);
+  //   },
+  //   [setDestinationEmail]
+  // );
 
-  const [paymentValue, setPaymentValue] = useState('');
-  const changePaymentValue = (e) => {
-    setPaymentValue(e.target.value);
+  //配達希望時間
+  // const destinationPreTimeChange = useCallback(
+  //   (e) => {
+  //     setDestinationPreTime(e.target.value);
+  //   },
+  //   [setDestinationPreTime]
+  // );
+
+  const clear = () => {
+    console.log('クリアボタンが発動しました');
+    setDestinationUserName('');
+    setDestinationZipcode('');
+    setDestinationAddress('');
+    setDestinationTel('');
+    setDestinationDate('');
+    setCreditCardNo('');
+    setPaymentValue('');
   };
 
-  const history = useHistory();
-  // const inputRef = useRef(null);
+  //エラーメッセージ
+  // if (!destinationUserName) {
+  //   errorMessages.errorName = '名前を入力してください';
+  // } else {
+  //   errorMessages.errorName = '';
+  // }
 
-  // const [inputError, setInputError] = useState(false);
-  // const handleChange = () => {
-  //   if (inputRef.current) {
-  //     const ref = inputRef.current;
-  //     if (!ref.validity.valid) {
-  //       setInputError(true);
-  //     } else {
-  //       setInputError(false);
-  //     }
-  //   }
-  // };
+  // if (!destinationEmail) {
+  //   errorMessages.errorEmail = 'メールアドレスを入力してください';
+  //   //     //indexOfは文字列から引数が見つからなかったら-1を返す
+  // } else if (destinationEmail.indexOf('@') === -1) {
+  //   errorMessages.errorEmail = 'メールアドレスの形式が不正です';
+  // } else {
+  //   errorMessages.errorEmail = '';
+  // }
+
+  // if (!destinationZipcode) {
+  //   errorMessages.errorZipcode = '郵便番号を入力してください';
+  // } else if (!destinationZipcode.match(/^[0-9]{3}-[0-9]{4}$/)) {
+  //   errorMessages.errorZipcode = '郵便番号の形式が不正です';
+  // } else {
+  //   errorMessages.errorZipcode = '';
+  // }
+
+  // if (!destinationAddress) {
+  //   errorMessages.errorAddress = '住所を入力してください';
+  // } else {
+  //   errorMessages.errorAddress = '';
+  // }
+
+  // if (!destinationTel) {
+  //   errorMessages.errorTel = '電話番号を入力してください';
+  // } else if (!destinationTel.match(/^0\d{1,4}-\d{1,4}-\d{3,4}$/)) {
+  //   errorMessages.errorTel = '電話番号の形式が不正です';
+  // } else {
+  //   errorMessages.errorTel = '';
+  // }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -360,8 +397,8 @@ const OrderConfirm = () => {
               <RadioGroup
                 aria-label="payment"
                 name="payment"
-                value={paymentMethods}
-                onChange={inputOrderPay}
+                value={paymentValue}
+                // onChange={inputOrderPay}
               >
                 <FormControlLabel
                   onChange={changePaymentValue}
@@ -380,7 +417,7 @@ const OrderConfirm = () => {
                   label="クレジットカード"
                 />
               </RadioGroup>
-              {paymentMethods === '2' ? (
+              {paymentValue === '2' ? (
                 <TextField
                   id="standard-basic"
                   label="Credit-card Number"
