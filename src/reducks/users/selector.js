@@ -13,3 +13,8 @@ export const getOrders = createSelector(
   [usersSelector],
   (state) => state.orders
 );
+
+export const getOrderHistory = createSelector(
+  [usersSelector],
+  (state) => state.orderHistory
+)

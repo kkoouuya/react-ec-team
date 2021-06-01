@@ -3,7 +3,7 @@
 export const initialState = {
   users: {
     isSignedIn: false,
-    uid: '',
+    uid: 'n6NXIuFHdVe6Ue9vtBaCSHuTZ372',
     orders: [],
     username: '',
     email: '',

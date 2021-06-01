@@ -799,7 +799,7 @@ const ItemDetail = () => {
                   ? dispatch(
                       addOrdersInfo(selectedId, num, LabelName, toppings, uid)
                     )
-                  : handleLink('/');
+                  : handleLink('/login');
               }}
             >
               カートに追加

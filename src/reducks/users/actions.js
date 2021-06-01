@@ -54,3 +54,12 @@ export const fetchOrdersAction = (orders) => {
     payload: orders,
   };
 };
+
+// export const ADD_PAYMENT_INFO_ACTION = 'add_payment_info_action';
+// export const addPaymentInfoAction = (paymentInfo) => {
+//   console.log('actions発動')
+//   return {
+//     type: 'add_payment_info_action',
+//     payload: paymentInfo,
+//   };
+// };

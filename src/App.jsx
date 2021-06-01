@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import './assets/style.css';
 import Router from './Router';
 import { auth } from './firebase/index';
