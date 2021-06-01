@@ -6,7 +6,8 @@ export const getUserId = createSelector([usersSelector], (state) => state.uid);
 
 export const getUserName = createSelector(
   [usersSelector], 
-  (state) => state.username);
+  (state) => state.username ? state.username : 'ゲスト'
+  );
 
 export const getOrders = createSelector(
   [usersSelector],

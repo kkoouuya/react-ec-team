@@ -4,7 +4,7 @@ import {
   isValidEmailFormat,
   isValidRequiredInput,
 } from "../../function/common";
-import { signInAction, fetchOrdersAction, signUpAction } from "./actions";
+import { signInAction, fetchOrdersAction, signUpAction,signOutAction } from "./actions";
 import { createBrowserHistory } from "history";
 //const usersRef = db.collection('users')
 import { useDispatch } from "react-redux";
@@ -122,40 +122,35 @@ const usersRef = db.collection('users')
                   throw new Error('ユーザーIDを取得できません');
               }
               const userId = userState.uid;
-              console.log(userId);
+              
 
-              return db.collection(`users/${userId}/userinfo`).get().then(snapshot => {
-                    const data = snapshot.data();
-                    console.log(data);
+              return usersRef.doc(userId).collection('userinfo').get().then(querySnapshot => {
+                  
+                querySnapshot.forEach(doc => {
+                  
+                  const data = doc.data()
+
+                  if (!data) {
+                    throw new Error('ユーザーデータが存在しません');
+                }
+
+                dispatch(signInAction({
+                    email: data.email,
+                    isSignedIn: true,
+                    uid: userId,
+                    username: data.username,
+                    address: data.address,
+                    tel:data.tel,
+                    zipcode:data.zipcode
+                }));
+                browserHistory.push("/");
+
+                })
+                
+               
                  
                 
-                  // if (!data) {
-                  //     throw new Error('ユーザーデータが存在しません');
-                  // }
-
-                //   dispatch(signInAction({
-                //       email: data.email,
-                //       isSignedIn: true,
-                //       uid: userId,
-                //       username: data.username,
-                //       address: data.address,
-                //       tel:data.tel,
-                //       zipcode:data.zipcode
-                //   }));
-
-                //   console.log({
-                //     email: data.email,
-                //     isSignedIn: true,
-                //     uid: userId,
-                //     username: data.username,
-                //     address: data.address,
-                //     tel:data.tel,
-                //     zipcode:data.zipcode
-                // });
-
-
-                  // dispatch(push('/'))
-                  browserHistory.push("/");
+                 
               })
           })
   }
@@ -212,11 +207,13 @@ export default signIn
 // };
 
 export const signOut = () => {
+  const browserHistory = createBrowserHistory();
   return async (dispatch) => {
-    console.log("ログアウト");
+    
       auth.signOut().then(() => {
+        
           dispatch(signOutAction());
-          dispatch(push('/login'));
+          browserHistory.push("/login");
       }).catch(() => {
           throw new Error('ログアウトに失敗しました。')
       })
