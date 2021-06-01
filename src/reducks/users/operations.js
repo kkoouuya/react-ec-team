@@ -236,7 +236,10 @@ export const fetchOrders = (uid) => {
 };
 
 export const setCancel = (orderId, uid) => {
-  const ordersRef = db.collection('users').doc(uid).collection('orders');
+  const ordersRef = db
+    .collection('users')
+    .doc('1CiNypKuOkdRJL7KKGaV5w7QSKB3')
+    .collection('orders');
   const updateOrdersRef = ordersRef.doc(orderId);
   return updateOrdersRef.update({
     status: 9,

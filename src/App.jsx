@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import './assets/style.css';
 import Router from './Router';
-//import { auth } from './firebase/index';
+import { auth } from './firebase/index';
 import { useSelector } from 'react-redux';
 import { getUserId } from './reducks/users/selector';
 //import {useHistory} from 'react-router-dom'
