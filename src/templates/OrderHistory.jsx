@@ -1,67 +1,117 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// import Paper from "@material-ui/core/Paper";
-import Button from '@material-ui/core/Button';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CancelIcon from '@material-ui/icons/Cancel';
-import HistoryIcon from '@material-ui/icons/History';
-// import IconButton from "@material-ui/core/IconButton";
-import Card from '@material-ui/core/Card';
-// import CardContent from "@material-ui/core/CardContent";
-// import Link from "@material-ui/core/Link";
-import { fetchOrders } from '../reducks/users/operations';
-import { getOrders } from '../reducks/users/selector';
-import { fetchProducts } from '../reducks/products/operations';
+import Paper from '@material-ui/core/Paper';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../reducks/products/selectors';
-import { fetchTopping } from '../reducks/topping/operations';
+//import { FetchCart } from '../reducks/products/operations';
+import { getOrders } from '../reducks/users/selector';
 import { getTopping } from '../reducks/topping/selectors';
+import { fetchTopping } from '../reducks/topping/operations';
+import { fetchProducts } from '../reducks/products/operations';
+import { fetchOrders, fetchOrderHistory } from '../reducks/users/operations';
+import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router';
+import { DeleteOrdersInfo } from '../reducks/topping/operations';
+import { getUserId, getOrderHIstory } from '../reducks/users/selector';
 import { Link } from 'react-router-dom';
-import { setCancel } from '../reducks/users/operations';
-import Grid from '@material-ui/core/Grid';
-import { getUserId } from '../reducks/users/selector';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-// import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 700,
-//   },
-// });
-
+//export default function CartList()
 const OrderHistory = () => {
-  const [double, setDouble] = useState(false);
-  // const [show, setShow] = useState(false);
-  // const [shows, setShows] = useState(true);
-  // const [cancel, setCancel] = useState('キャンセル');
-  const dispatch = useDispatch();
+  const history = useHistory();
   const selector = useSelector((state) => state);
+  const selecter2 = useSelector((state) => state);
+  const topping = getTopping(selecter2);
   const orders = getOrders(selector);
-  const products = getProducts(selector);
-  const topping = getTopping(selector);
   const uid = getUserId(selector);
+  // const orderHistory = getOrderHistory(selector);
+  const dispatch = useDispatch();
+
+  const [total, setTotalPrice] = useState(0);
+
+  const createTotalPrice = () => {
+    let totalPrice = 0;
+    const filterOrder = orders.filter((order) => order.status === 0);
+    filterOrder.forEach((item) => {
+      item.itemInfo.forEach((el) => {
+        if (products) {
+          const selectProducts = products.filter(
+            (product) => product.id === el.itemId
+          );
+          selectProducts.forEach((select) => {
+            if (el.itemSize === 0) {
+              totalPrice = totalPrice + select.Mprice * el.itemNum;
+            } else {
+              totalPrice = totalPrice + select.Lprice * el.itemNum;
+            }
+          });
+        }
+        el.toppings.forEach((el1) => {
+          if (topping) {
+            const selectTopping = topping.filter(
+              (top) => top.id === el1.toppingId
+            );
+            selectTopping.forEach((el5) => {
+              if (el1.toppingSize === 0) {
+                totalPrice = totalPrice + el5.Mprice * el.itemNum;
+              } else {
+                totalPrice = totalPrice + el5.Lprice * el.itemNum;
+              }
+            });
+          }
+        });
+      });
+    });
+    setTotalPrice(totalPrice);
+  };
+
+  // useEffect(() => {
+  //   dispatch(fetchOrderHistory());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   createToppingPrice();
+  // },[]);
 
   useEffect(() => {
-    dispatch(fetchOrders(uid));
-  }, [dispatch, uid]);
+    createTotalPrice();
+  });
+
+  const products = getProducts(selector);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+
+  //cart-----------------------
+
+  useEffect(() => {
+    if (uid) {
+      dispatch(fetchOrders(uid));
+    }
+  }, [dispatch, orders, uid]);
+
   useEffect(() => {
     dispatch(fetchTopping());
   }, [dispatch]);
-  // useEffect(()=>{
-  //   const unsubscribe =db.collection("users").doc("1CiNypKuOkdRJL7KKGaV5w7QSKB3").collection("orders").onSnapshot(snapshots =>{
+  //------------------------------
 
-  //   })
-  // })
+  const classes = useStyles();
+
+  let toppingPrice = 0;
+  // const topPriceArray = []
 
   return (
     <div>
@@ -69,5 +119,4 @@ const OrderHistory = () => {
     </div>
   );
 };
-
 export default OrderHistory;
