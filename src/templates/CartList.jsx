@@ -140,7 +140,10 @@ const CartList = () => {
     <div className="cartlist">
       {orders === undefined ? (
         ''
-      ) : orders.filter((el) => el.status === 0).length === 0 ? (
+      ) :
+        !orders.filter((el) => el.status === 0)
+      
+       ? (
         <div align="center">
           <h2>カートの中身は空です</h2>
           <Link to={{ pathname: '/' }}>
@@ -321,10 +324,11 @@ const CartList = () => {
                                                   円
                                                 </p>
                                               )}
-                                              {itemInfos.toppings.map(
+                                              <div className="hide">{itemInfos.toppings.map(
                                                 (el) => (toppingPrice = 0)
-                                              )}
+                                              )}</div>
                                             </TableCell>
+                                            
                                             <TableCell align="center">
                                               <div>
                                                 <Button
