@@ -305,5 +305,6 @@ export const addPaymentInfo = (
           });
         });
       });
+      
   };
 };

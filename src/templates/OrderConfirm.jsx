@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -81,6 +82,8 @@ const OrderConfirm = () => {
   //入力値
   const inputOrderUserName = useCallback(
     (e) => {
+      if (e.target.value === '') {
+      }
       setDestinationUserName(e.target.value);
     },
     [setDestinationUserName]
@@ -301,6 +304,8 @@ const OrderConfirm = () => {
   // const changeCardValue = (e) => {
   //   serCardValue(e.target.value);
   // };
+
+  const history = useHistory();
 
   return (
     <React.Fragment>
@@ -554,6 +559,7 @@ const OrderConfirm = () => {
           color="primary"
           name="button"
           onClick={() => {
+            history.push('/orderfinished');
             dispatch(
               addPaymentInfo(
                 uid,
