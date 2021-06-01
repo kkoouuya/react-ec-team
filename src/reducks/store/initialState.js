@@ -11,7 +11,7 @@ export const initialState = {
     address: '',
     tel: '',
     payment_method_id: '',
-    date: ''
+    date: '',
   },
   products: {},
   topping: {},

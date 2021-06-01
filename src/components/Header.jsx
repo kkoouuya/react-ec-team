@@ -73,7 +73,7 @@ const Header = () => {
   const handleLink = (path) => history.push(path);
   const selector = useSelector((state) => state);
   const username = getUserName(selector);
-  const uid = getUserId(selector)
+  const uid = getUserId(selector);
   // const uid = getUserId(selector);
 
   // useEffect(() => {
@@ -106,28 +106,36 @@ const Header = () => {
             <span className={classes.span}>さん</span>
           </Typography>
           <div className={classes.sectionDesktop}>
-            <IconButton
-              aria-label="show 17 new notifications"
-              color="inherit"
-              onClick={() => {
-                handleLink('/cartlist');
-              }}
-            >
-              <Badge badgeContent={3} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              aria-label="show 4 new mails"
-              color="inherit"
-              onClick={() => {
-                handleLink('/orderhistory');
-              }}
-            >
-              <Badge badgeContent={4} color="secondary">
-                <ImportContactsIcon />
-              </Badge>
-            </IconButton>
+            {!uid ? (
+              ''
+            ) : (
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+                onClick={() => {
+                  handleLink('/cartlist');
+                }}
+              >
+                <Badge badgeContent={3} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            )}
+            {!uid ? (
+              ''
+            ) : (
+              <IconButton
+                aria-label="show 4 new mails"
+                color="inherit"
+                onClick={() => {
+                  handleLink('/orderhistory');
+                }}
+              >
+                <Badge badgeContent={4} color="secondary">
+                  <ImportContactsIcon />
+                </Badge>
+              </IconButton>
+            )}
           </div>
           {/* <div className={classes.sectionMobile}>
             <IconButton
@@ -142,26 +150,28 @@ const Header = () => {
           </div> */}
         </Toolbar>
       </AppBar>
-      {!uid ? <div className="log-button">
-        <button
-          onClick={() => {
-            handleLink('/login');
-          }}
-        >
-          ログイン
-        </button>
-      </div>
-      :
-      <div className="log-button">
-        <button
-          onClick={() => {
-            dispatch(signOut());
-          }}
-        >
-          ログアウト
-        </button>
-      </div>}
-      
+      {!uid ? (
+        <div className="log-button">
+          <button
+            onClick={() => {
+              handleLink('/login');
+            }}
+          >
+            ログイン
+          </button>
+        </div>
+      ) : (
+        <div className="log-button">
+          <button
+            onClick={() => {
+              dispatch(signOut());
+            }}
+          >
+            ログアウト
+          </button>
+        </div>
+      )}
+
       {/* {renderMobileMenu}
       {renderMenu} */}
     </div>
