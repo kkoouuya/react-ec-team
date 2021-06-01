@@ -213,7 +213,7 @@ export const signOut = () => {
       auth.signOut().then(() => {
         
           dispatch(signOutAction());
-          browserHistory.push("/login");
+         // browserHistory.push("/login");
       }).catch(() => {
           throw new Error('ログアウトに失敗しました。')
       })

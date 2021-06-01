@@ -9,7 +9,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserName } from '../reducks/users/selector';
+import { getUserId, getUserName } from '../reducks/users/selector';
 import { signOut } from '../reducks/users/operations';
 // import { getUserId } from '../reducks/users/selector';
 
@@ -72,6 +72,7 @@ const Header = () => {
   const handleLink = (path) => history.push(path);
   const selector = useSelector((state) => state);
   const username = getUserName(selector);
+  const uid = getUserId(selector)
   // const uid = getUserId(selector);
 
   const dispatch = useDispatch();
@@ -136,7 +137,7 @@ const Header = () => {
           </div> */}
         </Toolbar>
       </AppBar>
-      <div className="log-button">
+      {!uid ? <div className="log-button">
         <button
           onClick={() => {
             handleLink('/login');
@@ -144,16 +145,18 @@ const Header = () => {
         >
           ログイン
         </button>
-        &nbsp;&nbsp;&nbsp;
+      </div>
+      :
+      <div className="log-button">
         <button
           onClick={() => {
             dispatch(signOut());
-            handleLink('/login');
           }}
         >
           ログアウト
         </button>
-      </div>
+      </div>}
+      
       {/* {renderMobileMenu}
       {renderMenu} */}
     </div>
