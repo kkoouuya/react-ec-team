@@ -18,3 +18,7 @@ export const getOrderHistory = createSelector(
   [usersSelector],
   (state) => state.orderHistory
 )
+export const getSignedIn = createSelector(
+  [usersSelector],
+  state => state.isSignedIn
+);

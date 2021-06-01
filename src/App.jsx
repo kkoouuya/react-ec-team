@@ -13,9 +13,11 @@ const App = () => {
   // useEffect(() => {
   //   auth.onAuthStateChanged((user) => {
   //     if (user) {
-  //       uid = user.uid;
+  //       console.log(user)
+  //       const uid = user.uid;
   //       // console.log(user.uid);
   //       console.log(uid);
+        
   //       // console.log('ログインしました！');
   //     } else {
   //       uid = null;
