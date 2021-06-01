@@ -16,6 +16,7 @@ import { useLocation } from 'react-router-dom';
 import { addPaymentInfo } from '../reducks/users/operations';
 import { getUserId } from '../reducks/users/selector';
 
+
 const OrderConfirm = () => {
   const selector = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -102,16 +103,16 @@ const OrderConfirm = () => {
   //   [setDestinationPreTime]
   // );
 
-  const clear = () => {
-    console.log('クリアボタンが発動しました');
-    setDestinationUserName('');
-    setDestinationZipcode('');
-    setDestinationAddress('');
-    setDestinationTel('');
-    setDestinationDate('');
-    setCreditCardNo('');
-    setPaymentValue('');
-  };
+  // const clear = () => {
+  //   console.log('クリアボタンが発動しました');
+  //   setDestinationUserName('');
+  //   setDestinationZipcode('');
+  //   setDestinationAddress('');
+  //   setDestinationTel('');
+  //   setDestinationDate('');
+  //   setCreditCardNo('');
+  //   setPaymentValue('');
+  // };
 
   //エラーメッセージ
   // if (!destinationUserName) {
