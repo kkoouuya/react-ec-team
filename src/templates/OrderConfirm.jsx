@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { addPaymentInfo } from '../reducks/users/operations';
 import { getUserId } from '../reducks/users/selector';
-
 
 const OrderConfirm = () => {
   const selector = useSelector((state) => state);
