@@ -3,6 +3,7 @@ import { db, auth, FirebaseTimestamp } from '../../firebase/index';
 import {
   isValidEmailFormat,
   isValidRequiredInput,
+  isValidCardFormat,
 } from '../../function/common';
 import {
   signInAction,
@@ -275,11 +276,17 @@ export const addPaymentInfo = (
   destinationAddress,
   destinationTel,
   destinationDate,
+  destinationPreTime,
   creditCardNo,
   sumPrice,
   paymentValue
 ) => {
   const browserHistory = createBrowserHistory();
+
+  const date1 = new Date();
+  const nowDate = date1.getDate();
+  const nowHour = date1.getHours();
+  const orderDate = Number(destinationDate.split('-').splice(2, 3).join(''));
 
   return async (dispatch) => {
     // Validations
@@ -290,7 +297,7 @@ export const addPaymentInfo = (
         destinationAddress,
         destinationTel,
         destinationDate,
-        creditCardNo,
+        destinationPreTime,
         paymentValue
       )
     ) {
@@ -298,24 +305,34 @@ export const addPaymentInfo = (
       return false;
     }
 
-    // if (!isValidEmailFormat(email)) {
-    //   alert('メールアドレスの形式が不正です。もう1度お試しください。');
-    //   return false;
-    // }
-    // if (password !== confirmPassword) {
-    //   alert('パスワードが一致しません。もう1度お試しください。');
-    //   return false;
-    // }
-    // if (password.length < 6) {
-    //   alert('パスワードは6文字以上で入力してください。');
-    //   return false;
-    // }
     if (!pattern.test(destinationZipcode)) {
       alert('郵便番号は XXX-XXXX の形式で入力してください');
       return false;
     }
     if (destinationTel.match(/^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/)) {
       alert('電話番号は XXXX-XXXX-XXXX の形式で入力してください');
+      return false;
+    }
+    if (orderDate - nowDate < 0) {
+      alert('今日以降の日付を選択してください');
+      return false;
+    }
+    if (destinationPreTime - nowHour <= 3) {
+      alert('3時間後以降の時間を選択してください');
+      return false;
+    }
+    if (paymentValue <= 0) {
+      alert('支払い方法を選択してください');
+      return false;
+    }
+
+    if (paymentValue === 2 && creditCardNo === 0) {
+      alert('クレジットカードの番号を記入してください');
+      return false;
+    }
+
+    if (paymentValue === 2 && !isValidCardFormat(creditCardNo)) {
+      alert('クレジットカードの形式が不正です。');
       return false;
     }
 

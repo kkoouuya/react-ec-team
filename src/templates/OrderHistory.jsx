@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import CancelIcon from "@material-ui/icons/Cancel";
-import HistoryIcon from "@material-ui/icons/History";
-import Card from "@material-ui/core/Card";
-import { fetchOrders } from "../reducks/users/operations";
-import { getOrders } from "../reducks/users/selector";
-import { getProducts } from "../reducks/products/selectors";
-import { getTopping } from "../reducks/topping/selectors";
-import { Link } from "react-router-dom";
-import { setCancel } from "../reducks/users/operations";
-import Grid from "@material-ui/core/Grid";
-import { getUserId } from "../reducks/users/selector";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import CancelIcon from '@material-ui/icons/Cancel';
+import HistoryIcon from '@material-ui/icons/History';
+import Card from '@material-ui/core/Card';
+import { fetchOrders } from '../reducks/users/operations';
+import { getOrders } from '../reducks/users/selector';
+import { getProducts } from '../reducks/products/selectors';
+import { getTopping } from '../reducks/topping/selectors';
+import { Link } from 'react-router-dom';
+import { setCancel } from '../reducks/users/operations';
+import Grid from '@material-ui/core/Grid';
+import { getUserId } from '../reducks/users/selector';
 
 const OrderHistory = () => {
   const [double, setDouble] = useState(false);
@@ -35,7 +35,7 @@ const OrderHistory = () => {
     if (uid) {
       dispatch(fetchOrders(uid));
     }
-  }, []);
+  }, [dispatch, uid]);
 
   const a = (time) => {
     console.log(time);
@@ -45,20 +45,20 @@ const OrderHistory = () => {
     console.log(c.toString());
     return (
       b.getFullYear() +
-      "年" +
+      '年' +
       (b.getMonth() + 1) +
-      "月" +
+      '月' +
       b.getDate() +
-      "日" +
+      '日' +
       b.getHours() +
-      "時頃"
+      '時頃'
     );
   };
 
   return (
     <React.Fragment>
       {orders === undefined ? (
-        ""
+        ''
       ) : (
         <div align="center">
           {orders.filter((order) => order.status !== 0).length !== 0 ? (
@@ -81,7 +81,7 @@ const OrderHistory = () => {
                         </TableRow>
                       </TableHead>
                       {orders === undefined
-                        ? ""
+                        ? ''
                         : orders
                             .filter((order) => order.status !== 0)
                             .map((order) => {
@@ -98,7 +98,7 @@ const OrderHistory = () => {
                                   </TableRow>
                                   {order.itemInfo.map((itemInfos) => {
                                     return products === undefined
-                                      ? ""
+                                      ? ''
                                       : products
                                           .filter(
                                             (product) =>
@@ -118,7 +118,7 @@ const OrderHistory = () => {
                                                 <TableCell align="center">
                                                   <Link
                                                     to={{
-                                                      pathname: "/itemdetail",
+                                                      pathname: '/itemdetail',
                                                       selectedItemId:
                                                         product.id,
                                                     }}
@@ -132,7 +132,7 @@ const OrderHistory = () => {
                                                     (topp) => {
                                                       return topping ===
                                                         undefined
-                                                        ? ""
+                                                        ? ''
                                                         : topping
                                                             .filter(
                                                               (toppings) =>
@@ -164,7 +164,7 @@ const OrderHistory = () => {
                                                 <TableCell align="center">
                                                   <Link
                                                     to={{
-                                                      pathname: "/itemdetail",
+                                                      pathname: '/itemdetail',
                                                       selectedItemId:
                                                         product.id,
                                                     }}
@@ -204,8 +204,8 @@ const OrderHistory = () => {
                                             }}
                                           >
                                             {order.status === 9 || double
-                                              ? "キャンセル済み"
-                                              : "キャンセル"}
+                                              ? 'キャンセル済み'
+                                              : 'キャンセル'}
                                           </Button>
                                         </div>
                                       ) : (
@@ -219,8 +219,8 @@ const OrderHistory = () => {
                                             }}
                                           >
                                             {order.status === 9
-                                              ? "キャンセル済み"
-                                              : "キャンセル"}
+                                              ? 'キャンセル済み'
+                                              : 'キャンセル'}
                                           </Button>
                                         </div>
                                       )}
@@ -237,7 +237,7 @@ const OrderHistory = () => {
           ) : (
             <div align="center">
               <h2>注文履歴がありません</h2>
-              <Link to={{ pathname: "/" }}>
+              <Link to={{ pathname: '/' }}>
                 <Button
                   variant="contained"
                   color="primary"

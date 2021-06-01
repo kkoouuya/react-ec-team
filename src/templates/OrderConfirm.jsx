@@ -26,6 +26,7 @@ const OrderConfirm = () => {
   const [destinationAddress, setDestinationAddress] = useState('');
   const [destinationTel, setDestinationTel] = useState('');
   const [destinationDate, setDestinationDate] = useState('');
+  const [destinationPreTime, setDestinationPreTime] = useState('');
   const [creditCardNo, setCreditCardNo] = useState('');
   const [paymentValue, setPaymentValue] = useState('');
 
@@ -69,6 +70,14 @@ const OrderConfirm = () => {
     [setDestinationDate]
   );
 
+  // 配達希望時間
+  const destinationPreTimeChange = useCallback(
+    (e) => {
+      setDestinationPreTime(e.target.value);
+    },
+    [setDestinationPreTime]
+  );
+
   //支払い方法
   const changePaymentValue = useCallback(
     (e) => {
@@ -90,14 +99,6 @@ const OrderConfirm = () => {
   //     setDestinationEmail(e.target.value);
   //   },
   //   [setDestinationEmail]
-  // );
-
-  //配達希望時間
-  // const destinationPreTimeChange = useCallback(
-  //   (e) => {
-  //     setDestinationPreTime(e.target.value);
-  //   },
-  //   [setDestinationPreTime]
   // );
 
   // const clear = () => {
@@ -281,50 +282,51 @@ const OrderConfirm = () => {
               aria-label="position"
               name="position"
               defaultValue="top"
+              onChange={destinationPreTimeChange}
             >
               <FormControlLabel
-                value="10時"
+                value="10"
                 labelPlacement="end"
                 control={<Radio color="primary" />}
                 label="10時"
               />
               <FormControlLabel
-                value="11時"
+                value="11"
                 control={<Radio color="primary" />}
                 label="11時"
               />
               <FormControlLabel
-                value="12時"
+                value="12"
                 control={<Radio color="primary" />}
                 label="12時"
               />
               <FormControlLabel
-                value="13時"
+                value="13"
                 control={<Radio color="primary" />}
                 label="13時"
               />
               <FormControlLabel
-                value="14時"
+                value="14"
                 control={<Radio color="primary" />}
                 label="14時"
               />
               <FormControlLabel
-                value="15時"
+                value="15"
                 control={<Radio color="primary" />}
                 label="15時"
               />
               <FormControlLabel
-                value="16時"
+                value="16"
                 control={<Radio color="primary" />}
                 label="16時"
               />
               <FormControlLabel
-                value="17時"
+                value="17"
                 control={<Radio color="primary" />}
                 label="17時"
               />
               <FormControlLabel
-                value="18時"
+                value="18"
                 control={<Radio color="primary" />}
                 label="18時"
               />
@@ -446,6 +448,7 @@ const OrderConfirm = () => {
                 destinationAddress,
                 destinationTel,
                 destinationDate,
+                Number(destinationPreTime),
                 creditCardNo,
                 sumPrice,
                 Number(paymentValue)
