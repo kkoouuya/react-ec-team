@@ -223,22 +223,20 @@ export const signOut = () => {
 
 export const fetchOrders = (uid) => {
   // const uid = getUserId(selector);
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
 
-  if (uid) {
-    const ordersRef = db.collection('users').doc(uid).collection('orders');
-
-    return async (dispatch) => {
-      ordersRef.get().then((snapshots) => {
-        const orderList = [];
-        snapshots.forEach((snapshot) => {
-          const order = snapshot.data();
-          orderList.push(order);
-        });
-        dispatch(fetchOrdersAction(orderList));
+  return async (dispatch) => {
+    ordersRef.get().then((snapshots) => {
+      const orderList = [];
+      snapshots.forEach((snapshot) => {
+        const order = snapshot.data();
+        orderList.push(order);
       });
-    };
-  }
+      dispatch(fetchOrdersAction(orderList));
+    });
+  };
 };
+
 
 export const setCancel = (orderId, uid) => {
   const ordersRef = db.collection('users').doc(uid).collection('orders');

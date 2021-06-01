@@ -48,11 +48,12 @@ const OrderHistory = () => {
   const topping = getTopping(selector);
   const uid = getUserId(selector);
 
-  useEffect(() => {
-    if (uid) {
+  useEffect(
+    () => {
       dispatch(fetchOrders(uid));
-    }
-  }, [dispatch, uid]);
+    },
+    [dispatch,uid]
+  );
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -66,7 +67,7 @@ const OrderHistory = () => {
   // })
 
   return (
-    <div>
+    <React.Fragment>
       {orders === undefined ? (
         <div align="center">
           <h2>注文履歴がありません</h2>
@@ -82,7 +83,7 @@ const OrderHistory = () => {
         </div>
       ) : (
         <div align="center">
-          {orders.some((order) => order.status !== 0) ? (
+          {orders.filter((order) => order.status !== 0) ? (
             <Grid container alignItems="center" justify="center">
               <Grid item xs={8}>
                 <Card>
@@ -230,7 +231,7 @@ const OrderHistory = () => {
                                               // doSomething();
                                               setDouble(true);
                                               // setShow(true);
-                                              setCancel(order.orderId,uid);
+                                              setCancel(order.orderId);
                                             }}
                                           >
                                             {order.status === 9 || double
@@ -294,7 +295,7 @@ const OrderHistory = () => {
           )}
         </div>
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
