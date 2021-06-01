@@ -307,3 +307,61 @@ export const addPaymentInfo = (
       });
   };
 };
+
+export const listenAuthState = () => {
+  const browserHistory = createBrowserHistory();
+  return async (dispatch) => {
+      return auth.onAuthStateChanged(user => {
+          if (user) {
+            
+            usersRef
+        .doc(user.uid)
+        .collection('userinfo')
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+
+            if (!data) {
+              throw new Error('ユーザーデータが存在しません');
+            }
+
+            dispatch(
+              signInAction({
+                email: data.email,
+                isSignedIn: true,
+                uid: user.uid,
+                username: data.username,
+                address: data.address,
+                tel: data.tel,
+                zipcode: data.zipcode,
+              })
+            );
+            browserHistory.push('/');
+          });
+        });
+              // usersRef.doc(user.uid).collection('userinfo').get()
+              //     .then(snapshot => {
+              //         const data = snapshot.data()
+              //         if (!data) {
+              //             throw new Error('ユーザーデータが存在しません。')
+              //         }
+              //         console.log('userdata');
+
+              //         // Update logged in user state
+              //         dispatch(signInAction({
+              //           email: data.email,
+              //           isSignedIn: true,
+              //           uid: userId,
+              //           username: data.username,
+              //           address: data.address,
+              //           tel: data.tel,
+              //           zipcode: data.zipcode,
+              //         }))
+              //     })
+          } else {
+              browserHistory.push('/signin')
+          }
+      })
+  }
+};

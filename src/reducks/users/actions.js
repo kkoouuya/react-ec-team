@@ -8,6 +8,7 @@ export const signUpAction = (username, email, zipcode, address, tel) => {
 
 export const SIGN_IN = 'SIGN_IN';
 export const signInAction = (userState) => {
+  
   return {
     type: 'SIGN_IN',
     payload: {
