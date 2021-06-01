@@ -134,6 +134,7 @@ const CartList = () => {
   //------------------------------
 
   const classes = useStyles();
+  //console.log(orders);
 
   let toppingPrice = 0;
   // const topPriceArray = []
@@ -141,9 +142,9 @@ const CartList = () => {
   return (
     <div className="cartlist">
       {orders === undefined ? (
-        ''
+      ''
       ) :
-        !orders.filter((el) => el.status === 0)
+      orders.filter(el => el.status === 0).length === 0
       
        ? (
         <div align="center">
@@ -249,7 +250,7 @@ const CartList = () => {
                                                                 toppings.id ===
                                                                 topp.toppingId
                                                             )
-                                                            .map((toppings) => {
+                                                            .map((toppings,index) => {
                                                               if (
                                                                 topp.toppingSize ===
                                                                 0
@@ -265,7 +266,7 @@ const CartList = () => {
                                                               return (
                                                                 <div
                                                                   key={
-                                                                    toppings.id
+                                                                    index
                                                                   }
                                                                 >
                                                                   <div></div>
