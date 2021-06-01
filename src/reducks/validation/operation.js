@@ -2,7 +2,7 @@ const pattern = /^[0-9]{3}-[0-9]{4}$/;
 const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 const pattern3 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
-export const OrderError = (userName, email, zipCode, address, tel, orderYear, orderMonth, orderDay, orderTime, cash, creditCard)=> {
+export const OrderError = (userName, email, zipCode, address, tel, orderYear, orderMonth, orderDay, orderTime, creditCard)=> {
     return async () => {
         
         // // Validations
@@ -79,21 +79,6 @@ export const OrderError = (userName, email, zipCode, address, tel, orderYear, or
                 if((numOrderTime - hour <= 3) || 
                 (numOrderTime - hour === 0)) {
                 alert('今から３時間以内の日時をご入力ください');
-        // } else if() {
-
-        // }
-        };
-
-         if(cash === '') {
-            // console.log('支払い')
-            alert('支払い情報の選択がされていません。');
-        }
-
-        if(creditCard === '' ){
-            alert('クレジットカード情報を入力してください');
-        } else if(!pattern3.test(creditCard)) {
-            alert('クレジットカード情報は XXXX-XXXX-XXXX-XXXX の形で入力してください');
-            return false
         };
 
         // console.log(orderYear + orderMonth + orderDay + orderTime);

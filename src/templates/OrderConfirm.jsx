@@ -58,7 +58,7 @@ const OrderConfirm = () => {
   const numOrderTime = Number(destinationHour);
 
   //firebaseへ格納用
-  const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
+  // const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
  
 
   //支払い方法ラジオボタン
@@ -67,7 +67,7 @@ const OrderConfirm = () => {
 // console.log(paymentMethods);
 
   //支払い方法
-  const [cash , setCash] = useState('')
+  // const [cash , setCash] = useState('')
   const [creditCardNo, setCreditCardNo] = useState('')
 
   //入力値
@@ -141,15 +141,15 @@ const DeliveriesMonths = [
 ]
 
 const DeliveriesDays = [
-  { value: '01', label: '1'},
-  { value: '02', label: '2'},
-  { value: '03', label: '3'},
-  { value: '04', label: '4'},
-  { value: '05', label: '5'},
-  { value: '06', label: '6'},
-  { value: '07', label: '7'},
-  { value: '08', label: '8'},
-  { value: '09', label: '9'},
+  { value: '1', label: '1'},
+  { value: '2', label: '2'},
+  { value: '3', label: '3'},
+  { value: '4', label: '4'},
+  { value: '5', label: '5'},
+  { value: '6', label: '6'},
+  { value: '7', label: '7'},
+  { value: '8', label: '8'},
+  { value: '9', label: '9'},
   { value: '10', label:'10'},
   { value: '11', label:'11'},
   { value: '12', label:'12'},
@@ -224,9 +224,7 @@ const DeliveriesTimes = [
           destinationYear === '' || 
           destinationMonth === '' || 
           destinationDay  === '' || 
-          destinationHour === '' ||
-          paymentMethods === '' ||
-          creditCardNo === '') 
+          destinationHour === '' ) 
         {
           console.log('入力完了していません'); 
 
@@ -235,9 +233,13 @@ const DeliveriesTimes = [
           !pattern2.test(destinationTel) ||
           (destinationDay === numOrderDay && 
               (numOrderTime - hour <= 3) || 
-              (numOrderTime - hour === 0)) ||
-              !pattern3.test(creditCardNo)) {
-            console.log('入力完了していません2'); 
+              (numOrderTime - hour === 0)) ) {
+            console.log('入力完了していません2');
+        } else if(creditCardNo === '' ){
+          console.log('クレジット');
+          alert('クレジットカード情報を入力してください');
+        } else if(!pattern3.test(creditCardNo)) {
+            alert('クレジットカード情報は XXXX-XXXX-XXXX-XXXX の形で入力してください');
         } else {
           history.push('/orderfinished');
         }
