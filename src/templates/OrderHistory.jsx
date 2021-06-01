@@ -31,18 +31,14 @@ const OrderHistory = () => {
   const uid = getUserId(selector);
 
   useEffect(() => {
-    console.log(uid);
     if (uid) {
       dispatch(fetchOrders(uid));
     }
   }, [dispatch, uid]);
 
   const a = (time) => {
-    console.log(time);
     const b = new Date(time);
     const c = Date.now();
-    console.log(b);
-    console.log(c.toString());
     return (
       b.getFullYear() +
       '年' +
