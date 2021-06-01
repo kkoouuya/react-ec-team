@@ -68,11 +68,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
+  // const [user, setUser] = setState('');
   const history = useHistory();
   const handleLink = (path) => history.push(path);
   const selector = useSelector((state) => state);
   const username = getUserName(selector);
   // const uid = getUserId(selector);
+
+  // useEffect(() => {
+  //   setUser(username);
+  // }, [username, setUser]);
 
   const dispatch = useDispatch();
   // console.log(username);

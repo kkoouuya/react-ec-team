@@ -1,19 +1,21 @@
 /* eslint-disable */ //⇦ESLintの警告を非常時にする
-import { db, auth, FirebaseTimestamp } from "../../firebase/index";
+import { db, auth, FirebaseTimestamp } from '../../firebase/index';
 import {
   isValidEmailFormat,
   isValidRequiredInput,
-} from "../../function/common";
-import { signInAction, fetchOrdersAction, signUpAction } from "./actions";
-import { createBrowserHistory } from "history";
-//const usersRef = db.collection('users')
-import { useDispatch } from "react-redux";
-//import { useHistory } from "react-router";
+} from '../../function/common';
+import {
+  signInAction,
+  fetchOrdersAction,
+  signUpAction,
+  addPaymentInfoAction,
+} from './actions';
+import { createBrowserHistory } from 'history';
+import { useDispatch } from 'react-redux';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
 // const handleLink = path => history.push(path);
-
 //const browserHistory = createBrowserHistory();
 
 export const signUp = (
@@ -40,29 +42,29 @@ export const signUp = (
         tel
       )
     ) {
-      alert("必須項目が未入力です。");
+      alert('必須項目が未入力です。');
       return false;
     }
 
     if (!isValidEmailFormat(email)) {
-      alert("メールアドレスの形式が不正です。もう1度お試しください。");
+      alert('メールアドレスの形式が不正です。もう1度お試しください。');
       return false;
     }
     if (password !== confirmPassword) {
-      alert("パスワードが一致しません。もう1度お試しください。");
+      alert('パスワードが一致しません。もう1度お試しください。');
       return false;
     }
     if (password.length < 6) {
-      alert("パスワードは6文字以上で入力してください。");
+      alert('パスワードは6文字以上で入力してください。');
       return false;
     }
     if (!pattern.test(zipcode)) {
       console.log(zipcode);
-      alert("郵便番号は XXX-XXXX の形式で入力してください");
+      alert('郵便番号は XXX-XXXX の形式で入力してください');
       return false;
     }
     if (tel.match(/\A0[5789]0[-(]?\d{4}[-)]?\d{4}\z/)) {
-      alert("電話番号は XXXX-XXXX-XXXX の形式で入力してください");
+      alert('電話番号は XXXX-XXXX-XXXX の形式で入力してください');
       return false;
     }
 
@@ -91,9 +93,9 @@ export const signUp = (
             .set(userInitialData)
             .then(async () => {
               console.log(username);
-              console.log("DB保存成功");
-              browserHistory.push("/");
-              console.log("DB");
+              console.log('DB保存成功');
+              browserHistory.push('/');
+              console.log('DB');
             });
         }
         dispatch(signUpAction(username, email, zipcode, address, tel));
@@ -105,8 +107,8 @@ export const SignIn = (email, password) => {
   return async (dispatch) => {
     // console.log("ログイン");
 
-    if (email === "" || password === "") {
-      alert("必須項目が未入力です。");
+    if (email === '' || password === '') {
+      alert('必須項目が未入力です。');
       return false;
     }
 
@@ -132,7 +134,7 @@ export const SignIn = (email, password) => {
                 // username: username,
               })
             );
-            console.log("ログイン済");
+            console.log('ログイン済');
             // dispatch.push('/');
           });
       }
@@ -142,7 +144,7 @@ export const SignIn = (email, password) => {
 
 export const signOut = () => {
   // return async (dispatch, getState) =>{
-  console.log("ログアウト");
+  console.log('ログアウト');
   auth.signOut().then(() => {
     dispatch(signOutAction());
     // dispatch.push("/login");
@@ -152,37 +154,67 @@ export const signOut = () => {
 export const fetchOrders = (uid) => {
   // const uid = getUserId(selector);
 
-  const ordersRef = db.collection('users').doc(uid).collection('orders');
+  if (uid) {
+    const ordersRef = db.collection('users').doc(uid).collection('orders');
 
-  return async (dispatch) => {
-    ordersRef.get().then((snapshots) => {
-      const orderList = [];
-      snapshots.forEach((snapshot) => {
-        const order = snapshot.data();
-        orderList.push(order);
+    return async (dispatch) => {
+      ordersRef.get().then((snapshots) => {
+        const orderList = [];
+        snapshots.forEach((snapshot) => {
+          const order = snapshot.data();
+          orderList.push(order);
+        });
+        dispatch(fetchOrdersAction(orderList));
       });
-      dispatch(fetchOrdersAction(orderList));
-    });
-  };
+    };
+  }
 };
 
-export const setCancel = (orderId) => {
+export const setCancel = (orderId, uid) => {
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
   const updateOrdersRef = ordersRef.doc(orderId);
-  // console.log(updateOrdersRef);
   return updateOrdersRef.update({
     status: 9,
   });
-  // .then(() => {
-  //   console.log("Document successfully updated!");
-  // });
 };
 
-// export const resetCancel = (orderId) => {
-//   const updateOrdersRef = ordersRef.doc(orderId);
-//   return updateOrdersRef.update({
-//     status: 1,
-//   });
-//   // .then(() => {
-//   //   console.log("Document successfully updated!");
-//   // });
-// };
+export const addPaymentInfo = (
+  uid,
+  destinationUserName,
+  destinationZipcode,
+  destinationAddress,
+  destinationTel,
+  destinationDate,
+  creditCardNo,
+  sumPrice,
+  paymentValue
+) => {
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
+  console.log(FirebaseTimestamp.now().toDate());
+  const timestamp = FirebaseTimestamp.now().toDate();
+
+  return async (dispatch) => {
+    ordersRef
+      .where('status', '==', 0)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const orderedId = doc.data().orderId;
+
+          ordersRef.doc(orderedId).update({
+            status: paymentValue,
+            userId: uid,
+            orderDate: timestamp,
+            destinationName: destinationUserName,
+            destionationZipcode: destinationZipcode,
+            destinationAddress: destinationAddress,
+            destinationTel: destinationTel,
+            destionationTime: destinationDate,
+            paymentMethod: paymentValue,
+            creditCard: creditCardNo,
+            totalPrice: sumPrice,
+          });
+        });
+      });
+  };
+};

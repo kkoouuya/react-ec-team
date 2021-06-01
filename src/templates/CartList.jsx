@@ -123,7 +123,9 @@ const CartList = () => {
   //cart-----------------------
 
   useEffect(() => {
-    dispatch(fetchOrders(uid));
+    if (uid) {
+      dispatch(fetchOrders(uid));
+    }
   }, [dispatch, orders, uid]);
 
   useEffect(() => {
@@ -204,18 +206,18 @@ const CartList = () => {
                                                 height="100px"
                                                 align="center"
                                               />
-                                              <p>{product.name}</p>
+                                              <div>{product.name}</div>
                                             </TableCell>
                                             <TableCell align="center">
-                                              <p>{itemInfos.itemNum}個</p>
-                                              <p>
+                                              <div>{itemInfos.itemNum}個</div>
+                                              <div>
                                                 {itemInfos.itemSize === 0 ? (
                                                   <div>Mサイズ</div>
                                                 ) : (
                                                   <div>Lサイズ</div>
                                                 )}
-                                              </p>
-                                              <p>
+                                              </div>
+                                              <div>
                                                 {itemInfos.itemSize === 0 ? (
                                                   <div>
                                                     {product.Mprice}円/個
@@ -225,12 +227,12 @@ const CartList = () => {
                                                     {product.Lprice}円/個
                                                   </div>
                                                 )}
-                                              </p>
+                                              </div>
                                             </TableCell>
                                             <TableCell align="center">
                                               {itemInfos.toppings.length ===
                                               0 ? (
-                                                <p>なし</p>
+                                                <div>なし</div>
                                               ) : (
                                                 <div>
                                                   {itemInfos.toppings.map(
@@ -258,17 +260,17 @@ const CartList = () => {
                                                                   toppings.Lprice;
                                                               }
                                                               return (
-                                                                <>
-                                                                  <p
-                                                                    key={
-                                                                      toppings.id
-                                                                    }
-                                                                  ></p>
+                                                                <div
+                                                                  key={
+                                                                    toppings.id
+                                                                  }
+                                                                >
+                                                                  <div></div>
                                                                   <div>
                                                                     {topp.toppingSize ===
                                                                     0 ? (
                                                                       <>
-                                                                        <p>
+                                                                        <div>
                                                                           {
                                                                             toppings.name
                                                                           }
@@ -277,11 +279,11 @@ const CartList = () => {
                                                                             toppings.Mprice
                                                                           }
                                                                           円
-                                                                        </p>
+                                                                        </div>
                                                                       </>
                                                                     ) : (
                                                                       <>
-                                                                        <p>
+                                                                        <div>
                                                                           {
                                                                             toppings.name
                                                                           }
@@ -290,11 +292,11 @@ const CartList = () => {
                                                                             toppings.Lprice
                                                                           }
                                                                           円
-                                                                        </p>
+                                                                        </div>
                                                                       </>
                                                                     )}
                                                                   </div>
-                                                                </>
+                                                                </div>
                                                               );
                                                             });
                                                     }
@@ -307,19 +309,19 @@ const CartList = () => {
                                               align="center"
                                             >
                                               {itemInfos.itemSize === 0 ? (
-                                                <p>
+                                                <div>
                                                   {(product.Mprice +
                                                     toppingPrice) *
                                                     itemInfos.itemNum}
                                                   円
-                                                </p>
+                                                </div>
                                               ) : (
-                                                <p>
+                                                <div>
                                                   {(product.Lprice +
                                                     toppingPrice) *
                                                     itemInfos.itemNum}
                                                   円
-                                                </p>
+                                                </div>
                                               )}
                                               {itemInfos.toppings.map(
                                                 (el) => (toppingPrice = 0)
@@ -364,7 +366,11 @@ const CartList = () => {
           </h2>
           <div className="center">
             <Button
-              onClick={() => history.push('/orderconfirm')}
+              onClick={() =>
+                history.push('/orderconfirm', {
+                  sumPrice: Math.round(total * 1.1),
+                })
+              }
               variant="contained"
               color="primary"
             >

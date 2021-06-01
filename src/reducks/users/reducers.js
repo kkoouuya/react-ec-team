@@ -9,7 +9,6 @@ export const UsersReducer = (state = initialState.users, action) => {
         orders: [...action.payload],
       };
     case Actions.SIGN_UP:
-      console.log(action.payload);
       return {
         ...state,
         usersInfo: action.payload,
@@ -33,6 +32,12 @@ export const UsersReducer = (state = initialState.users, action) => {
         ...state,
         user: { ...action.payload },
       };
+    // case Actions.ADD_PAYMENT_INFO_ACTION:
+    //   console.log(action.payload);
+    //   return {
+    //     ...state,
+    //     orderdInfo: action.payload,
+    //   };
     default:
       return state;
   }

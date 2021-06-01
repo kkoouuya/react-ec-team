@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import './assets/style.css';
 import Router from './Router';
 import { auth } from './firebase/index';
@@ -10,7 +10,7 @@ const App = () => {
   const selector = useSelector((state) => state);
   let uid = getUserId(selector);
 
-  useEffect(() => {
+  useRef(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         uid = user.uid;
