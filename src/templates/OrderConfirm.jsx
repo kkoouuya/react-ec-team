@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +10,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-// import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -20,32 +19,9 @@ import { getUserId } from '../reducks/users/selector';
 const OrderConfirm = () => {
   const selector = useSelector((state) => state);
   const dispatch = useDispatch();
-  // const history = useHistory();
   const sumPrice = useLocation().state.sumPrice;
   const uid = getUserId(selector);
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '30ch',
-      },
-    },
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-  }));
-
-  const classes = useStyles();
   // const pattern = /^[0-9]{3}-[0-9]{4}$/;
   // const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
@@ -58,19 +34,6 @@ const OrderConfirm = () => {
 
   //配達日時
   const [destinationDate, setDestinationDate] = useState('');
-
-  // const [destinationYear, setDestinationYear] = useState('');
-  // const [destinationMonth, setDestinationMonth] = useState('');
-  // const [destinationDay, setDestinationDay] = useState('');
-  // const [destinationHour, setDestinationHour] = useState('');
-
-  // const today = new Date();
-  // const hour = today.getHours();
-  // const numOrderDay = Number(destinationDay);
-  // const numOrderTime = Number(destinationHour);
-
-  //firebaseへ格納用
-  // const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
 
   //支払い方法ラジオボタン
   const [paymentMethods, setPaymentMethods] = useState('');
@@ -88,13 +51,6 @@ const OrderConfirm = () => {
     },
     [setDestinationUserName]
   );
-
-  // const inputOrderEmail = useCallback(
-  //   (e) => {
-  //     setDestinationEmail(e.target.value);
-  //   },
-  //   [setDestinationEmail]
-  // );
 
   const inputOrderZipcode = useCallback(
     (e) => {
@@ -124,44 +80,12 @@ const OrderConfirm = () => {
     [setDestinationDate]
   );
 
-  // const inputOrderYear = useCallback(
-  //   (e) => {
-  //     setDestinationYear(e.target.value);
-  //   },
-  //   [setDestinationYear]
-  // );
-
-  // const inputOrderMonth = useCallback(
-  //   (e) => {
-  //     setDestinationMonth(e.target.value);
-  //   },
-  //   [setDestinationMonth]
-  // );
-
-  // const inputOrderDay = useCallback(
-  //   (e) => {
-  //     setDestinationDay(e.target.value);
-  //   },
-  //   [setDestinationDay]
-  // );
-
-  // const inputOrderHour = useCallback(
-  //   (e) => {
-  //     setDestinationHour(e.target.value);
-  //   },
-  //   [setDestinationHour]
-  // );
-
   const inputOrderPay = useCallback(
     (e) => {
       setPaymentMethods(e.target.value);
     },
     [setPaymentMethods]
   );
-
-  // const inputCash = useCallback((e) => {
-  //   setCash(e.target.value)
-  // },[setCash])
 
   const inputCreditCardNo = useCallback(
     (e) => {
@@ -170,148 +94,68 @@ const OrderConfirm = () => {
     [setCreditCardNo]
   );
 
-  //配達関連
-  // const DeliveriesYears = [
-  //   { value: '2021', label: '2021' },
-  //   { value: '2022', label: '2022' },
-  // ];
-
-  // const DeliveriesMonths = [
-  //   { value: '1', label: '1' },
-  //   { value: '2', label: '2' },
-  //   { value: '3', label: '3' },
-  //   { value: '4', label: '4' },
-  //   { value: '5', label: '5' },
-  //   { value: '6', label: '6' },
-  //   { value: '7', label: '7' },
-  //   { value: '8', label: '8' },
-  //   { value: '9', label: '9' },
-  //   { value: '10', label: '10' },
-  //   { value: '11', label: '11' },
-  //   { value: '12', label: '12' },
-  // ];
-
-  // const DeliveriesDays = [
-  //   { value: '1', label: '1' },
-  //   { value: '2', label: '2' },
-  //   { value: '3', label: '3' },
-  //   { value: '4', label: '4' },
-  //   { value: '5', label: '5' },
-  //   { value: '6', label: '6' },
-  //   { value: '7', label: '7' },
-  //   { value: '8', label: '8' },
-  //   { value: '9', label: '9' },
-  //   { value: '10', label: '10' },
-  //   { value: '11', label: '11' },
-  //   { value: '12', label: '12' },
-  //   { value: '13', label: '13' },
-  //   { value: '14', label: '14' },
-  //   { value: '15', label: '15' },
-  //   { value: '16', label: '16' },
-  //   { value: '17', label: '17' },
-  //   { value: '18', label: '18' },
-  //   { value: '19', label: '19' },
-  //   { value: '20', label: '20' },
-  //   { value: '21', label: '21' },
-  //   { value: '22', label: '22' },
-  //   { value: '23', label: '23' },
-  //   { value: '24', label: '24' },
-  //   { value: '25', label: '25' },
-  //   { value: '26', label: '26' },
-  //   { value: '27', label: '27' },
-  //   { value: '28', label: '28' },
-  //   { value: '29', label: '29' },
-  //   { value: '30', label: '30' },
-  //   { value: '31', label: '31' },
-  // ];
-
-  // const DeliveriesTimes = [
-  //   { value: '8', label: '8' },
-  //   { value: '9', label: '9' },
-  //   { value: '10', label: '10' },
-  //   { value: '11', label: '11' },
-  //   { value: '12', label: '12' },
-  //   { value: '13', label: '13' },
-  //   { value: '14', label: '14' },
-  //   { value: '15', label: '15' },
-  //   { value: '16', label: '16' },
-  //   { value: '17', label: '17' },
-  //   { value: '18', label: '18' },
-  // ];
-
-  //データ・画面遷移
-  // const orderClicked = (
-  //   destinationUserName,
-  //   destinationEmail,
-  //   destinationZipcode,
-  //   destinationAddress,
-  //   destinationTel,
-  //   destinationYear,
-  //   destinationMonth,
-  //   destinationDay,
-  //   destinationHour,
-  //   paymentMethods,
-  //   creditCardNo
-  // ) => {
-  //   dispatch(
-  //     OrderError(
-  //       destinationUserName,
-  //       destinationEmail,
-  //       destinationZipcode,
-  //       destinationAddress,
-  //       destinationTel,
-  //       destinationYear,
-  //       destinationMonth,
-  //       destinationDay,
-  //       destinationHour,
-  //       paymentMethods,
-  //       creditCardNo
-  //     )
-  //   );
-
-  //   // if(destinationUserName === '' ||
-  //   //   destinationEmail === '' ||
-  //   //   destinationZipcode  === '' ||
-  //   //   destinationAddress === '' ||
-  //   //   destinationTel === '' ||
-  //   //   destinationYear === '' ||
-  //   //   destinationMonth === '' ||
-  //   //   destinationDay  === '' ||
-  //   //   destinationHour === '' ||
-  //   //   paymentMethods === '' ||
-  //   //   creditCardNo === '')
-  //   // {
-  //   //   console.log('入力完了していません');
-
-  //   // } else if((destinationEmail.indexOf('@') === -1) ||
-  //   //   !pattern.test(destinationZipcode) ||
-  //   //   !pattern2.test(destinationTel) ||
-  //   //   (destinationDay === numOrderDay &&
-  //   //       (numOrderTime - hour <= 3) ||
-  //   //       (numOrderTime - hour === 0))) {
-  //   //     console.log('入力完了していません2');
-  //   // } else {
-  //   history.push('/orderfinished');
-  //   // }
-  // };
-
   const [paymentValue, setPaymentValue] = useState('');
   const changePaymentValue = (e) => {
     setPaymentValue(e.target.value);
   };
 
-  // const [cardValue, serCardValue] = useState('');
-  // const changeCardValue = (e) => {
-  //   serCardValue(e.target.value);
+  const history = useHistory();
+  // const inputRef = useRef(null);
+
+  // const [inputError, setInputError] = useState(false);
+  // const handleChange = () => {
+  //   if (inputRef.current) {
+  //     const ref = inputRef.current;
+  //     if (!ref.validity.valid) {
+  //       setInputError(true);
+  //     } else {
+  //       setInputError(false);
+  //     }
+  //   }
   // };
 
-  const history = useHistory();
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '30ch',
+      },
+    },
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+  }));
+  const classes = useStyles();
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         お届け先情報入力
       </Typography>
+      {/* <Grid>
+        <form className={classes.root}>
+        <TextField
+          error={inputError}
+          inputProps={{ pattern: '^[a-zA-Z0-9_]+$' }}
+          inputRef={inputRef}
+          defaultValue=""
+          id="outlined-basic"
+          label="Outlined"
+          variant="outlined"
+          helperText={inputRef?.current?.validationMessage}
+          onChange={handleChange}
+        />
+        </form>
+      </Grid> */}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
