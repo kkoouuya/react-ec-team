@@ -64,8 +64,8 @@ export const signUp = (
       alert('郵便番号は XXX-XXXX の形式で入力してください');
       return false;
     }
-    if (tel.match(/\A0[5789]0[-(]?\d{4}[-)]?\d{4}\z/)) {
-      alert('電話番号は XXXX-XXXX-XXXX の形式で入力してください');
+    if (!tel.match(/^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/)) {
+      alert('携帯電話11桁の数値を入力してください！');
       return false;
     }
 
@@ -146,8 +146,9 @@ const signIn = (email, password) => {
                 zipcode: data.zipcode,
               })
             );
-            browserHistory.push('/');
+            //browserHistory.push('/');
           });
+          browserHistory.push('/');
         });
     });
   };
