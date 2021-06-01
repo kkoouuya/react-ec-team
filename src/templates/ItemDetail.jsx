@@ -142,34 +142,34 @@ const ItemDetail = () => {
   useEffect(() => {
     const sumPrice = [
       Number(value) * num,
-      onion,
-      tsunamayo,
-      itarianTomato,
-      squid,
-      bulgogi,
-      anchovy,
-      shrimp,
-      corn,
-      peppers,
-      freshSliced,
-      bacon,
-      pepperoni,
-      aged,
-      special,
-      camembert,
-      freshMozzarella,
-      italianSausage,
-      garlic,
-      arabiki,
-      broccoli,
-      green,
-      parmesan,
-      pineapple,
-      jalapeno,
-      mochi,
-      potato,
-      black,
-      cheese,
+      onion * num,
+      tsunamayo * num,
+      itarianTomato * num,
+      squid * num,
+      bulgogi * num,
+      anchovy * num,
+      shrimp * num,
+      corn * num,
+      peppers * num,
+      freshSliced * num,
+      bacon * num,
+      pepperoni * num,
+      aged * num,
+      special * num,
+      camembert * num,
+      freshMozzarella * num,
+      italianSausage * num,
+      garlic * num,
+      arabiki * num,
+      broccoli * num,
+      green * num,
+      parmesan * num,
+      pineapple * num,
+      jalapeno * num,
+      mochi * num,
+      potato * num,
+      black * num,
+      cheese * num,
     ]
       .filter((price) => price !== '')
       .reduce((pre, cur) => pre + cur);
@@ -482,7 +482,7 @@ const ItemDetail = () => {
               <FormLabel component="legend" className="sum-money">
                 合計金額&nbsp;
                 {sumPrice === undefined ? sumPrice : sumPrice.toLocaleString()}
-                円
+                円（税抜き）
               </FormLabel>
             </FormControl>
           </CardContent>

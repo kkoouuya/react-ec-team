@@ -93,62 +93,6 @@ const OrderConfirm = () => {
     },
     [setCreditCardNo]
   );
-  // メール
-  // const destinationEmailChange = useCallback(
-  //   (e) => {
-  //     setDestinationEmail(e.target.value);
-  //   },
-  //   [setDestinationEmail]
-  // );
-
-  // const clear = () => {
-  //   console.log('クリアボタンが発動しました');
-  //   setDestinationUserName('');
-  //   setDestinationZipcode('');
-  //   setDestinationAddress('');
-  //   setDestinationTel('');
-  //   setDestinationDate('');
-  //   setCreditCardNo('');
-  //   setPaymentValue('');
-  // };
-
-  //エラーメッセージ
-  // if (!destinationUserName) {
-  //   errorMessages.errorName = '名前を入力してください';
-  // } else {
-  //   errorMessages.errorName = '';
-  // }
-
-  // if (!destinationEmail) {
-  //   errorMessages.errorEmail = 'メールアドレスを入力してください';
-  //   //     //indexOfは文字列から引数が見つからなかったら-1を返す
-  // } else if (destinationEmail.indexOf('@') === -1) {
-  //   errorMessages.errorEmail = 'メールアドレスの形式が不正です';
-  // } else {
-  //   errorMessages.errorEmail = '';
-  // }
-
-  // if (!destinationZipcode) {
-  //   errorMessages.errorZipcode = '郵便番号を入力してください';
-  // } else if (!destinationZipcode.match(/^[0-9]{3}-[0-9]{4}$/)) {
-  //   errorMessages.errorZipcode = '郵便番号の形式が不正です';
-  // } else {
-  //   errorMessages.errorZipcode = '';
-  // }
-
-  // if (!destinationAddress) {
-  //   errorMessages.errorAddress = '住所を入力してください';
-  // } else {
-  //   errorMessages.errorAddress = '';
-  // }
-
-  // if (!destinationTel) {
-  //   errorMessages.errorTel = '電話番号を入力してください';
-  // } else if (!destinationTel.match(/^0\d{1,4}-\d{1,4}-\d{3,4}$/)) {
-  //   errorMessages.errorTel = '電話番号の形式が不正です';
-  // } else {
-  //   errorMessages.errorTel = '';
-  // }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -169,29 +113,18 @@ const OrderConfirm = () => {
       marginRight: theme.spacing(1),
       width: 200,
     },
+    wrapper: {
+      paddingLeft: 50,
+      paddingRight: 50,
+    },
   }));
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <div className={classes.wrapper}>
       <Typography variant="h6" gutterBottom>
         お届け先情報入力
       </Typography>
-      {/* <Grid>
-        <form className={classes.root}>
-        <TextField
-          error={inputError}
-          inputProps={{ pattern: '^[a-zA-Z0-9_]+$' }}
-          inputRef={inputRef}
-          defaultValue=""
-          id="outlined-basic"
-          label="Outlined"
-          variant="outlined"
-          helperText={inputRef?.current?.validationMessage}
-          onChange={handleChange}
-        />
-        </form>
-      </Grid> */}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -205,17 +138,7 @@ const OrderConfirm = () => {
             onChange={inputOrderUserName}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          {/* <TextField
-            required
-            id="mail"
-            name="mail"
-            label="Mail Address"
-            fullWidth
-            autoComplete="shipping mail"
-            onChange={inputOrderEmail}
-          /> */}
-        </Grid>
+        <Grid item xs={12} sm={6}></Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -227,7 +150,8 @@ const OrderConfirm = () => {
             onChange={inputOrderZipcode}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}></Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="address"
@@ -238,7 +162,8 @@ const OrderConfirm = () => {
             onChange={inputOrderAddress}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}></Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="tel"
@@ -249,18 +174,8 @@ const OrderConfirm = () => {
             onChange={inputOrderTel}
           />
         </Grid>
-        {/* <Grid item xs={12}>
-          <TextField
-            required
-            id="tel"
-            name="tel"
-            label="配達日時"
-            fullWidth
-            autoComplete="shipping phone"
-            onChange={inputOrderTel}
-          />
-        </Grid> */}
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}></Grid>
+        <Grid item xs={12} sm={6}>
           <form className={classes.container} noValidate>
             <TextField
               id="date"
@@ -333,63 +248,6 @@ const OrderConfirm = () => {
             </RadioGroup>
           </FormLabel>
         </Grid>
-        {/* <form className={classes.root} noValidate>
-          <div>
-            <TextField
-              id="destinationYear"
-              select
-              label="Delivery Year"
-              value={destinationYear}
-              onChange={inputOrderYear}
-            >
-              {DeliveriesYears.map((year) => (
-                <MenuItem key={year.value} value={year.value}>
-                  {year.label}
-                </MenuItem>
-              ))}
-            </TextField>
-
-            <TextField
-              id="destinationMonth"
-              select
-              label="Delivery Month"
-              value={destinationMonth}
-              onChange={inputOrderMonth}
-            >
-              {DeliveriesMonths.map((month) => (
-                <MenuItem key={month.value} value={month.value}>
-                  {month.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="destinationDay"
-              select
-              label="Delivery Day"
-              value={destinationDay}
-              onChange={inputOrderDay}
-            >
-              {DeliveriesDays.map((day) => (
-                <MenuItem key={day.value} value={day.value}>
-                  {day.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="destinationHour"
-              select
-              label="Delivery Time"
-              value={destinationHour}
-              onChange={inputOrderHour}
-            >
-              {DeliveriesTimes.map((time) => (
-                <MenuItem key={time.value} value={time.value}>
-                  {time.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </div>
-        </form> */}
         <Grid item xs={12}>
           <div className={classes.root}>
             <FormControl component="fieldset">
@@ -398,7 +256,6 @@ const OrderConfirm = () => {
                 aria-label="payment"
                 name="payment"
                 value={paymentValue}
-                // onChange={inputOrderPay}
               >
                 <FormControlLabel
                   onChange={changePaymentValue}
@@ -420,7 +277,7 @@ const OrderConfirm = () => {
               {paymentValue === '2' ? (
                 <TextField
                   id="standard-basic"
-                  label="Credit-card Number"
+                  label="カード番号"
                   name="cardNumber"
                   value={creditCardNo}
                   onChange={inputCreditCardNo}
@@ -462,7 +319,7 @@ const OrderConfirm = () => {
           <Button variant="outlined">ショッピングカートに戻る</Button>
         </Link>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
