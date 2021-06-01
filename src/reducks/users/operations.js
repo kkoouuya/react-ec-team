@@ -243,9 +243,28 @@ export const setCancel = (orderId, uid) => {
   });
 };
 
-export const fetchOrderHistory = () => {
-  console.log('hoge')
-}
+export const fetchOrderHistory = (uid) => {
+  console.log('hoge');
+  const orderHistorylist = [];
+  return async (dispatch) => {
+    const ordersRef = db.collection('users').doc(uid).collection('orders');
+    const getOrderHistory = ordersRef
+      .where('status', '!=', 0)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());
+          let hoge = {
+            totalPrice: doc.data().totalPrice,
+            itemInfo: doc.data().itemInfo,
+          };
+          orderHistorylist.push(hoge);
+        });
+        // console.log(orderHistorylist);
+        console.log(orderHistorylist);
+      });
+  };
+};
 
 export const addPaymentInfo = (
   uid,
