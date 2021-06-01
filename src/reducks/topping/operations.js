@@ -93,6 +93,7 @@ export const DeleteOrdersInfo = (uid, itemInfos, orderId) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          const docId = doc.data().orderId;
           let deleteItem = doc
             .data()
             .itemInfo.filter((item) => item.id !== itemInfosId);
@@ -103,8 +104,10 @@ export const DeleteOrdersInfo = (uid, itemInfos, orderId) => {
               status: 0,
             },
           ];
-          console.log(localCart[0]);
           ordersRef.doc(orderId).set(localCart[0]);
+          if (doc.data().itemInfo.length === 1) {
+            ordersRef.doc(docId).delete();
+          }
         });
       });
   };
