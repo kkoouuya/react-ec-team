@@ -2,7 +2,7 @@
 // const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 // const pattern3 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 
-export const OrderError = (userName, email, zipCode, address, tel, orderYear, orderMonth, orderDay, orderTime, pay, cash,creditCard)=> {
+export const OrderError = (userName, email, zipCode, address, tel, orderYear, orderMonth, orderDay, orderTime, creditCard)=> {
     return async () => {
         
         // // // Validations

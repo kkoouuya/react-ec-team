@@ -48,9 +48,9 @@ const OrderHistory = () => {
   const topping = getTopping(selector);
   const uid = getUserId(selector);
 
-  useEffect((uid) => {
+  useEffect(() => {
     if (uid) {
-      dispatch(fetchOrders());
+      dispatch(fetchOrders(uid));
     }
   }, [dispatch, uid]);
   useEffect(() => {
@@ -66,7 +66,7 @@ const OrderHistory = () => {
   // })
 
   return (
-    <React.Fragment>
+    <div>
       {orders === undefined ? (
         <div align="center">
           <h2>注文履歴がありません</h2>
@@ -294,7 +294,7 @@ const OrderHistory = () => {
           )}
         </div>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

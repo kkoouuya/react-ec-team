@@ -3,15 +3,12 @@ import { db, auth, FirebaseTimestamp } from '../../firebase/index';
 import {
   isValidEmailFormat,
   isValidRequiredInput,
-} from '../../function/common';
-import {
-  signInAction,
-  fetchOrdersAction,
-  signUpAction,
-  addPaymentInfoAction,
-} from './actions';
-import { createBrowserHistory } from 'history';
-import { useDispatch } from 'react-redux';
+} from "../../function/common";
+import { signInAction, fetchOrdersAction, signUpAction,signOutAction } from "./actions";
+import { createBrowserHistory } from "history";
+//const usersRef = db.collection('users')
+import { useDispatch } from "react-redux";
+//import { useHistory } from "react-router";
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
@@ -102,54 +99,127 @@ export const signUp = (
       });
   };
 };
+const usersRef = db.collection('users')
 
-export const SignIn = (email, password) => {
+ const signIn = (email, password) => {
+  const browserHistory = createBrowserHistory();
   return async (dispatch) => {
-    // console.log("ログイン");
-
-    if (email === '' || password === '') {
-      alert('必須項目が未入力です。');
-      return false;
-    }
-
-    auth.signInWithEmailAndPassword(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-      if (user) {
-        const uid = user.uid;
-
-        db.collection(`users/${uid}/userinfo`)
-          .doc(uid)
-          .get()
-          .then((snapshot) => {
-            // console.log('１２３')
-            const data = snapshot.data();
-            console.log(snapshot.data());
-
-            dispatch(
-              signInAction({
-                email: email,
-                isSignedIn: true,
-                uid: uid,
-                // username: username,
-              })
-            );
-            console.log('ログイン済');
-            // dispatch.push('/');
-          });
+      if (!isValidRequiredInput(email, password)) {
+          
+          alert('必須項目が未入力です')
+          return false
       }
-    });
-  };
+      if (!isValidEmailFormat(email)) {
+          
+          alert('メールアドレスの形式が不正です。')
+          return false
+      }
+      return auth.signInWithEmailAndPassword(email, password)
+          .then(result => {
+              const userState = result.user
+              if (!userState) {
+                  throw new Error('ユーザーIDを取得できません');
+              }
+              const userId = userState.uid;
+              
+
+              return usersRef.doc(userId).collection('userinfo').get().then(querySnapshot => {
+                  
+                querySnapshot.forEach(doc => {
+                  
+                  const data = doc.data()
+
+                  if (!data) {
+                    throw new Error('ユーザーデータが存在しません');
+                }
+
+                dispatch(signInAction({
+                    email: data.email,
+                    isSignedIn: true,
+                    uid: userId,
+                    username: data.username,
+                    address: data.address,
+                    tel:data.tel,
+                    zipcode:data.zipcode
+                }));
+                browserHistory.push("/");
+
+                })
+                
+               
+                 
+                
+                 
+              })
+          })
+  }
 };
+
+export default signIn
+// const SignIn = (email, password) => {
+//   return async (dispatch) => {
+//     // console.log("ログイン");
+
+//     if (email === "" || password === "") {
+//       alert("必須項目が未入力です。");
+//       return false;
+//     }
+
+//     auth.signInWithEmailAndPassword(email, password).then((result) => {
+//       const user = result.user;
+//       console.log(user);
+//       if (user) {
+//         const uid = user.uid;
+
+//         db.collection(`users/${uid}/userinfo`)
+//           .doc(uid)
+//           .get()
+//           .then((snapshot) => {
+//             // console.log('１２３')
+//             const data = snapshot.data();
+//             console.log(data);
+
+//             dispatch(
+//               signInAction({
+//                 email: email,
+//                 isSignedIn: true,
+//                 uid: uid,
+//                 // username: username,
+//               })
+//             );
+//             console.log("ログイン済");
+//             // dispatch.push('/');
+//           });
+//       }
+//     });
+//   };
+// };
+// export default SignIn
+
+// export const signOut = () => {
+//   // return async (dispatch, getState) =>{
+//   console.log("ログアウト");
+//   auth.signOut().then(() => {
+//     dispatch(signOutAction());
+//     // dispatch.push("/login");
+//   });
+// };
 
 export const signOut = () => {
-  // return async (dispatch, getState) =>{
-  console.log('ログアウト');
-  auth.signOut().then(() => {
-    dispatch(signOutAction());
-    // dispatch.push("/login");
-  });
+  const browserHistory = createBrowserHistory();
+  return async (dispatch) => {
+    
+      auth.signOut().then(() => {
+        
+          dispatch(signOutAction());
+          browserHistory.push("/login");
+      }).catch(() => {
+          throw new Error('ログアウトに失敗しました。')
+      })
+  }
 };
+
+
 
 export const fetchOrders = (uid) => {
   // const uid = getUserId(selector);
