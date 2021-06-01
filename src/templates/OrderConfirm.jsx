@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +10,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-// import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -19,9 +19,137 @@ import { getUserId } from '../reducks/users/selector';
 const OrderConfirm = () => {
   const selector = useSelector((state) => state);
   const dispatch = useDispatch();
-  // const history = useHistory();
   const sumPrice = useLocation().state.sumPrice;
   const uid = getUserId(selector);
+  const history = useHistory();
+
+  const [destinationUserName, setDestinationUserName] = useState('');
+  const [destinationZipcode, setDestinationZipcode] = useState('');
+  const [destinationAddress, setDestinationAddress] = useState('');
+  const [destinationTel, setDestinationTel] = useState('');
+  const [destinationDate, setDestinationDate] = useState('');
+  const [creditCardNo, setCreditCardNo] = useState('');
+  const [paymentValue, setPaymentValue] = useState('');
+
+  //名前
+  const inputOrderUserName = useCallback(
+    (e) => {
+      setDestinationUserName(e.target.value);
+    },
+    [setDestinationUserName]
+  );
+
+  //郵便番号
+  const inputOrderZipcode = useCallback(
+    (e) => {
+      setDestinationZipcode(e.target.value);
+    },
+    [setDestinationZipcode]
+  );
+
+  //メールアドレス
+  const inputOrderAddress = useCallback(
+    (e) => {
+      setDestinationAddress(e.target.value);
+    },
+    [setDestinationAddress]
+  );
+
+  //電話番号
+  const inputOrderTel = useCallback(
+    (e) => {
+      setDestinationTel(e.target.value);
+    },
+    [setDestinationTel]
+  );
+
+  //配達日
+  const inputOrderDate = useCallback(
+    (e) => {
+      setDestinationDate(e.target.value);
+    },
+    [setDestinationDate]
+  );
+
+  //支払い方法
+  const changePaymentValue = useCallback(
+    (e) => {
+      setPaymentValue(e.target.value);
+    },
+    [setPaymentValue]
+  );
+
+  //カード番号
+  const inputCreditCardNo = useCallback(
+    (e) => {
+      setCreditCardNo(e.target.value);
+    },
+    [setCreditCardNo]
+  );
+  // メール
+  // const destinationEmailChange = useCallback(
+  //   (e) => {
+  //     setDestinationEmail(e.target.value);
+  //   },
+  //   [setDestinationEmail]
+  // );
+
+  //配達希望時間
+  // const destinationPreTimeChange = useCallback(
+  //   (e) => {
+  //     setDestinationPreTime(e.target.value);
+  //   },
+  //   [setDestinationPreTime]
+  // );
+
+  // const clear = () => {
+  //   console.log('クリアボタンが発動しました');
+  //   setDestinationUserName('');
+  //   setDestinationZipcode('');
+  //   setDestinationAddress('');
+  //   setDestinationTel('');
+  //   setDestinationDate('');
+  //   setCreditCardNo('');
+  //   setPaymentValue('');
+  // };
+
+  //エラーメッセージ
+  // if (!destinationUserName) {
+  //   errorMessages.errorName = '名前を入力してください';
+  // } else {
+  //   errorMessages.errorName = '';
+  // }
+
+  // if (!destinationEmail) {
+  //   errorMessages.errorEmail = 'メールアドレスを入力してください';
+  //   //     //indexOfは文字列から引数が見つからなかったら-1を返す
+  // } else if (destinationEmail.indexOf('@') === -1) {
+  //   errorMessages.errorEmail = 'メールアドレスの形式が不正です';
+  // } else {
+  //   errorMessages.errorEmail = '';
+  // }
+
+  // if (!destinationZipcode) {
+  //   errorMessages.errorZipcode = '郵便番号を入力してください';
+  // } else if (!destinationZipcode.match(/^[0-9]{3}-[0-9]{4}$/)) {
+  //   errorMessages.errorZipcode = '郵便番号の形式が不正です';
+  // } else {
+  //   errorMessages.errorZipcode = '';
+  // }
+
+  // if (!destinationAddress) {
+  //   errorMessages.errorAddress = '住所を入力してください';
+  // } else {
+  //   errorMessages.errorAddress = '';
+  // }
+
+  // if (!destinationTel) {
+  //   errorMessages.errorTel = '電話番号を入力してください';
+  // } else if (!destinationTel.match(/^0\d{1,4}-\d{1,4}-\d{3,4}$/)) {
+  //   errorMessages.errorTel = '電話番号の形式が不正です';
+  // } else {
+  //   errorMessages.errorTel = '';
+  // }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,270 +171,28 @@ const OrderConfirm = () => {
       width: 200,
     },
   }));
-
   const classes = useStyles();
-  // const pattern = /^[0-9]{3}-[0-9]{4}$/;
-  // const pattern2 = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
-
-  //初期値
-  const [destinationUserName, setDestinationUserName] = useState('');
-  // const [destinationEmail, setDestinationEmail] = useState('');
-  const [destinationZipcode, setDestinationZipcode] = useState('');
-  const [destinationAddress, setDestinationAddress] = useState('');
-  const [destinationTel, setDestinationTel] = useState('');
-
-  //配達日時
-  const [destinationDate, setDestinationDate] = useState('');
-
-  // const [destinationYear, setDestinationYear] = useState('');
-  // const [destinationMonth, setDestinationMonth] = useState('');
-  // const [destinationDay, setDestinationDay] = useState('');
-  // const [destinationHour, setDestinationHour] = useState('');
-
-  // const today = new Date();
-  // const hour = today.getHours();
-  // const numOrderDay = Number(destinationDay);
-  // const numOrderTime = Number(destinationHour);
-
-  //firebaseへ格納用
-  // const destinationTime = destinationYear + destinationMonth + destinationDay + destinationHour;
-
-  //支払い方法ラジオボタン
-  const [paymentMethods, setPaymentMethods] = useState('');
-
-  //支払い方法
-  // const [cash, setCash] = useState('');
-  const [creditCardNo, setCreditCardNo] = useState('');
-
-  //入力値
-  const inputOrderUserName = useCallback(
-    (e) => {
-      setDestinationUserName(e.target.value);
-    },
-    [setDestinationUserName]
-  );
-
-  // const inputOrderEmail = useCallback(
-  //   (e) => {
-  //     setDestinationEmail(e.target.value);
-  //   },
-  //   [setDestinationEmail]
-  // );
-
-  const inputOrderZipcode = useCallback(
-    (e) => {
-      setDestinationZipcode(e.target.value);
-    },
-    [setDestinationZipcode]
-  );
-
-  const inputOrderAddress = useCallback(
-    (e) => {
-      setDestinationAddress(e.target.value);
-    },
-    [setDestinationAddress]
-  );
-
-  const inputOrderTel = useCallback(
-    (e) => {
-      setDestinationTel(e.target.value);
-    },
-    [setDestinationTel]
-  );
-
-  const inputOrderDate = useCallback(
-    (e) => {
-      setDestinationDate(e.target.value);
-    },
-    [setDestinationDate]
-  );
-
-  // const inputOrderYear = useCallback(
-  //   (e) => {
-  //     setDestinationYear(e.target.value);
-  //   },
-  //   [setDestinationYear]
-  // );
-
-  // const inputOrderMonth = useCallback(
-  //   (e) => {
-  //     setDestinationMonth(e.target.value);
-  //   },
-  //   [setDestinationMonth]
-  // );
-
-  // const inputOrderDay = useCallback(
-  //   (e) => {
-  //     setDestinationDay(e.target.value);
-  //   },
-  //   [setDestinationDay]
-  // );
-
-  // const inputOrderHour = useCallback(
-  //   (e) => {
-  //     setDestinationHour(e.target.value);
-  //   },
-  //   [setDestinationHour]
-  // );
-
-  const inputOrderPay = useCallback(
-    (e) => {
-      setPaymentMethods(e.target.value);
-    },
-    [setPaymentMethods]
-  );
-
-  // const inputCash = useCallback((e) => {
-  //   setCash(e.target.value)
-  // },[setCash])
-
-  const inputCreditCardNo = useCallback(
-    (e) => {
-      setCreditCardNo(e.target.value);
-    },
-    [setCreditCardNo]
-  );
-
-  //配達関連
-  // const DeliveriesYears = [
-  //   { value: '2021', label: '2021' },
-  //   { value: '2022', label: '2022' },
-  // ];
-
-  // const DeliveriesMonths = [
-  //   { value: '1', label: '1' },
-  //   { value: '2', label: '2' },
-  //   { value: '3', label: '3' },
-  //   { value: '4', label: '4' },
-  //   { value: '5', label: '5' },
-  //   { value: '6', label: '6' },
-  //   { value: '7', label: '7' },
-  //   { value: '8', label: '8' },
-  //   { value: '9', label: '9' },
-  //   { value: '10', label: '10' },
-  //   { value: '11', label: '11' },
-  //   { value: '12', label: '12' },
-  // ];
-
-  // const DeliveriesDays = [
-  //   { value: '1', label: '1' },
-  //   { value: '2', label: '2' },
-  //   { value: '3', label: '3' },
-  //   { value: '4', label: '4' },
-  //   { value: '5', label: '5' },
-  //   { value: '6', label: '6' },
-  //   { value: '7', label: '7' },
-  //   { value: '8', label: '8' },
-  //   { value: '9', label: '9' },
-  //   { value: '10', label: '10' },
-  //   { value: '11', label: '11' },
-  //   { value: '12', label: '12' },
-  //   { value: '13', label: '13' },
-  //   { value: '14', label: '14' },
-  //   { value: '15', label: '15' },
-  //   { value: '16', label: '16' },
-  //   { value: '17', label: '17' },
-  //   { value: '18', label: '18' },
-  //   { value: '19', label: '19' },
-  //   { value: '20', label: '20' },
-  //   { value: '21', label: '21' },
-  //   { value: '22', label: '22' },
-  //   { value: '23', label: '23' },
-  //   { value: '24', label: '24' },
-  //   { value: '25', label: '25' },
-  //   { value: '26', label: '26' },
-  //   { value: '27', label: '27' },
-  //   { value: '28', label: '28' },
-  //   { value: '29', label: '29' },
-  //   { value: '30', label: '30' },
-  //   { value: '31', label: '31' },
-  // ];
-
-  // const DeliveriesTimes = [
-  //   { value: '8', label: '8' },
-  //   { value: '9', label: '9' },
-  //   { value: '10', label: '10' },
-  //   { value: '11', label: '11' },
-  //   { value: '12', label: '12' },
-  //   { value: '13', label: '13' },
-  //   { value: '14', label: '14' },
-  //   { value: '15', label: '15' },
-  //   { value: '16', label: '16' },
-  //   { value: '17', label: '17' },
-  //   { value: '18', label: '18' },
-  // ];
-
-  //データ・画面遷移
-  // const orderClicked = (
-  //   destinationUserName,
-  //   destinationEmail,
-  //   destinationZipcode,
-  //   destinationAddress,
-  //   destinationTel,
-  //   destinationYear,
-  //   destinationMonth,
-  //   destinationDay,
-  //   destinationHour,
-  //   paymentMethods,
-  //   creditCardNo
-  // ) => {
-  //   dispatch(
-  //     OrderError(
-  //       destinationUserName,
-  //       destinationEmail,
-  //       destinationZipcode,
-  //       destinationAddress,
-  //       destinationTel,
-  //       destinationYear,
-  //       destinationMonth,
-  //       destinationDay,
-  //       destinationHour,
-  //       paymentMethods,
-  //       creditCardNo
-  //     )
-  //   );
-
-  //   // if(destinationUserName === '' ||
-  //   //   destinationEmail === '' ||
-  //   //   destinationZipcode  === '' ||
-  //   //   destinationAddress === '' ||
-  //   //   destinationTel === '' ||
-  //   //   destinationYear === '' ||
-  //   //   destinationMonth === '' ||
-  //   //   destinationDay  === '' ||
-  //   //   destinationHour === '' ||
-  //   //   paymentMethods === '' ||
-  //   //   creditCardNo === '')
-  //   // {
-  //   //   console.log('入力完了していません');
-
-  //   // } else if((destinationEmail.indexOf('@') === -1) ||
-  //   //   !pattern.test(destinationZipcode) ||
-  //   //   !pattern2.test(destinationTel) ||
-  //   //   (destinationDay === numOrderDay &&
-  //   //       (numOrderTime - hour <= 3) ||
-  //   //       (numOrderTime - hour === 0))) {
-  //   //     console.log('入力完了していません2');
-  //   // } else {
-  //   history.push('/orderfinished');
-  //   // }
-  // };
-
-  const [paymentValue, setPaymentValue] = useState('');
-  const changePaymentValue = (e) => {
-    setPaymentValue(e.target.value);
-  };
-
-  // const [cardValue, serCardValue] = useState('');
-  // const changeCardValue = (e) => {
-  //   serCardValue(e.target.value);
-  // };
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         お届け先情報入力
       </Typography>
+      {/* <Grid>
+        <form className={classes.root}>
+        <TextField
+          error={inputError}
+          inputProps={{ pattern: '^[a-zA-Z0-9_]+$' }}
+          inputRef={inputRef}
+          defaultValue=""
+          id="outlined-basic"
+          label="Outlined"
+          variant="outlined"
+          helperText={inputRef?.current?.validationMessage}
+          onChange={handleChange}
+        />
+        </form>
+      </Grid> */}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -511,8 +397,8 @@ const OrderConfirm = () => {
               <RadioGroup
                 aria-label="payment"
                 name="payment"
-                value={paymentMethods}
-                onChange={inputOrderPay}
+                value={paymentValue}
+                // onChange={inputOrderPay}
               >
                 <FormControlLabel
                   onChange={changePaymentValue}
@@ -531,7 +417,7 @@ const OrderConfirm = () => {
                   label="クレジットカード"
                 />
               </RadioGroup>
-              {paymentMethods === '2' ? (
+              {paymentValue === '2' ? (
                 <TextField
                   id="standard-basic"
                   label="Credit-card Number"
@@ -554,6 +440,7 @@ const OrderConfirm = () => {
           color="primary"
           name="button"
           onClick={() => {
+            history.push('/orderfinished');
             dispatch(
               addPaymentInfo(
                 uid,

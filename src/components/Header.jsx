@@ -116,7 +116,7 @@ const Header = () => {
                   handleLink('/cartlist');
                 }}
               >
-                <Badge badgeContent={3} color="secondary">
+                <Badge color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
@@ -131,7 +131,7 @@ const Header = () => {
                   handleLink('/orderhistory');
                 }}
               >
-                <Badge badgeContent={4} color="secondary">
+                <Badge color="secondary">
                   <ImportContactsIcon />
                 </Badge>
               </IconButton>

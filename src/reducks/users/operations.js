@@ -104,8 +104,8 @@ export const signUp = (
       });
   };
 };
-const usersRef = db.collection('users');
 
+const usersRef = db.collection('users');
 const signIn = (email, password) => {
   const browserHistory = createBrowserHistory();
   return async (dispatch) => {
@@ -156,6 +156,7 @@ const signIn = (email, password) => {
 };
 
 export default signIn;
+
 // const SignIn = (email, password) => {
 //   return async (dispatch) => {
 //     // console.log("ログイン");
@@ -306,6 +307,7 @@ export const addPaymentInfo = (
           });
         });
       });
+      
   };
 };
 
