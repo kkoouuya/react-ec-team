@@ -3,11 +3,16 @@ import { db, auth, FirebaseTimestamp } from '../../firebase/index';
 import {
   isValidEmailFormat,
   isValidRequiredInput,
-} from "../../function/common";
-import { signInAction, fetchOrdersAction, signUpAction,signOutAction } from "./actions";
-import { createBrowserHistory } from "history";
+} from '../../function/common';
+import {
+  signInAction,
+  fetchOrdersAction,
+  signUpAction,
+  signOutAction,
+} from './actions';
+import { createBrowserHistory } from 'history';
 //const usersRef = db.collection('users')
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 //import { useHistory } from "react-router";
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
@@ -99,63 +104,57 @@ export const signUp = (
       });
   };
 };
-const usersRef = db.collection('users')
+const usersRef = db.collection('users');
 
- const signIn = (email, password) => {
+const signIn = (email, password) => {
   const browserHistory = createBrowserHistory();
   return async (dispatch) => {
-      if (!isValidRequiredInput(email, password)) {
-          
-          alert('必須項目が未入力です')
-          return false
+    if (!isValidRequiredInput(email, password)) {
+      alert('必須項目が未入力です');
+      return false;
+    }
+    if (!isValidEmailFormat(email)) {
+      alert('メールアドレスの形式が不正です。');
+      return false;
+    }
+    return auth.signInWithEmailAndPassword(email, password).then((result) => {
+      const userState = result.user;
+      if (!userState) {
+        throw new Error('ユーザーIDを取得できません');
       }
-      if (!isValidEmailFormat(email)) {
-          
-          alert('メールアドレスの形式が不正です。')
-          return false
-      }
-      return auth.signInWithEmailAndPassword(email, password)
-          .then(result => {
-              const userState = result.user
-              if (!userState) {
-                  throw new Error('ユーザーIDを取得できません');
-              }
-              const userId = userState.uid;
-              
+      const userId = userState.uid;
 
-              return usersRef.doc(userId).collection('userinfo').get().then(querySnapshot => {
-                  
-                querySnapshot.forEach(doc => {
-                  
-                  const data = doc.data()
+      return usersRef
+        .doc(userId)
+        .collection('userinfo')
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
 
-                  if (!data) {
-                    throw new Error('ユーザーデータが存在しません');
-                }
+            if (!data) {
+              throw new Error('ユーザーデータが存在しません');
+            }
 
-                dispatch(signInAction({
-                    email: data.email,
-                    isSignedIn: true,
-                    uid: userId,
-                    username: data.username,
-                    address: data.address,
-                    tel:data.tel,
-                    zipcode:data.zipcode
-                }));
-                browserHistory.push("/");
-
-                })
-                
-               
-                 
-                
-                 
+            dispatch(
+              signInAction({
+                email: data.email,
+                isSignedIn: true,
+                uid: userId,
+                username: data.username,
+                address: data.address,
+                tel: data.tel,
+                zipcode: data.zipcode,
               })
-          })
-  }
+            );
+            browserHistory.push('/');
+          });
+        });
+    });
+  };
 };
 
-export default signIn
+export default signIn;
 // const SignIn = (email, password) => {
 //   return async (dispatch) => {
 //     // console.log("ログイン");
@@ -208,18 +207,17 @@ export default signIn
 export const signOut = () => {
   const browserHistory = createBrowserHistory();
   return async (dispatch) => {
-    
-      auth.signOut().then(() => {
-        
-          dispatch(signOutAction());
-          browserHistory.push("/login");
-      }).catch(() => {
-          throw new Error('ログアウトに失敗しました。')
+    auth
+      .signOut()
+      .then(() => {
+        dispatch(signOutAction());
+        browserHistory.push('/login');
       })
-  }
+      .catch(() => {
+        throw new Error('ログアウトに失敗しました。');
+      });
+  };
 };
-
-
 
 export const fetchOrders = (uid) => {
   // const uid = getUserId(selector);
@@ -236,7 +234,6 @@ export const fetchOrders = (uid) => {
     });
   };
 };
-
 
 export const setCancel = (orderId, uid) => {
   const ordersRef = db.collection('users').doc(uid).collection('orders');
