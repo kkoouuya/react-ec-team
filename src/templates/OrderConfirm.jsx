@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { addPaymentInfo } from '../reducks/users/operations';
 import { getUserId } from '../reducks/users/selector';
-import Cart from '../components/Cart'
+import Cart from '../components/Cart';
 
 const OrderConfirm = () => {
   const selector = useSelector((state) => state);
@@ -23,6 +23,7 @@ const OrderConfirm = () => {
   const uid = getUserId(selector);
 
   const [destinationUserName, setDestinationUserName] = useState('');
+  const [destinationEmail, setDestinationEmail] = useState('');
   const [destinationZipcode, setDestinationZipcode] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [destinationTel, setDestinationTel] = useState('');
@@ -37,6 +38,14 @@ const OrderConfirm = () => {
       setDestinationUserName(e.target.value);
     },
     [setDestinationUserName]
+  );
+
+  //メールアドレス
+  const inputOrderEmail = useCallback(
+    (e) => {
+      setDestinationEmail(e.target.value);
+    },
+    [setDestinationEmail]
   );
 
   //郵便番号
@@ -118,7 +127,7 @@ const OrderConfirm = () => {
       paddingLeft: 50,
       paddingRight: 50,
       maxWidth: 700,
-      margin: "0 auto"
+      margin: '0 auto',
     },
   }));
   const classes = useStyles();
@@ -141,6 +150,19 @@ const OrderConfirm = () => {
             autoComplete="given-name"
             placeholder="Enter your name"
             onChange={inputOrderUserName}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}></Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="Email"
+            name="Email"
+            label="メールアドレス"
+            fullWidth
+            autoComplete="given-name"
+            placeholder="Enter your name"
+            onChange={inputOrderEmail}
           />
         </Grid>
         <Grid item xs={12} sm={6}></Grid>
@@ -306,6 +328,7 @@ const OrderConfirm = () => {
               addPaymentInfo(
                 uid,
                 destinationUserName,
+                destinationEmail,
                 destinationZipcode,
                 destinationAddress,
                 destinationTel,

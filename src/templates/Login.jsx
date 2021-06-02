@@ -115,7 +115,6 @@ const Login = () => {
             onClick={() => {
               //e.preventDefault();
               dispatch(signIn(email, password));
-              handlePage('/');
             }}
           >
             ログイン

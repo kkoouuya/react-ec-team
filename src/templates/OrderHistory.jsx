@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,7 +22,6 @@ import Grid from '@material-ui/core/Grid';
 import { getUserId } from '../reducks/users/selector';
 
 const OrderHistory = () => {
-  //const [double, setDouble] = useState(false);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
@@ -34,7 +33,7 @@ const OrderHistory = () => {
     if (uid) {
       dispatch(fetchOrders(uid));
     }
-  }, [dispatch, uid,orders]);
+  }, [dispatch, uid, orders]);
 
   const a = (time) => {
     // console.log(time);
@@ -87,7 +86,7 @@ const OrderHistory = () => {
                                   <TableRow>
                                     <TableCell align="center">
                                       <h3>
-                                        {a(order.orderDate.seconds * 1000) }
+                                        {a(order.orderDate.seconds * 1000)}
                                         に注文済み
                                       </h3>
                                     </TableCell>
@@ -125,58 +124,68 @@ const OrderHistory = () => {
                                                   </Link>
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                  {itemInfos.toppings.length === 0 ?
-                                                  (<p>なし</p>) :
-                                                  (
-                                                  <div>{itemInfos.toppings.map(
-                                                    (topp,index) => {
-                                                      return topping ===
-                                                        undefined
-                                                        ? ''
-                                                        : topping
-                                                            .filter(
-                                                              (toppings) =>
-                                                                toppings.id ===
-                                                                topp.toppingId
-                                                            )
-                                                            .map((toppings) => {
-                                                              return (
-                                                                <div key={index}>
-                                                                    {topp.toppingSize ===
-                                                                    0 ? (
-                                                                      <>
-                                                                        <div>
-                                                                          {
-                                                                            toppings.name
-                                                                          }
-                                                                          /+1倍/+
-                                                                          {
-                                                                            toppings.Mprice
-                                                                          }
-                                                                          円
-                                                                        </div>
-                                                                      </>
-                                                                    ) : (
-                                                                      <>
-                                                                        <div>
-                                                                          {
-                                                                            toppings.name
-                                                                          }
-                                                                          /+2倍/+
-                                                                          {
-                                                                            toppings.Lprice
-                                                                          }
-                                                                          円
-                                                                        </div>
-                                                                      </>
-                                                                    )}
-                                                                  </div>
-                                                              );
-                                                            });
-                                                    }
-                                                  )}</div>)
-                                                }
-                                                  
+                                                  {itemInfos.toppings.length ===
+                                                  0 ? (
+                                                    <p>なし</p>
+                                                  ) : (
+                                                    <div>
+                                                      {itemInfos.toppings.map(
+                                                        (topp, index) => {
+                                                          return topping ===
+                                                            undefined
+                                                            ? ''
+                                                            : topping
+                                                                .filter(
+                                                                  (toppings) =>
+                                                                    toppings.id ===
+                                                                    topp.toppingId
+                                                                )
+                                                                .map(
+                                                                  (
+                                                                    toppings
+                                                                  ) => {
+                                                                    return (
+                                                                      <div
+                                                                        key={
+                                                                          index
+                                                                        }
+                                                                      >
+                                                                        {topp.toppingSize ===
+                                                                        0 ? (
+                                                                          <>
+                                                                            <div>
+                                                                              {
+                                                                                toppings.name
+                                                                              }
+                                                                              /+1倍/+
+                                                                              {
+                                                                                toppings.Mprice
+                                                                              }
+                                                                              円
+                                                                            </div>
+                                                                          </>
+                                                                        ) : (
+                                                                          <>
+                                                                            <div>
+                                                                              {
+                                                                                toppings.name
+                                                                              }
+                                                                              /+2倍/+
+                                                                              {
+                                                                                toppings.Lprice
+                                                                              }
+                                                                              円
+                                                                            </div>
+                                                                          </>
+                                                                        )}
+                                                                      </div>
+                                                                    );
+                                                                  }
+                                                                );
+                                                        }
+                                                      )}
+                                                    </div>
+                                                  )}
                                                 </TableCell>
                                                 <TableCell
                                                   key={itemInfos.itemId}
@@ -218,16 +227,12 @@ const OrderHistory = () => {
                                           <Button
                                             variant="contained"
                                             startIcon={<CancelIcon />}
-                                            disabled={
-
-                                              order.status === 9 
-                                            }
+                                            disabled={order.status === 9}
                                             onClick={() => {
-                                              
                                               setCancel(order.orderId, uid);
                                             }}
                                           >
-                                            {order.status === 9 
+                                            {order.status === 9
                                               ? 'キャンセル済み'
                                               : 'キャンセル'}
                                           </Button>

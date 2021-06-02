@@ -17,7 +17,7 @@ import { createBrowserHistory } from 'history';
 // import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
 //import { useHistory } from "react-router";
-import {push} from 'connected-react-router'
+import { push } from 'connected-react-router';
 import { useEffect } from 'react';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
@@ -101,18 +101,14 @@ export const signUp = (
             .then(async () => {
               console.log(username);
               console.log('DB保存成功');
-              dispatch(push('/'))
-              location.reload()
+              dispatch(push('/'));
+              location.reload();
               console.log('DB');
             });
-          
         }
         dispatch(signUpAction(username, email, zipcode, address, tel));
-        
       });
-      
   };
-            
 };
 
 const usersRef = db.collection('users');
@@ -160,11 +156,9 @@ const signIn = (email, password) => {
                 zipcode: data.zipcode,
               })
             );
-            //browserHistory.push('/');
+             
             
           });
-          //browserHistory.push('/');
-          
           
         });
     });
@@ -230,15 +224,12 @@ export const signOut = () => {
       .signOut()
       .then(() => {
         dispatch(signOutAction());
-        
       })
       .catch(() => {
         throw new Error('ログアウトに失敗しました。');
       });
-      dispatch(push('/login'))
-      location.reload()
-      
-      
+    dispatch(push('/login'));
+    location.reload();
   };
 };
 
@@ -259,15 +250,11 @@ export const fetchOrders = (uid) => {
 };
 
 export const setCancel = (orderId, uid) => {
-  
   const ordersRef = db.collection('users').doc(uid).collection('orders');
   const updateOrdersRef = ordersRef.doc(orderId);
   return updateOrdersRef.update({
     status: 9,
-  }
-  
-  );
-  
+  });
 };
 
 // 注文履歴を取得（使いたい時に）
@@ -297,6 +284,7 @@ export const setCancel = (orderId, uid) => {
 export const addPaymentInfo = (
   uid,
   destinationUserName,
+  destinationEmail,
   destinationZipcode,
   destinationAddress,
   destinationTel,
@@ -306,6 +294,11 @@ export const addPaymentInfo = (
   sumPrice,
   paymentValue
 ) => {
+  // console.log(uid)
+  // console.log(destinationUserName)
+  // console.log(destinationEmail)
+  // console.log(destinationZipcode)
+  // console.log('hoge')
   const browserHistory = createBrowserHistory();
 
   const date1 = new Date();
@@ -313,11 +306,16 @@ export const addPaymentInfo = (
   const nowHour = date1.getHours();
   const orderDate = Number(destinationDate.split('-').splice(2, 3).join(''));
 
+  console.log(destinationPreTime)
+  console.log(nowHour)
+  console.log(destinationPreTime - nowHour)
+
   return async (dispatch) => {
     // Validations
     if (
       !isValidRequiredInput(
         destinationUserName,
+        destinationEmail,
         destinationZipcode,
         destinationAddress,
         destinationTel,
@@ -334,6 +332,10 @@ export const addPaymentInfo = (
       alert('郵便番号は XXX-XXXX の形式で入力してください');
       return false;
     }
+    if (!isValidEmailFormat(destinationEmail)) {
+      alert('メールアドレスの形式が不正です。もう1度お試しください。');
+      return false;
+    }
     if (destinationTel.match(/^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/)) {
       alert('電話番号は XXXX-XXXX-XXXX の形式で入力してください');
       return false;
@@ -342,7 +344,7 @@ export const addPaymentInfo = (
       alert('今日以降の日付を選択してください');
       return false;
     }
-    if (destinationPreTime - nowHour <= 3) {
+    if (orderDate - nowDate === 0 && destinationPreTime - nowHour <= 3) {
       alert('3時間後以降の時間を選択してください');
       return false;
     }
@@ -386,7 +388,7 @@ export const addPaymentInfo = (
           });
         });
         browserHistory.push('/orderfinished');
-        location.reload()
+        location.reload();
       });
   };
 };
@@ -422,16 +424,11 @@ export const listenAuthState = () => {
               // browserHistory.push('/');
             });
           });
-        
       } else {
-        dispatch(push('/login'))
-        
+        dispatch(push('/login'));
       }
-      
     });
-    
   };
-  
 };
 
 export const fetchCart = (uid) => {
@@ -442,7 +439,6 @@ export const fetchCart = (uid) => {
       .where('status', '==', 0)
       .get()
       .then((querySnapshot) => {
-        console.log(querySnapshot);
         querySnapshot.forEach((doc) => {
           cartList.push(doc.data());
         });
