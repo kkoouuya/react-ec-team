@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState(''),
     [password, setPassword] = useState('');
 
@@ -56,7 +58,7 @@ const Login = () => {
   );
 
   const classes = useStyles();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const history = useHistory();
   const handlePage = (path) => history.push(path);
   //const selector = useSelector((state) => state);

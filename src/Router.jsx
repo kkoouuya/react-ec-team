@@ -19,17 +19,19 @@ const Router = () => {
     <BrowserRouter>
       <Header />
       <Switch>
-      <Route exact path="/signup" component={SignUp} />
-      <Route exact path="/login" component={Login} />
+      {/* <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/login" component={Login} /> */}
 
      <Auth>
+     <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/login" component={Login} />
         <Route exact path="/" component={ItemList} />
         <Route exact path="/itemdetail" component={ItemDetail} />
         <Route exact path="/cartlist" component={CartList} />
         <Route exact path="/orderconfirm" component={OrderConfirm} />
         <Route exact path="/orderfinished" component={OrderFinished} />
         <Route exact path="/orderhistory" component={OrderHistory} />
-        <Route exact path="/login" component={Login} />
+        {/* <Route exact path="/login" component={Login} /> */}
         <Route exact path="/paymentform" component={PaymentForm}/>
       </Auth>
       </Switch>
