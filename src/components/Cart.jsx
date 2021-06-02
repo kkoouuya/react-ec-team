@@ -29,8 +29,8 @@ const useStyles = makeStyles({
 });
 
 //export default function CartList()
-const CartList = () => {
-  const location = useLocation();
+const Cart = () => {
+    const location = useLocation();
   const history = useHistory();
   const selector = useSelector((state) => state);
   const selecter2 = useSelector((state) => state);
@@ -142,7 +142,6 @@ const CartList = () => {
 
   return (
     <div className="cartlist">
-      <h2 className="center">ショッピングカート</h2>
       {orders === undefined ? (
       ''
       ) :
@@ -163,7 +162,7 @@ const CartList = () => {
         </div>
       ) : (
         <div>
-          {/* <h2 className="center">ショッピングカート</h2> */}
+          
           <div>
             {orders === undefined ? (
               ''
@@ -372,7 +371,7 @@ const CartList = () => {
             合計金額（税込）：{Math.round(total * 1.1).toLocaleString()}円
           </h2>
           <div className="center">
-            {location.pathname === '/cartlist' ? 
+          {location.pathname === '/cartlist' ? 
             <Button
             onClick={() =>
               history.push('/orderconfirm', {
@@ -393,4 +392,4 @@ const CartList = () => {
     </div>
   );
 };
-export default CartList;
+export default Cart;

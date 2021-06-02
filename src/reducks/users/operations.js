@@ -252,11 +252,15 @@ export const fetchOrders = (uid) => {
 };
 
 export const setCancel = (orderId, uid) => {
+  location.reload()
   const ordersRef = db.collection('users').doc(uid).collection('orders');
   const updateOrdersRef = ordersRef.doc(orderId);
   return updateOrdersRef.update({
     status: 9,
-  });
+  }
+  
+  );
+  
 };
 
 // 注文履歴を取得（使いたい時に）
@@ -375,6 +379,7 @@ export const addPaymentInfo = (
           });
         });
         browserHistory.push('/orderfinished');
+        location.reload()
       });
   };
 };

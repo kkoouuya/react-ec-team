@@ -22,7 +22,7 @@ import Grid from '@material-ui/core/Grid';
 import { getUserId } from '../reducks/users/selector';
 
 const OrderHistory = () => {
-  const [double, setDouble] = useState(false);
+  // const [double, setDouble] = useState(false);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
@@ -37,6 +37,7 @@ const OrderHistory = () => {
   }, [dispatch, uid]);
 
   const a = (time) => {
+    console.log(time);
     const b = new Date(time);
     // const c = Date.now();
     return (
@@ -86,8 +87,8 @@ const OrderHistory = () => {
                                   <TableRow>
                                     <TableCell align="center">
                                       <h3>
-                                        {a(order.orderDate.seconds * 1000)}
-                                        に配達予定
+                                        {a(order.orderDate.seconds * 1000) }
+                                        に注文済み
                                       </h3>
                                     </TableCell>
                                     <TableCell colSpan="4"></TableCell>
@@ -124,8 +125,11 @@ const OrderHistory = () => {
                                                   </Link>
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                  {itemInfos.toppings.map(
-                                                    (topp) => {
+                                                  {itemInfos.toppings.length === 0 ?
+                                                  (<p>なし</p>) :
+                                                  (
+                                                  <div>{itemInfos.toppings.map(
+                                                    (topp,index) => {
                                                       return topping ===
                                                         undefined
                                                         ? ''
@@ -137,19 +141,42 @@ const OrderHistory = () => {
                                                             )
                                                             .map((toppings) => {
                                                               return (
-                                                                <p
-                                                                  key={
-                                                                    toppings.id
-                                                                  }
-                                                                >
-                                                                  {
-                                                                    toppings.name
-                                                                  }
-                                                                </p>
+                                                                <div key={index}>
+                                                                    {topp.toppingSize ===
+                                                                    0 ? (
+                                                                      <>
+                                                                        <div>
+                                                                          {
+                                                                            toppings.name
+                                                                          }
+                                                                          /+1倍/+
+                                                                          {
+                                                                            toppings.Mprice
+                                                                          }
+                                                                          円
+                                                                        </div>
+                                                                      </>
+                                                                    ) : (
+                                                                      <>
+                                                                        <div>
+                                                                          {
+                                                                            toppings.name
+                                                                          }
+                                                                          /+2倍/+
+                                                                          {
+                                                                            toppings.Lprice
+                                                                          }
+                                                                          円
+                                                                        </div>
+                                                                      </>
+                                                                    )}
+                                                                  </div>
                                                               );
                                                             });
                                                     }
-                                                  )}
+                                                  )}</div>)
+                                                }
+                                                  
                                                 </TableCell>
                                                 <TableCell
                                                   key={itemInfos.itemId}
@@ -192,14 +219,14 @@ const OrderHistory = () => {
                                             variant="contained"
                                             startIcon={<CancelIcon />}
                                             disabled={
-                                              order.status === 9 || double
+                                              order.status === 9
                                             }
                                             onClick={() => {
-                                              setDouble(true);
+                                              // setDouble(true);
                                               setCancel(order.orderId, uid);
                                             }}
                                           >
-                                            {order.status === 9 || double
+                                            {order.status === 9
                                               ? 'キャンセル済み'
                                               : 'キャンセル'}
                                           </Button>

@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { addPaymentInfo } from '../reducks/users/operations';
 import { getUserId } from '../reducks/users/selector';
+import Cart from '../components/Cart'
 
 const OrderConfirm = () => {
   const selector = useSelector((state) => state);
@@ -122,6 +123,8 @@ const OrderConfirm = () => {
 
   return (
     <div className={classes.wrapper}>
+      <h2 className="center">注文確認画面</h2>
+      <Cart />
       <Typography variant="h6" gutterBottom>
         お届け先情報入力
       </Typography>
