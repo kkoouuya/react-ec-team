@@ -797,7 +797,8 @@ const ItemDetail = () => {
               onClick={() => {
                 uid
                   ? dispatch(
-                      addOrdersInfo(selectedId, num, LabelName, toppings, uid)
+                      addOrdersInfo(selectedId, num, LabelName, toppings, uid),
+                      handleLink('/cartlist')
                     )
                   : handleLink('/login');
               }}
