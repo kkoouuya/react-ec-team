@@ -268,6 +268,10 @@ export const addPaymentInfo = (
       alert('今日以降の日付を選択してください');
       return false;
     }
+    if (destinationPreTime === 0) {
+      alert('配達時間を選択してください');
+      return false;
+    }
     if (orderDate - nowDate === 0 && destinationPreTime - nowHour <= 3) {
       alert('3時間後以降の時間を選択してください');
       return false;
