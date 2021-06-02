@@ -41,6 +41,7 @@ export const signUp = (
     // Validations
     if (
       !isValidRequiredInput(
+        username,
         email,
         password,
         confirmPassword,
