@@ -13,8 +13,11 @@ import {
 } from './actions';
 import { createBrowserHistory } from 'history';
 //const usersRef = db.collection('users')
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+// import { useHistory } from 'react-router';
 //import { useHistory } from "react-router";
+import {push} from 'connected-react-router'
+import { useEffect } from 'react';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
 
@@ -96,13 +99,18 @@ export const signUp = (
             .then(async () => {
               console.log(username);
               console.log('DB保存成功');
-              browserHistory.push('/');
+              dispatch(push('/'))
+              location.reload()
               console.log('DB');
             });
+          
         }
         dispatch(signUpAction(username, email, zipcode, address, tel));
+        
       });
+      
   };
+            
 };
 
 const usersRef = db.collection('users');
@@ -150,6 +158,7 @@ const signIn = (email, password) => {
             //browserHistory.push('/');
           });
           browserHistory.push('/');
+          
         });
     });
   };
@@ -207,17 +216,22 @@ export default signIn;
 // };
 
 export const signOut = () => {
-  const browserHistory = createBrowserHistory();
+  //const history = useHistory();
+  //const browserHistory = createBrowserHistory();
   return async (dispatch) => {
     auth
       .signOut()
       .then(() => {
         dispatch(signOutAction());
-        browserHistory.push('/itemlist');
+        
       })
       .catch(() => {
         throw new Error('ログアウトに失敗しました。');
       });
+      dispatch(push('/login'))
+      location.reload()
+      
+      
   };
 };
 
@@ -366,7 +380,7 @@ export const addPaymentInfo = (
 };
 
 export const listenAuthState = () => {
-  const browserHistory = createBrowserHistory();
+  //const browserHistory = createBrowserHistory();
   return async (dispatch) => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
@@ -393,31 +407,17 @@ export const listenAuthState = () => {
                   zipcode: data.zipcode,
                 })
               );
-              browserHistory.push('/');
+              // browserHistory.push('/');
             });
           });
-        // usersRef.doc(user.uid).collection('userinfo').get()
-        //     .then(snapshot => {
-        //         const data = snapshot.data()
-        //         if (!data) {
-        //             throw new Error('ユーザーデータが存在しません。')
-        //         }
-        //         console.log('userdata');
-
-        //         // Update logged in user state
-        //         dispatch(signInAction({
-        //           email: data.email,
-        //           isSignedIn: true,
-        //           uid: userId,
-        //           username: data.username,
-        //           address: data.address,
-        //           tel: data.tel,
-        //           zipcode: data.zipcode,
-        //         }))
-        //     })
+        
       } else {
-        browserHistory.push('/');
+        dispatch(push('/login'))
+        
       }
+      
     });
+    
   };
+  
 };

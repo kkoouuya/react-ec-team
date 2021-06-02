@@ -189,9 +189,9 @@ const CartList = () => {
                     ? ''
                     : orders
                         .filter((order) => order.status === 0)
-                        .map((order) => {
+                        .map((order,index) => {
                           return (
-                            <TableBody key={order.orderId}>
+                            <TableBody key={index}>
                               {order.itemInfo.map((itemInfos) => {
                                 return products === undefined
                                   ? ''
@@ -200,9 +200,9 @@ const CartList = () => {
                                         (product) =>
                                           product.id === itemInfos.itemId
                                       )
-                                      .map((product) => {
+                                      .map((product,index) => {
                                         return (
-                                          <TableRow key={product.id}>
+                                          <TableRow key={index}>
                                             <TableCell align="center">
                                               <img
                                                 src={product.imagePath}

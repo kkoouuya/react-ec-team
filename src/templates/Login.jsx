@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+
+  const dispatch = useDispatch()
+
+  
   const [email, setEmail] = useState(''),
     [password, setPassword] = useState('');
 
@@ -56,7 +60,7 @@ const Login = () => {
   );
 
   const classes = useStyles();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const history = useHistory();
   const handlePage = (path) => history.push(path);
   //const selector = useSelector((state) => state);
