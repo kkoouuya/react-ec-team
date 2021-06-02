@@ -126,8 +126,12 @@ const OrderConfirm = () => {
     wrapper: {
       paddingLeft: 50,
       paddingRight: 50,
-      maxWidth: 700,
+      maxWidth: 900,
       margin: '0 auto',
+    },
+    padding: {
+      paddingLeft: 50,
+      paddingRight: 50,
     },
   }));
   const classes = useStyles();
@@ -136,216 +140,216 @@ const OrderConfirm = () => {
     <div className={classes.wrapper}>
       <h2 className="center">注文確認画面</h2>
       <Cart />
-      <Typography variant="h6" gutterBottom>
-        お届け先情報入力
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="username"
-            name="username"
-            label="名前"
-            fullWidth
-            autoComplete="given-name"
-            placeholder="Enter your name"
-            onChange={inputOrderUserName}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}></Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="Email"
-            name="Email"
-            label="メールアドレス"
-            fullWidth
-            autoComplete="given-name"
-            placeholder="Enter your name"
-            onChange={inputOrderEmail}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}></Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zipCode"
-            name="zipCode"
-            label="郵便番号"
-            fullWidth
-            autoComplete="shipping postal-code"
-            onChange={inputOrderZipcode}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}></Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="address"
-            name="address"
-            label="住所"
-            fullWidth
-            autoComplete="shipping address-line1"
-            onChange={inputOrderAddress}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}></Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="tel"
-            name="tel"
-            label="電話番号"
-            fullWidth
-            autoComplete="shipping phone"
-            onChange={inputOrderTel}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}></Grid>
-        <Grid item xs={12} sm={6}>
-          <form className={classes.container} noValidate>
+      <div className={classes.padding}>
+        <Typography variant="h6" gutterBottom>
+          お届け先情報入力
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              id="date"
-              label="配達日"
-              type="date"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange={inputOrderDate}
+              required
+              id="username"
+              name="username"
+              label="名前"
+              fullWidth
+              autoComplete="given-name"
+              onChange={inputOrderUserName}
             />
-          </form>
-        </Grid>
-        <Grid item xs={12} sm={8}>
-          <FormLabel component="legend">
-            配達時間
-            <RadioGroup
-              row
-              aria-label="position"
-              name="position"
-              defaultValue="top"
-              onChange={destinationPreTimeChange}
-            >
-              <FormControlLabel
-                value="10"
-                labelPlacement="end"
-                control={<Radio color="primary" />}
-                label="10時"
+          </Grid>
+          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="Email"
+              name="Email"
+              label="メールアドレス"
+              fullWidth
+              autoComplete="given-name"
+              onChange={inputOrderEmail}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="zipCode"
+              name="zipCode"
+              label="郵便番号"
+              fullWidth
+              autoComplete="shipping postal-code"
+              onChange={inputOrderZipcode}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="address"
+              name="address"
+              label="住所"
+              fullWidth
+              autoComplete="shipping address-line1"
+              onChange={inputOrderAddress}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="tel"
+              name="tel"
+              label="電話番号"
+              fullWidth
+              autoComplete="shipping phone"
+              onChange={inputOrderTel}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} sm={6}>
+            <form className={classes.container} noValidate>
+              <TextField
+                id="date"
+                label="配達日"
+                type="date"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={inputOrderDate}
               />
-              <FormControlLabel
-                value="11"
-                control={<Radio color="primary" />}
-                label="11時"
-              />
-              <FormControlLabel
-                value="12"
-                control={<Radio color="primary" />}
-                label="12時"
-              />
-              <FormControlLabel
-                value="13"
-                control={<Radio color="primary" />}
-                label="13時"
-              />
-              <FormControlLabel
-                value="14"
-                control={<Radio color="primary" />}
-                label="14時"
-              />
-              <FormControlLabel
-                value="15"
-                control={<Radio color="primary" />}
-                label="15時"
-              />
-              <FormControlLabel
-                value="16"
-                control={<Radio color="primary" />}
-                label="16時"
-              />
-              <FormControlLabel
-                value="17"
-                control={<Radio color="primary" />}
-                label="17時"
-              />
-              <FormControlLabel
-                value="18"
-                control={<Radio color="primary" />}
-                label="18時"
-              />
-            </RadioGroup>
-          </FormLabel>
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.root}>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">支払い方法</FormLabel>
+            </form>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <FormLabel component="legend">
+              配達時間
               <RadioGroup
-                aria-label="payment"
-                name="payment"
-                value={paymentValue}
+                row
+                aria-label="position"
+                name="position"
+                defaultValue="top"
+                onChange={destinationPreTimeChange}
               >
                 <FormControlLabel
-                  onChange={changePaymentValue}
-                  value="1"
-                  name="pay"
-                  id="0"
-                  control={<Radio />}
-                  label="代金引換"
+                  value="10"
+                  labelPlacement="end"
+                  control={<Radio color="primary" />}
+                  label="10時"
                 />
                 <FormControlLabel
-                  onChange={changePaymentValue}
-                  value="2"
-                  name="pay"
-                  id="1"
-                  control={<Radio />}
-                  label="クレジットカード"
+                  value="11"
+                  control={<Radio color="primary" />}
+                  label="11時"
+                />
+                <FormControlLabel
+                  value="12"
+                  control={<Radio color="primary" />}
+                  label="12時"
+                />
+                <FormControlLabel
+                  value="13"
+                  control={<Radio color="primary" />}
+                  label="13時"
+                />
+                <FormControlLabel
+                  value="14"
+                  control={<Radio color="primary" />}
+                  label="14時"
+                />
+                <FormControlLabel
+                  value="15"
+                  control={<Radio color="primary" />}
+                  label="15時"
+                />
+                <FormControlLabel
+                  value="16"
+                  control={<Radio color="primary" />}
+                  label="16時"
+                />
+                <FormControlLabel
+                  value="17"
+                  control={<Radio color="primary" />}
+                  label="17時"
+                />
+                <FormControlLabel
+                  value="18"
+                  control={<Radio color="primary" />}
+                  label="18時"
                 />
               </RadioGroup>
-              {paymentValue === '2' ? (
-                <TextField
-                  id="standard-basic"
-                  label="カード番号"
-                  name="cardNumber"
-                  value={creditCardNo}
-                  onChange={inputCreditCardNo}
-                />
-              ) : (
-                ''
-              )}
-            </FormControl>
-          </div>
+            </FormLabel>
+          </Grid>
+          <Grid item xs={12}>
+            <div className={classes.root}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">支払い方法</FormLabel>
+                <RadioGroup
+                  aria-label="payment"
+                  name="payment"
+                  value={paymentValue}
+                >
+                  <FormControlLabel
+                    onChange={changePaymentValue}
+                    value="1"
+                    name="pay"
+                    id="0"
+                    control={<Radio />}
+                    label="代金引換"
+                  />
+                  <FormControlLabel
+                    onChange={changePaymentValue}
+                    value="2"
+                    name="pay"
+                    id="1"
+                    control={<Radio />}
+                    label="クレジットカード"
+                  />
+                </RadioGroup>
+                {paymentValue === '2' ? (
+                  <TextField
+                    id="standard-basic"
+                    label="カード番号（VISA、JCB）"
+                    name="cardNumber"
+                    value={creditCardNo}
+                    onChange={inputCreditCardNo}
+                  />
+                ) : (
+                  ''
+                )}
+              </FormControl>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
 
-      <div className={classes.root}>
-        <Button
-          type="button"
-          variant="contained"
-          color="primary"
-          name="button"
-          onClick={() => {
-            dispatch(
-              addPaymentInfo(
-                uid,
-                destinationUserName,
-                destinationEmail,
-                destinationZipcode,
-                destinationAddress,
-                destinationTel,
-                destinationDate,
-                Number(destinationPreTime),
-                creditCardNo,
-                sumPrice,
-                Number(paymentValue)
-              )
-            );
-          }}
-        >
-          この内容で注文する
-        </Button>
-        <Link to="/cartlist">
-          <Button variant="outlined">ショッピングカートに戻る</Button>
-        </Link>
+        <div className={classes.root}>
+          <Button
+            type="button"
+            variant="contained"
+            color="primary"
+            name="button"
+            onClick={() => {
+              dispatch(
+                addPaymentInfo(
+                  uid,
+                  destinationUserName,
+                  destinationEmail,
+                  destinationZipcode,
+                  destinationAddress,
+                  destinationTel,
+                  destinationDate,
+                  Number(destinationPreTime),
+                  creditCardNo,
+                  sumPrice,
+                  Number(paymentValue)
+                )
+              );
+            }}
+          >
+            この内容で注文する
+          </Button>
+          <Link to="/cartlist">
+            <Button variant="outlined">ショッピングカートに戻る</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
