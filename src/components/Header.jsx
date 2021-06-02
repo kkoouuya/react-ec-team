@@ -74,6 +74,8 @@ const Header = () => {
   const selector = useSelector((state) => state);
   const username = getUserName(selector);
   const uid = getUserId(selector);
+  // const cartlist = getCart(selector);
+
   // const uid = getUserId(selector);
 
   // useEffect(() => {

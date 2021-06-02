@@ -1,6 +1,7 @@
 import React from 'react';
 import './assets/style.css';
 import Router from './Router';
+
 // import { auth } from './firebase/index';
 // import { useSelector } from 'react-redux';
 // import { getUserId } from './reducks/users/selector';
@@ -17,7 +18,7 @@ const App = () => {
   //       const uid = user.uid;
   //       // console.log(user.uid);
   //       console.log(uid);
-        
+
   //       // console.log('ログインしました！');
   //     } else {
   //       uid = null;

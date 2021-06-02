@@ -10,6 +10,7 @@ import {
   fetchOrdersAction,
   signUpAction,
   signOutAction,
+  fetchCartAction,
 } from './actions';
 import { createBrowserHistory } from 'history';
 //const usersRef = db.collection('users')
@@ -419,5 +420,22 @@ export const listenAuthState = () => {
         browserHistory.push('/');
       }
     });
+  };
+};
+
+export const fetchCart = (uid) => {
+  const cartList = [];
+  const ordersRef = db.collection('users').doc(uid).collection('orders');
+  return async (dispatch) => {
+    ordersRef
+      .where('status', '==', 0)
+      .get()
+      .then((querySnapshot) => {
+        console.log(querySnapshot);
+        querySnapshot.forEach((doc) => {
+          cartList.push(doc.data());
+        });
+        dispatch(fetchCartAction(cartList));
+      });
   };
 };
