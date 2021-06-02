@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../reducks/products/selectors';
-//import { FetchCart } from '../reducks/products/operations';
 import { getOrders } from '../reducks/users/selector';
 import { getTopping } from '../reducks/topping/selectors';
 import { fetchTopping } from '../reducks/topping/operations';
@@ -29,7 +28,6 @@ const useStyles = makeStyles({
   },
 });
 
-//export default function CartList()
 const CartList = () => {
   const location = useLocation();
   const history = useHistory();
@@ -41,36 +39,6 @@ const CartList = () => {
   const dispatch = useDispatch();
   const products = getProducts(selector);
   const [total, setTotalPrice] = useState(0);
-
-  // const [priceTopping, setPriceTopping] = useState(0);
-
-  // const createToppingPrice = () => {
-  //   let toppingPrice = 0;
-  //   const filterOrder = orders.filter((order) => order.status === 0);
-  //   filterOrder.forEach((item) => {
-  //     item.itemInfo.forEach((el) => {
-  //       el.toppings.forEach((el1) => {
-  //         if (topping) {
-  //           const selectTopping = topping.filter(
-  //             (top) => top.id === el1.toppingId
-  //           );
-  //           selectTopping.forEach((el5) => {
-  //             if (el1.toppingSize === 0) {
-  //               toppingPrice = toppingPrice + el5.Mprice;
-  //               toppingArray.push(toppingPrice);
-  //             } else {
-  //               toppingPrice = toppingPrice + el5.Lprice;
-  //               toppingArray.push(toppingPrice);
-  //             }
-  //           });
-  //         }
-  //       });
-  //     });
-  //   });
-  //   setPriceTopping(toppingPrice);
-
-  //   toppingArray.push(toppingPrice);
-  // };
 
   const createTotalPrice = () => {
     let totalPrice = 0;
@@ -108,10 +76,6 @@ const CartList = () => {
     setTotalPrice(totalPrice);
   };
 
-  // useEffect(() => {
-  //   createToppingPrice();
-  // },[]);
-
   useEffect(() => {
     createTotalPrice();
   });
@@ -138,10 +102,8 @@ const CartList = () => {
   //------------------------------
 
   const classes = useStyles();
-  //console.log(orders);
 
   let toppingPrice = 0;
-  // const topPriceArray = []
 
   return (
     <div className="cartlist">
@@ -163,7 +125,6 @@ const CartList = () => {
         </div>
       ) : (
         <div>
-          {/* <h2 className="center">ショッピングカート</h2> */}
           <div>
             {orders === undefined ? (
               ''
@@ -191,7 +152,7 @@ const CartList = () => {
                     ? ''
                     : orders
                         .filter((order) => order.status === 0)
-                        .map((order,index) => {
+                        .map((order, index) => {
                           return (
                             <TableBody key={index}>
                               {order.itemInfo.map((itemInfos) => {
@@ -202,7 +163,7 @@ const CartList = () => {
                                         (product) =>
                                           product.id === itemInfos.itemId
                                       )
-                                      .map((product,index) => {
+                                      .map((product, index) => {
                                         return (
                                           <TableRow key={index}>
                                             <TableCell align="center">
@@ -377,21 +338,21 @@ const CartList = () => {
             合計金額（税込）：{Math.round(total * 1.1).toLocaleString()}円
           </h2>
           <div className="center">
-            {location.pathname === '/cartlist' ? 
-            <Button
-            onClick={() =>
-              history.push('/orderconfirm', {
-                sumPrice: Math.round(total * 1.1),
-              })
-            }
-            variant="contained"
-            color="primary"
-          >
-            注文確認画面に進む
-          </Button> :
-           <> </>
-          }
-            
+            {location.pathname === '/cartlist' ? (
+              <Button
+                onClick={() =>
+                  history.push('/orderconfirm', {
+                    sumPrice: Math.round(total * 1.1),
+                  })
+                }
+                variant="contained"
+                color="primary"
+              >
+                注文確認画面に進む
+              </Button>
+            ) : (
+              <> </>
+            )}
           </div>
         </div>
       )}

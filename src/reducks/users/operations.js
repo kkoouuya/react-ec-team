@@ -13,17 +13,10 @@ import {
   fetchCartAction,
 } from './actions';
 import { createBrowserHistory } from 'history';
-//const usersRef = db.collection('users')
-// import { useDispatch } from 'react-redux';
-// import { useHistory } from 'react-router';
-//import { useHistory } from "react-router";
 import { push } from 'connected-react-router';
 import { useEffect } from 'react';
 
 const pattern = /^[0-9]{3}-[0-9]{4}$/;
-
-// const handleLink = path => history.push(path);
-//const browserHistory = createBrowserHistory();
 
 export const signUp = (
   username,
@@ -34,7 +27,6 @@ export const signUp = (
   password,
   confirmPassword
 ) => {
-  //const history = useHistory();
   const browserHistory = createBrowserHistory();
 
   return async (dispatch) => {
@@ -99,11 +91,8 @@ export const signUp = (
             .doc()
             .set(userInitialData)
             .then(async () => {
-              console.log(username);
-              console.log('DB保存成功');
               dispatch(push('/'));
               location.reload();
-              console.log('DB');
             });
         }
         dispatch(signUpAction(username, email, zipcode, address, tel));
@@ -123,14 +112,13 @@ const signIn = (email, password) => {
       alert('メールアドレスの形式が不正です。');
       return false;
     }
-    //browserHistory.push('/');
+
     return auth.signInWithEmailAndPassword(email, password).then((result) => {
       const userState = result.user;
       if (!userState) {
         throw new Error('ユーザーIDを取得できません');
       }
       const userId = userState.uid;
-      
 
       return usersRef
         .doc(userId)
@@ -139,7 +127,6 @@ const signIn = (email, password) => {
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const data = doc.data();
-            
 
             if (!data) {
               throw new Error('ユーザーデータが存在しません');
@@ -156,69 +143,20 @@ const signIn = (email, password) => {
                 zipcode: data.zipcode,
               })
             );
+<<<<<<< HEAD
              
             
+=======
+>>>>>>> e6f460f47902e17af52aa9f05e09ca1b60ad5b2c
           });
           
         });
     });
   };
 };
-
 export default signIn;
 
-// const SignIn = (email, password) => {
-//   return async (dispatch) => {
-//     // console.log("ログイン");
-
-//     if (email === "" || password === "") {
-//       alert("必須項目が未入力です。");
-//       return false;
-//     }
-
-//     auth.signInWithEmailAndPassword(email, password).then((result) => {
-//       const user = result.user;
-//       console.log(user);
-//       if (user) {
-//         const uid = user.uid;
-
-//         db.collection(`users/${uid}/userinfo`)
-//           .doc(uid)
-//           .get()
-//           .then((snapshot) => {
-//             // console.log('１２３')
-//             const data = snapshot.data();
-//             console.log(data);
-
-//             dispatch(
-//               signInAction({
-//                 email: email,
-//                 isSignedIn: true,
-//                 uid: uid,
-//                 // username: username,
-//               })
-//             );
-//             console.log("ログイン済");
-//             // dispatch.push('/');
-//           });
-//       }
-//     });
-//   };
-// };
-// export default SignIn
-
-// export const signOut = () => {
-//   // return async (dispatch, getState) =>{
-//   console.log("ログアウト");
-//   auth.signOut().then(() => {
-//     dispatch(signOutAction());
-//     // dispatch.push("/login");
-//   });
-// };
-
 export const signOut = () => {
-  //const history = useHistory();
-  //const browserHistory = createBrowserHistory();
   return async (dispatch) => {
     auth
       .signOut()
@@ -234,7 +172,6 @@ export const signOut = () => {
 };
 
 export const fetchOrders = (uid) => {
-  // const uid = getUserId(selector);
   const ordersRef = db.collection('users').doc(uid).collection('orders');
 
   return async (dispatch) => {
@@ -294,21 +231,11 @@ export const addPaymentInfo = (
   sumPrice,
   paymentValue
 ) => {
-  // console.log(uid)
-  // console.log(destinationUserName)
-  // console.log(destinationEmail)
-  // console.log(destinationZipcode)
-  // console.log('hoge')
   const browserHistory = createBrowserHistory();
-
   const date1 = new Date();
   const nowDate = date1.getDate();
   const nowHour = date1.getHours();
   const orderDate = Number(destinationDate.split('-').splice(2, 3).join(''));
-
-  console.log(destinationPreTime)
-  console.log(nowHour)
-  console.log(destinationPreTime - nowHour)
 
   return async (dispatch) => {
     // Validations
@@ -387,14 +314,13 @@ export const addPaymentInfo = (
             totalPrice: sumPrice,
           });
         });
-        browserHistory.push('/orderfinished');
+        browserHistory.push('/ordercomplete');
         location.reload();
       });
   };
 };
 
 export const listenAuthState = () => {
-  //const browserHistory = createBrowserHistory();
   return async (dispatch) => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
@@ -409,7 +335,6 @@ export const listenAuthState = () => {
               if (!data) {
                 throw new Error('ユーザーデータが存在しません');
               }
-
               dispatch(
                 signInAction({
                   email: data.email,
@@ -421,7 +346,6 @@ export const listenAuthState = () => {
                   zipcode: data.zipcode,
                 })
               );
-              // browserHistory.push('/');
             });
           });
       } else {
