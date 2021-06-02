@@ -117,6 +117,8 @@ const OrderConfirm = () => {
     wrapper: {
       paddingLeft: 50,
       paddingRight: 50,
+      maxWidth: 700,
+      margin: "0 auto"
     },
   }));
   const classes = useStyles();
