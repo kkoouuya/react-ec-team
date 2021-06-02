@@ -219,7 +219,7 @@ const OrderHistory = () => {
                                   })}
                                   <TableRow>
                                     <TableCell colSpan={4} align="right">
-                                      <h3>合計金額：{order.totalPrice}円</h3>
+                                      <h3>合計金額：{order.totalPrice.toLocaleString()}円</h3>
                                     </TableCell>
                                     <TableCell align="center">
                                       {order.status !== 9 ? (
