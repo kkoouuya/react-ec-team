@@ -335,7 +335,9 @@ const Cart = () => {
                                             
                                             <TableCell align="center">
                                               <div>
-                                                <Button
+                                                  {location.pathname === '/orderconfirm' ?
+                                                  <></> :
+                                                  <Button
                                                   key={order.id}
                                                   variant="contained"
                                                   color="primary"
@@ -351,6 +353,8 @@ const Cart = () => {
                                                 >
                                                   削除
                                                 </Button>
+                                                }
+                                                
                                               </div>
                                             </TableCell>
                                           </TableRow>

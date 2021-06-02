@@ -22,7 +22,6 @@ import Grid from '@material-ui/core/Grid';
 import { getUserId } from '../reducks/users/selector';
 
 const OrderHistory = () => {
-  // const [double, setDouble] = useState(false);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
@@ -34,10 +33,10 @@ const OrderHistory = () => {
     if (uid) {
       dispatch(fetchOrders(uid));
     }
-  }, [dispatch, uid]);
+  }, [dispatch, uid, orders]);
 
   const a = (time) => {
-    console.log(time);
+    // console.log(time);
     const b = new Date(time);
     // const c = Date.now();
     return (
@@ -230,7 +229,6 @@ const OrderHistory = () => {
                                             startIcon={<CancelIcon />}
                                             disabled={order.status === 9}
                                             onClick={() => {
-                                              // setDouble(true);
                                               setCancel(order.orderId, uid);
                                             }}
                                           >
