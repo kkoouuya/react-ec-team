@@ -1,4 +1,4 @@
-import React, { useEffect,useState} from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,7 +22,7 @@ import Grid from '@material-ui/core/Grid';
 import { getUserId } from '../reducks/users/selector';
 
 const OrderHistory = () => {
-  const [double, setDouble] = useState(false);
+  //const [double, setDouble] = useState(false);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
@@ -34,7 +34,7 @@ const OrderHistory = () => {
     if (uid) {
       dispatch(fetchOrders(uid));
     }
-  }, [dispatch, uid]);
+  }, [dispatch, uid,orders]);
 
   const a = (time) => {
     // console.log(time);
@@ -220,14 +220,14 @@ const OrderHistory = () => {
                                             startIcon={<CancelIcon />}
                                             disabled={
 
-                                              order.status === 9 || double
+                                              order.status === 9 
                                             }
                                             onClick={() => {
-                                               setDouble(true);
+                                              
                                               setCancel(order.orderId, uid);
                                             }}
                                           >
-                                            {order.status === 9 || double
+                                            {order.status === 9 
                                               ? 'キャンセル済み'
                                               : 'キャンセル'}
                                           </Button>
