@@ -33,7 +33,7 @@ export const UsersReducer = (state = initialState.users, action) => {
         user: { ...action.payload },
       };
     case Actions.FETCH_CART:
-      console.log(action.payload);
+      
       return {
         ...state,
         cartList: action.payload,

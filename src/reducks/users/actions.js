@@ -57,7 +57,7 @@ export const fetchOrdersAction = (orders) => {
 
 export const FETCH_CART = 'fetch_cart';
 export const fetchCartAction = (cartList) => {
-  console.log(cartList);
+  
   return {
     type: FETCH_CART,
     payload: cartList,

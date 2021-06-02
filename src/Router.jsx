@@ -19,12 +19,11 @@ const Router = () => {
     <BrowserRouter>
       <Header />
       <Switch>
-      {/* <Route exact path="/signup" component={SignUp} />
-      <Route exact path="/login" component={Login} /> */}
+      <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/login" component={Login} />
 
      <Auth>
-     <Route exact path="/signup" component={SignUp} />
-      <Route exact path="/login" component={Login} />
+     
         <Route exact path="/" component={ItemList} />
         <Route exact path="/itemdetail" component={ItemDetail} />
         <Route exact path="/cartlist" component={CartList} />

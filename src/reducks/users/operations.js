@@ -127,12 +127,14 @@ const signIn = (email, password) => {
       alert('メールアドレスの形式が不正です。');
       return false;
     }
+    //browserHistory.push('/');
     return auth.signInWithEmailAndPassword(email, password).then((result) => {
       const userState = result.user;
       if (!userState) {
         throw new Error('ユーザーIDを取得できません');
       }
       const userId = userState.uid;
+      
 
       return usersRef
         .doc(userId)
@@ -141,6 +143,7 @@ const signIn = (email, password) => {
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const data = doc.data();
+            
 
             if (!data) {
               throw new Error('ユーザーデータが存在しません');
@@ -158,8 +161,10 @@ const signIn = (email, password) => {
               })
             );
             //browserHistory.push('/');
+            
           });
-          browserHistory.push('/');
+          //browserHistory.push('/');
+          
           
         });
     });
@@ -254,7 +259,7 @@ export const fetchOrders = (uid) => {
 };
 
 export const setCancel = (orderId, uid) => {
-  location.reload()
+  
   const ordersRef = db.collection('users').doc(uid).collection('orders');
   const updateOrdersRef = ordersRef.doc(orderId);
   return updateOrdersRef.update({
