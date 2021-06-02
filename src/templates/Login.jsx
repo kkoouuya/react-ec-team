@@ -75,7 +75,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           ログイン
         </Typography>
-        <form className={classes.form} noValidate>
+        <div className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -119,7 +119,7 @@ const Login = () => {
           >
             ログイン
           </Button>
-        </form>
+        </div>
         <Link
           to="/signup"
           onClick={() => {

@@ -143,17 +143,14 @@ const signIn = (email, password) => {
                 zipcode: data.zipcode,
               })
             );
-<<<<<<< HEAD
-             
-            
-=======
->>>>>>> e6f460f47902e17af52aa9f05e09ca1b60ad5b2c
           });
-          
+          browserHistory.push('/');
+          location.reload();
         });
     });
   };
 };
+
 export default signIn;
 
 export const signOut = () => {
