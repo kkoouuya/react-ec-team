@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
   flex: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap-reverse',
     justifyContent: 'center',
   },
 });
